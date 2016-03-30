@@ -67,12 +67,19 @@ ul.navbar a.current-page {
     border-left-width:1px;
     border-top-width:1px;
 }
+.panel-dive-database {
+    border-bottom-right-radius:0.5em;
+    border-bottom-width:1px;
+}
+.panel-dive-filters, div#search-by-name {
+   background:#f0f0f0;
 
+}
+    
 /**** MAKE-DIVELIST FILTER PANE ****/
 .panel-dive-filters {
     height:100%;
-    background:#f0f0f0;
-}
+ }
 
 ul#filter-dive-group{
     padding:0;
@@ -139,7 +146,6 @@ html,body {
 }
 
 div#search-by-name {
-    background:#f0f0f0;
     border-top-right-radius:0.5em;
     border-top:1px solid #aaa;
     border-right:1px solid #aaa;
@@ -159,7 +165,8 @@ div#search-by-name {
 div.scrollable-pane {
     height:94%;
     overflow-y:scroll;
-  
+    border-left:1px solid #aaa;
+    border-top:1px solid #aaa;
 }
 table.dive-database {
     width:100%;
@@ -179,6 +186,10 @@ a.selection-circle  {
    
 }
 
+tr.dive-entry td {
+    border-bottom:1px solid #eee;
+
+}
 tr.dive-entry:hover > td a.selection-circle {
     background:#cdf;
 }
