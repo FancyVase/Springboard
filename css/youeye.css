@@ -1,0 +1,233 @@
+body {
+    margin:0 2em;
+    font-family:"Lato",Cabin,"Gill Sans", Helvetica,Arial,sans-serif;
+}
+a {
+    outline:0;
+}
+h5 {
+    font-weight:700;
+
+}
+
+/********************* PAGE HEADER**/
+.header #logo {
+    display:none;
+}
+div.header {
+    position:relative;
+    padding-bottom:0.5em;
+}
+.header h1 {
+    font-weight:700;
+}
+/** PAGE HEADER NAVIGATION **/
+ul.navbar {
+    position:absolute;right:0;
+    top:0.75em; 
+}
+ul.navbar li {
+    display:inline;
+}
+
+ul.navbar li > a {
+    padding:0.5em 0.5em;
+    
+    border-radius:0.25em;
+    min-width:4em;
+    font-weight:bolder;
+    font-size:1.2em;
+    
+}
+ul.navbar a.current-page {
+    color:inherit;
+    
+    cursor:inherit;
+    border-bottom:0em solid #c60;
+    border-radius:0;
+}
+
+
+/***** AFFECTING MULTIPLE DIVE PANELS ****/
+.panel-dive-filters, .panel-dive-database, .panel-dive-list {
+    border:0px solid #aaa;
+    border-bottom-width:1px;
+    height:100%;
+}
+.panel-dive-filters {
+    border-left-width:1px;
+    border-top-width:1px;
+}
+
+/**** MAKE-DIVELIST FILTER PANE ****/
+.panel-dive-filters {
+    height:100%;
+    background:#f0f0f0;
+}
+
+ul#filter-dive-group{
+    padding:0;
+}
+ul#filter-dive-group a {
+    color:#555;
+    padding-left:0.75em;
+    line-height:1.8em;
+    font-size:1.14em;
+    text-transform:uppercase;
+    display:block;
+    width:9em;
+    border-left:0.25em solid transparent;
+}
+
+ul#filter-dive-group .selected {
+    background:#fff;
+    background:#cf0;
+    border-radius:0.2em;
+}
+
+ul#filter-dive-group li {
+    list-style-type:none;
+    
+}
+
+#panel-dive-filters select {
+    display:block;
+    width:100%:
+    margin:0;
+    padding:0;
+    width:9em;
+
+
+}
+.panel-dive-filters select.inactive {
+    color:#999;
+
+}
+
+#experience-level li {
+    list-style-type:none;
+    
+}
+ul#experience-level {
+    margin:0;
+    padding-left:1em;
+}
+
+
+
+
+/**** PANEL: DIVE DATABASE *****/
+html,body {
+    height:90%;
+}
+.panel-dive-database {
+
+    height:100%;
+    padding:0;
+}
+.panel-dive-database > * {
+    padding-left:0.5em;
+}
+
+div#search-by-name {
+    background:#f0f0f0;
+    border-top-right-radius:0.5em;
+    border-top:1px solid #aaa;
+    border-right:1px solid #aaa;
+    padding:0.25em 0;
+}
+
+#search-by-name h5 {
+    display:inline;
+}
+#ip-search-by-name {
+    display:inline;
+    
+}
+
+
+/*** ----- dive database table entries ----- ***/
+div.scrollable-pane {
+    height:94%;
+    overflow-y:scroll;
+  
+}
+table.dive-database {
+    width:100%;
+}
+a.selection-circle {
+    text-decoration:none;
+    outline:0;
+}
+a.selection-circle  {
+    display:block;
+    width:1.4em;
+    height:1.4em;
+    border:0.1em solid #888;
+    border-radius:4em;
+    background:#fff;
+    vertical-align:middle;
+   
+}
+
+tr.dive-entry:hover > td a.selection-circle {
+    background:#cdd;
+}
+.selected a.selection-circle {
+    background:#4af!important;
+}
+
+tr.dive-entry:hover > td {
+    background:#ff0;
+}
+
+
+
+tr.dive-entry > td {
+    padding:0.25em 0;
+    cursor:pointer;
+}
+
+td.dive-selector {
+    width:3em;
+}
+
+.dive-id {
+    font-weight:900;
+    font-size:1.5em;
+    color:#444;
+    color:#0a6;
+}
+
+
+/******************** DIVE LIST PANEL ******/
+.panel-dive-list {
+    margin-left:1em;
+ 
+    padding-top:0.5em;
+}
+
+.panel-dive-list #toolbar {
+    
+}
+
+.inputlike {
+    min-width:12em;
+    display:block;
+
+    height:2em;
+    border-radius:0.2em;
+    padding:0.1em 0.2em;
+    font-size:1.25em;
+    border:1px solid transparent;
+    border-radius:0.2em;
+    cursor:pointer;
+    font-weight:bolder;
+}
+
+.inputlike:hover {
+    border-color:#aaa;
+}
+
+
+
