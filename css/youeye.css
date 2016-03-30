@@ -17,15 +17,24 @@ h5 {
 div.header {
     position:relative;
     padding-bottom:0.5em;
+    padding-top:1.5em;
+    padding-bottom:1em;
+    
 }
 .header h1 {
     font-weight:700;
+    display:inline;
 }
 /** PAGE HEADER NAVIGATION **/
 ul.navbar {
-    position:absolute;right:0;
-    top:0.75em; 
+    position:absolute;
+    right:0;
+    top:0.75em;
+    top:1.5em;
+    right:8em;
+
 }
+
 ul.navbar li {
     display:inline;
 }
@@ -171,13 +180,14 @@ a.selection-circle  {
 }
 
 tr.dive-entry:hover > td a.selection-circle {
-    background:#cdd;
+    background:#cdf;
 }
-.selected a.selection-circle {
+.selected a.selection-circle, tr:active a.selection-circle {
     background:#4af!important;
 }
 
 tr.dive-entry:hover > td {
+    background:#fff;
     background:#ff0;
 }
 
@@ -201,18 +211,10 @@ td.dive-selector {
 
 
 /******************** DIVE LIST PANEL ******/
-.panel-dive-list {
-    margin-left:1em;
- 
-    padding-top:0.5em;
-}
 
-.panel-dive-list #toolbar {
-    
-}
 
 .inputlike {
-    min-width:12em;
+    min-width:8em;
     display:block;
 
     height:2em;
@@ -223,6 +225,7 @@ td.dive-selector {
     border-radius:0.2em;
     cursor:pointer;
     font-weight:bolder;
+
 }
 
 .inputlike:hover {
@@ -231,3 +234,54 @@ td.dive-selector {
 
 
 
+.panel-dive-list {
+    margin-left:1em;
+    padding-top:0.5em;
+    padding:0;
+}
+
+.panel-dive-list #toolbar {
+    height:100%;
+    width:100%;
+
+}
+
+#divelist-container td {
+    vertical-align:top;
+    height:100%;
+    text-align:center;
+    background:#fff8d0;
+}
+
+#divelist-viewchanger {
+    height:1em;
+    
+}
+
+
+
+p#quicklist {
+    padding-top:15%;
+    font-size:1.5em;
+}
+
+ul#quicklist-options {
+    list-style-type:none;
+    text-align:left;
+    margin-top:2em;
+}
+
+#quicklist-options li a {
+    font-size:1.5em;
+    line-height:2em;
+ 
+    font-weight:700;
+}
+
+#btns-edit {
+    text-align:right;
+}
+
+.divelist-viewchanger img {
+
+}

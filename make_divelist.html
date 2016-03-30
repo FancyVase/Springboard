@@ -17,14 +17,20 @@
   <body>
     <div class="header">
 
+      
+
+ 
       <ul class="navbar">
 	<li><a href="#">Home</a></li>
 	<li><a href="#" class="current-page">Make Divelist</a></li>
 	<li><a href="#">Learn Dives</a></li>
       </ul>
-      
+
+
+   
       <h1><img id="logo" src="img/logo.jpg"></img>Springboard</h1>
 
+      
     </div>
     <div class="col-md-2 panel-dive-filters">
       <h5>Dive Group</h5>
@@ -33,7 +39,7 @@
 
 	<!-- FILTER BY GROUP !-->
 	<ul id="filter-dive-group">
-	<li><a href="#" class="selected">All</a></li>
+	<li><a href="#" class="selected">All Groups</a></li>
 	<li><a href="#">Front</a></li>
 	<li><a href="#">Back</a></li>
 	<li><a href="#">Inward</a></li>
@@ -43,8 +49,8 @@
 
 	<!-- FILTER BY PERFORMED TIME !-->
       <div id="filter-time">
-	<h5><input type="checkbox">&nbsp;&nbsp;
-	  Performed within</input></h5>
+	<h5><input type="checkbox">&nbsp;
+	  Within</input></h5>
 	&nbsp;&nbsp;&nbsp;
 	<select class="inactive">
 	  <option>1 Month</option>
@@ -476,11 +482,30 @@
 	  <td>
 	    <div class="inputlike" id="divelist-savename">Untitled Divelist</div>
 	  </td>
-	  <td>
+	  <td id="btns-edit">
 	    &nbsp;
-	    <button id="btn-save">Save</button>
+	    <button id="btn-save">Save as...</button>
 	    <button id="btn-export">Export</button>
 	    <button id="btn-newlist">New List</button>
+	  </td>
+	</tr>
+
+	<tr id="divelist-container">
+	  <td colspan="4">
+	    <p id="quicklist">
+	      Select dives from the database on the left,
+	      or <strong>autogenerate a divelist based on</strong>
+	      <ul id="quicklist-options">
+		<li><a href="#">Highest predicted score</a> &raquo;</li>
+		<li><a href="#">Most practiced dives &raquo;</a></li>
+		<li><a href="#">Most recently performed dives &raquo;</a></li>
+	      </ul>
+	    </p>
+	  </td>
+	</tr>
+	<tr id="divelist-viewchanger">
+	  <td colspan="4">
+	    View:&nbsp; <a href="#"><img src="img/view_list.png"/>&nbsp; As list</a> &nbsp; <a href="#"><img src="img/view_chart.png"/>&nbsp;As chart</a>
 	  </td>
 	</tr>
       </table>
