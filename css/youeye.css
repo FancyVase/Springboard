@@ -1,6 +1,8 @@
 body {
     margin:0 2em;
     font-family:"Lato",Cabin,"Gill Sans", Helvetica,Arial,sans-serif;
+    background:#fff url("../img/tiles-3.jpg");
+    background-size:25%;
 }
 a {
     outline:0;
@@ -10,6 +12,9 @@ h5 {
 
 }
 
+table {
+    border-collapse:collapse;
+}
 /********************* PAGE HEADER**/
 .header #logo {
     display:none;
@@ -137,7 +142,7 @@ html,body {
     height:90%;
 }
 .panel-dive-database {
-
+    background:#fff;
     height:100%;
     padding:0;
 }
@@ -150,6 +155,7 @@ div#search-by-name {
     border-top:1px solid #aaa;
     border-right:1px solid #aaa;
     padding:0.25em 0;
+    
 }
 
 #search-by-name h5 {
@@ -183,23 +189,28 @@ a.selection-circle  {
     border-radius:4em;
     background:#fff;
     vertical-align:middle;
-   
+    
 }
 
 tr.dive-entry td {
     border-bottom:1px solid #eee;
+    background:#fff;
+    
 
 }
 tr.dive-entry:hover > td a.selection-circle {
     background:#cdf;
 }
 .selected a.selection-circle, tr:active a.selection-circle {
-    background:#4af!important;
+				  background:#4af;
+				  background:#17b!important;
+				  
 }
 
 tr.dive-entry:hover > td {
     background:#fff;
     background:#ff0;
+    background:#cf0;
 }
 
 
@@ -222,7 +233,37 @@ td.dive-selector {
 
 
 /******************** DIVE LIST PANEL ******/
+.hide-quicklist #quicklist, #hide-quicklist #quicklist-options {
+    display:none;
+}
 
+
+#list-view {
+
+}
+#list-view .selected-dive {
+    display:block;
+    text-align:left;
+    padding:0.5em;
+
+    border:1px solid #aaa;
+    border-top-width:0px;
+    background:#fff;
+    cursor:grab;
+}
+
+#list-view .selected-dive:before {
+    content:"\2195";
+    font-size:1.5em;
+    padding-right:0.5em;
+    color:#aaa;;
+}
+#list-view .selected-dive:hover:before {
+    color:#c00;
+}
+#list-view .selected-dive:first-child {
+    border-top-width:1px;
+}
 
 .inputlike {
     min-width:8em;
@@ -249,6 +290,7 @@ td.dive-selector {
     margin-left:1em;
     padding-top:0.5em;
     padding:0;
+
 }
 
 .panel-dive-list #toolbar {
@@ -266,14 +308,14 @@ td.dive-selector {
 
 #divelist-viewchanger {
     height:1em;
-    
+    background:#fff;
 }
 
 
 
-p#quicklist {
+#quicklist {
     padding-top:15%;
-    font-size:1.5em;
+    display:block;
 }
 
 ul#quicklist-options {
@@ -296,3 +338,26 @@ ul#quicklist-options {
 .divelist-viewchanger img {
 
 }
+
+body {
+    background:#c4dfe6;
+    background:#fff;
+}
+.panel-dive-filters, div#search-by-name {
+    /* background:#66a5ad; */
+    /* background:#c4dfe6; */
+
+    /* background:#66ffbb!important; */
+    
+}
+
+h1{
+ color:#1b7!important;
+ 
+}
+
+/* a{color:#17b} */
+/* a.selected{ */
+/*     background:#17b !important; */
+/*     color:#fff !important; */
+/* } */

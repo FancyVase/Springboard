@@ -17,7 +17,18 @@
   <body>
     <div class="header">
 
-      
+<!-------- dxh comments
+for last performed, maybe include name of meet, or say how
+      long ago
+
+Highlighting a dive in the database or selected dive list should
+highlight the dive in the other place. (e.g. hover over dive in
+selections list to highlight it in database.)
+
+For the column corresponding to last performed, perhaps include the
+name of the meet and/or a text string describing how long ago it was.
+ 
+!---->      
 
  
       <ul class="navbar">
@@ -50,7 +61,7 @@
 	<!-- FILTER BY PERFORMED TIME !-->
       <div id="filter-time">
 	<h5><input type="checkbox">&nbsp;
-	  Within</input></h5>
+	  Performed within</input></h5>
 	&nbsp;&nbsp;&nbsp;
 	<select class="inactive">
 	  <option>1 Month</option>
@@ -84,8 +95,7 @@
 	</input>	
       </div>
 
-      <!-- for last performed, maybe include name of meet, or say how
-      long ago!-->
+     
       <div class="scrollable-pane">
       <table class="dive-database">
 	<tr class="dive-entry">
@@ -480,7 +490,7 @@
       <table id="toolbar">
 	<tr>
 	  <td>
-	    <div class="inputlike" id="divelist-savename">Untitled Divelist</div>
+	    <div class="inputlike" id="divelist-savename" contenteditable="true">Untitled Divelist</div>
 	  </td>
 	  <td id="btns-edit">
 	    &nbsp;
@@ -490,9 +500,25 @@
 	  </td>
 	</tr>
 
-	<tr id="divelist-container">
+	<tr id="divelist-container" class="hide-quicklist">
 	  <td colspan="4">
-	    <p id="quicklist">
+	    <div id="list-view">
+	      <span class="selected-dive">1024Q
+		&nbsp; <strong>Dive</strong></span>
+	      <span class="selected-dive">1024Q
+	      	&nbsp; <strong>Dive</strong></span>
+	      <span class="selected-dive">1024Q
+		&nbsp; <strong>Dive</strong></span>
+	      <span class="selected-dive">1024Q
+		&nbsp; <strong>Dive</strong></span>
+	      <span class="selected-dive">1024Q
+		&nbsp; <strong>Dive</strong></span>
+	      <span class="selected-dive">1024Q
+		&nbsp; <strong>Dive</strong></span>
+
+	      
+	    </div>
+	    <div id="quicklist" class="lead">
 	      Select dives from the database on the left,
 	      or <strong>autogenerate a divelist based on</strong>
 	      <ul id="quicklist-options">
@@ -500,17 +526,16 @@
 		<li><a href="#">Most practiced dives &raquo;</a></li>
 		<li><a href="#">Most recently performed dives &raquo;</a></li>
 	      </ul>
-	    </p>
+	    </div>
 	  </td>
 	</tr>
 	<tr id="divelist-viewchanger">
 	  <td colspan="4">
-	    View:&nbsp;
+	    View as:&nbsp;
 	    <a href="#"
 	    id="btn-view-as-list"><img src="img/view_list.png"/>&nbsp;
-	    As list</a> &nbsp; <a href="#"
-	    id="btn-view-as-chart"><img src="img/view_chart.png"/>&nbsp;As
-	    chart</a>
+	      List</a> &nbsp; <a href="#"
+	    id="btn-view-as-chart"><img src="img/view_chart.png"/>&nbsp;Chart</a>
 	  </td>
 	</tr>
       </table>
