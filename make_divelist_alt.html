@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<!-- todo remove &nbsp; -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,900,700' rel='stylesheet' type='text/css'>
+
+    <title>Springboard | Make Divelist</title>
+
+    <link href="css/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/make_divelist.css" rel="stylesheet">
+
+    <style type="text/css">
+      table.layout {
+      position:absolute;
+      top:1em;left:1em;right:1em;bottom:1em;
+      height:100%;
+      }
+      table {
+      width:100%;
+      
+      }
+
+      html {
+      margin:1em;
+      }
+      td.panel-dive-filters {
+      vertical-align:top;
+      padding-left:1em;
+      }
+
+      td.panel {
+      width:25em;
+      }
+
+table.layout > * > tr > td:first-child + td {
+       
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <table class="layout">
+
+      <!-- HEADER !--->
+      <tr class="header">
+	<td colspan="2">
+	  <h1><img id="logo" src="img/logo.jpg">Springboard</h1>
+	</td>
+	<td>
+
+      <ul class="navbar">
+        <li><a href="#">Home</a></li>
+        <li><a href="#" class="current-page">Make Divelist</a></li>
+        <li><a href="#">Learn Dives</a></li>
+      </ul>
+	</td>
+      </tr>
+
+      <tr>
+	<td class="panel-dive-filters">
+	   <h5>Dive Group</h5>
+
+      <form name="filters">
+
+        <!-- FILTER BY GROUP !-->
+        <ul id="filter-dive-group">
+          <li><a href="#" class="selected">All Groups</a></li>
+          <li><a href="#">Front</a></li>
+          <li><a href="#">Back</a></li>
+          <li><a href="#">Inward</a></li>
+          <li><a href="#">Reverse</a></li>
+          <li><a href="#">Twist</a></li>
+        </ul>
+
+        <!-- FILTER BY PERFORMED TIME !-->
+        <div id="filter-time">
+          <h5><input type="checkbox">&nbsp;Performed within</h5>
+          &nbsp;&nbsp;&nbsp;
+          <select class="inactive">
+            <option>1 Month</option>
+          </select>
+        </div>
+
+        <!-- FILTER BY EXPERIENCE !-->
+        <div id="filter-experience">
+          <h5>Experience level</h5>
+          <ul id="experience-level">
+            <li><input type="checkbox" checked>&nbsp;&nbsp;I know it</li>
+            <li><input type="checkbox" checked>&nbsp;&nbsp;I'm learning it</li>
+            <li><input type="checkbox">&nbsp;&nbsp;I don't know it</li>
+          </ul>    
+        </div>
+      </form>
+	</td>
+
+	<!---- DIVE DATABASE PANEL !--->
+	<td class="panel-dive-database">
+
+	  <div id="search-by-name">
+            <h5>Find dive</h5>&nbsp;&nbsp;<input id="ip-search-by-name">    
+	  </div>
+	  
+	  <div class="scrollable-pane">
+	    <table class="dive-database" id="dive-database-table">
+	    </table>
+	  </div>
+
+	</td>
+
+	<td>
+	  <div class="panel-dive-list">
+	    <table id="toolbar">
+              <tr>
+		<td>
+		  <div class="inputlike" id="divelist-savename" contenteditable="true">Untitled Divelist</div>
+		</td>
+		<td id="btns-edit">
+		  &nbsp;
+		  <button id="btn-save">Save as...</button>
+		  <button id="btn-export">Export</button>
+		  <button id="btn-newlist">New List</button>
+		</td>
+              </tr>
+	      
+              <tr id="divelist-container" class="">
+		<td colspan="4">
+		  <div id="list-view">
+		    <!-- TODO remove this
+			 <span class="selected-dive">1024Q
+			   &nbsp; <strong>Dive</strong></span>
+			 <span class="selected-dive">1024Q
+	      		   &nbsp; <strong>Dive</strong></span>
+			 <span class="selected-dive">1024Q
+			   &nbsp; <strong>Dive</strong></span>
+			 <span class="selected-dive">1024Q
+			   &nbsp; <strong>Dive</strong></span>
+			 <span class="selected-dive">1024Q
+			   &nbsp; <strong>Dive</strong></span>
+			 <span class="selected-dive">1024Q
+			   &nbsp; <strong>Dive</strong></span>
+			 -->
+		  </div>
+		  <div id="quicklist" class="lead">
+		    Select dives from the database on the left,
+		    or <strong>autogenerate a divelist based on</strong>
+		    <ul id="quicklist-options">
+                      <li><a href="#">Highest predicted score</a> &raquo;</li>
+                      <li><a href="#">Most practiced dives &raquo;</a></li>
+                      <li><a href="#">Most recently performed dives &raquo;</a></li>
+		    </ul>
+		  </div>
+		</td>
+              </tr>
+              <tr id="divelist-viewchanger">
+		<td colspan="4">
+		  View as:&nbsp;
+		  <a href="#" id="btn-view-as-list"><img src="img/view_list.png"/>&nbsp;List</a>
+		  &nbsp;
+		  <a href="#" id="btn-view-as-chart"><img src="img/view_chart.png"/>&nbsp;Chart</a>
+		</td>
+              </tr>
+	    </table>
+	  </div>
+	</td>
+      </tr>
+      
+    </table>
+
+    <!--     <div class="header"> -->
+
+    <!--     <\!-------- dxh comments (TODO) -->
+    <!--     for last performed, maybe include name of meet, or say how -->
+    <!--           long ago -->
+
+    <!--     Highlighting a dive in the database or selected dive list should -->
+    <!--     highlight the dive in the other place. (e.g. hover over dive in -->
+    <!--     selections list to highlight it in database.) -->
+
+    <!--     For the column corresponding to last performed, perhaps include the -->
+    <!--     name of the meet and/or a text string describing how long ago it was. -->
+    <!--     !---\->       -->
+    
+    <!--       <ul class="navbar"> -->
+    <!--         <li><a href="#">Home</a></li> -->
+    <!--         <li><a href="#" class="current-page">Make Divelist</a></li> -->
+    <!--         <li><a href="#">Learn Dives</a></li> -->
+    <!--       </ul> -->
+    
+<!--       <h1><img id="logo" src="img/logo.jpg">Springboard</h1> -->
+      
+<!--     </div> -->
+
+<!--     <div class="col-md-2 panel-dive-filters"> -->
+<!--       <h5>Dive Group</h5> -->
+
+<!--       <form name="filters"> -->
+
+<!--         <\!-- FILTER BY GROUP !-\-> -->
+<!--         <ul id="filter-dive-group"> -->
+<!--           <li><a href="#" class="selected">All Groups</a></li> -->
+<!--           <li><a href="#">Front</a></li> -->
+<!--           <li><a href="#">Back</a></li> -->
+<!--           <li><a href="#">Inward</a></li> -->
+<!--           <li><a href="#">Reverse</a></li> -->
+<!--           <li><a href="#">Twist</a></li> -->
+<!--         </ul> -->
+
+<!--         <\!-- FILTER BY PERFORMED TIME !-\-> -->
+<!--         <div id="filter-time"> -->
+<!--           <h5><input type="checkbox">&nbsp;Performed within</h5> -->
+<!--           &nbsp;&nbsp;&nbsp; -->
+<!--           <select class="inactive"> -->
+<!--             <option>1 Month</option> -->
+<!--           </select> -->
+<!--         </div> -->
+
+<!--         <\!-- FILTER BY EXPERIENCE !-\-> -->
+<!--         <div id="filter-experience"> -->
+<!--           <h5>Experience level</h5> -->
+<!--           <ul id="experience-level"> -->
+<!--             <li><input type="checkbox" checked>&nbsp;&nbsp;I know it</li> -->
+<!--             <li><input type="checkbox" checked>&nbsp;&nbsp;I'm learning it</li> -->
+<!--             <li><input type="checkbox">&nbsp;&nbsp;I don't know it</li> -->
+<!--           </ul>     -->
+<!--         </div> -->
+<!--       </form> -->
+<!--     </div> -->
+
+<!--     <\!------- DIVE DATABASE PANEL !-----\-> -->
+<!--     <div class="col-md-5 panel-dive-database"> -->
+<!--       <div id="search-by-name"> -->
+<!--         <h5>Find dive</h5>&nbsp;&nbsp;<input id="ip-search-by-name">     -->
+<!--       </div> -->
+     
+<!--       <div class="scrollable-pane"> -->
+<!--       <table class="dive-databasez" id="dive-database-tablez"> -->
+<!--       </table> -->
+<!--       </div> -->
+<!--     </div> -->
+
+<!--     <div class="col-md-4 panel-dive-list"> -->
+<!--       <table id="toolbar"> -->
+<!--         <tr> -->
+<!--           <td> -->
+<!--             <div class="inputlike" id="divelist-savename" contenteditable="true">Untitled Divelist</div> -->
+<!--           </td> -->
+<!--           <td id="btns-edit"> -->
+<!--             &nbsp; -->
+<!--             <button id="btn-save">Save as...</button> -->
+<!--             <button id="btn-export">Export</button> -->
+<!--             <button id="btn-newlist">New List</button> -->
+<!--           </td> -->
+<!--         </tr> -->
+
+<!--         <tr id="divelist-container" class="hide-quicklist"> -->
+<!--           <td colspan="4"> -->
+<!--             <div id="list-view"> -->
+<!-- 	      <\!-- TODO remove this -->
+<!-- 	      <span class="selected-dive">1024Q -->
+<!-- 		&nbsp; <strong>Dive</strong></span> -->
+<!-- 	      <span class="selected-dive">1024Q -->
+<!-- 	      	&nbsp; <strong>Dive</strong></span> -->
+<!-- 	      <span class="selected-dive">1024Q -->
+<!-- 		&nbsp; <strong>Dive</strong></span> -->
+<!-- 	      <span class="selected-dive">1024Q -->
+<!-- 		&nbsp; <strong>Dive</strong></span> -->
+<!-- 	      <span class="selected-dive">1024Q -->
+<!-- 		&nbsp; <strong>Dive</strong></span> -->
+<!-- 	      <span class="selected-dive">1024Q -->
+<!-- 		&nbsp; <strong>Dive</strong></span> -->
+<!-- -\-> -->
+<!--             </div> -->
+<!--             <div id="quicklist" class="lead"> -->
+<!--               Select dives from the database on the left, -->
+<!--               or <strong>autogenerate a divelist based on</strong> -->
+<!--               <ul id="quicklist-options"> -->
+<!--                 <li><a href="#">Highest predicted score</a> &raquo;</li> -->
+<!--                 <li><a href="#">Most practiced dives &raquo;</a></li> -->
+<!--                 <li><a href="#">Most recently performed dives &raquo;</a></li> -->
+<!--               </ul> -->
+<!--             </div> -->
+<!--           </td> -->
+<!--         </tr> -->
+<!--         <tr id="divelist-viewchanger"> -->
+<!--           <td colspan="4"> -->
+<!--             View as:&nbsp; -->
+<!--             <a href="#" id="btn-view-as-list"><img src="img/view_list.png"/>&nbsp;List</a> -->
+<!--             &nbsp; -->
+<!--             <a href="#" id="btn-view-as-chart"><img src="img/view_chart.png"/>&nbsp;Chart</a> -->
+<!--           </td> -->
+<!--         </tr> -->
+<!--       </table> -->
+<!--     </div> -->
+  </body>
+
+  <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script> -->
+  <!-- <script type="text/javascript" src="js/make_divelist.js"></script> -->
+  <script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+  <script type="text/javascript" src="js/make_divelist.js"></script>
+</html>
