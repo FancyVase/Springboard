@@ -1,22 +1,46 @@
 // JS functions for the make_divelist.html page
 
 function loadDiveData(filename) {
-    var diveData = getDivesFromCsv(filename);
-    populateDivelist(diveData);
-}
+//    var diveData = getDivesFromCsv(filename);
+//    populateDivelist(diveData);
+//}
 
-function getDivesFromCsv(filename) {
+    var diveData;
+//function getDivesFromCsv(filename) {
     // all_dives.csv cols are: ID, name, DD
-    var client = new XMLHttpRequest(); //todo see console warning
-    client.open('GET', filename, false);
-    client.send();
-    var my_csv = client.responseText;
-    my_csv = my_csv.split("\n");
-    var dives_set = new Array();
-    for (var i=0;i<my_csv.length;i++){
-        dives_set.push(my_csv[i].split(","));
+    
+//    var dives_set;
+    
+    $.ajax({
+        type: "GET",
+        url: filename,
+        dataType: "text",
+        contentType: "text/csv;charset=utf-8",
+        success: processData
+//        success: function(data) {processData(data);}
+    });
+//    function processData(a,b,c){
+//        console.log(a,b,c);
+//    }
+    
+//    function fn(text)
+    
+//    var client = new XMLHttpRequest(); //todo see console warning
+//    client.open('GET', filename, false);
+//    client.send();
+//    var my_csv = client.responseText;
+    function processData(my_csv) {
+//        console.log(my_csv);
+        my_csv = my_csv.split("\n");
+        diveData = new Array();
+        for (var i=0;i<my_csv.length;i++){
+            diveData.push(my_csv[i].split(","));
+        }
+        console.log("inside", diveData);
+        populateDivelist(diveData);
     }
-    return dives_set;
+//    console.log("outside", diveData);
+//    return dives_set;
 }
 
 function populateDivelist(diveData) {
@@ -41,26 +65,28 @@ function populateDivelist(diveData) {
         }
         $("#dive-database-table").append($newDiveRow);
     }
+    
+    // Bind click listener for dives
+    $(".dive-entry").click(function() { toggleDive(this) });
 }
 
-function toggleDive(clicked) {
-    console.log("toggling!");
-    $("#divelist-container").addClass("hide-quicklist");
-    $(clicked).toggleClass("selected");
-    if ($(clicked).hasClass("selected")) { // Add it to the box
-        $("#list-view").append('<span class="selected-dive" id="'+clicked.id+'_selected">'+clicked.id+' &nbsp; <strong>Dive</strong></span>');
+function toggleDive(clickedDive) {
+//    var clickedDive = event.currentTarget;
+    console.log("toggling:", clickedDive);
+    $("#divelist-container").addClass("hide-quicklist"); //todo for dxh: why not just modify #quicklist's properties instead? -jmn
+    $(clickedDive).toggleClass("selected");
+    if ($(clickedDive).hasClass("selected")) { // Add it to the box
+        $("#list-view").append('<span class="selected-dive" id="'+clickedDive.id+'_selected">'+clickedDive.id+' &nbsp; <strong>Dive</strong></span>');
     } else { // remove it from the box
-        $('#'+clicked.id+'_selected').remove();
+        $('#'+clickedDive.id+'_selected').remove();
     }
 }
 
 $(document).ready(function() {
     
 //    loadDiveData("all_dives.csv");
-    loadDiveData("dive_data.csv");
+    loadDiveData("dive_data_csv.csv");
     
     // Bind Action Listeners
-    $(".dive-entry").click(toggleDive);
+    $("#filter_all").click(function() { filterDives(this) });
 });
-
-
