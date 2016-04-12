@@ -22,11 +22,14 @@ function loadDiveData(filename) {
 function populateDivelist(diveData) {
     var diveSelector = '<a class="selection-circle"></a>';
     for (var i=0; i<diveData.length; i++) {
-        var $newDiveRow = $("<tr></tr>", {"class":"dive-entry", "id":diveData[i][0]});
+        var diveID = diveData[i][0];
+        var diveGroup = diveID.substring(0,1);
+        var $newDiveRow = $("<tr></tr>", {"class":"dive-entry", "id":diveID,
+                                          "dive-group":diveGroup});
         var diveProperties = {
-            "dive-id": diveData[i][0],
+            "dive-id": diveID,
             "dive-name": diveData[i][1],
-//            "dive-dd": diveData[i][2], //for all_dives.csv
+            // "dive-dd": diveData[i][2], //for all_dives.csv
             "dive-experience": diveData[i][2],
             "dive-predicted-score": diveData[i][3],
             "dive-high-score": diveData[i][4],
@@ -57,11 +60,28 @@ function toggleDive(clickedDive) {
     }
 }
 
+function onFilterByDiveGroup(event) {
+    // Move highlight
+    $("#filter-dive-group").find("a").removeClass("selected");
+    $(event.currentTarget).addClass("selected");
+        
+    var diveGroup = event.currentTarget.getAttribute("dive-group");
+    if (diveGroup == "all") {
+        console.log("Showing all dives");
+        $(".dive-entry").show();
+        return;
+    }
+    console.log("Filtering by dive group:", diveGroup);
+    $(".dive-entry").each(function(n,dive) {
+        (dive.getAttribute("dive-group") == diveGroup) ? $(dive).show() : $(dive).hide();
+    });
+}
+
 $(document).ready(function() {
     
-//    loadDiveData("all_dives.csv");
+    // loadDiveData("all_dives.csv");
     loadDiveData("dive_data.csv");
     
     // Bind Action Listeners
-    $("#filter_all").click(function() { filterDives(this) });
+    $("#filter-dive-group").find("a").click(onFilterByDiveGroup);
 });
