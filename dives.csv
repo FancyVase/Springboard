@@ -1,0 +1,211 @@
+001A,Forward Entry Straight,1
+001B,Forward Entry Pike,1
+001C,Forward Entry Tuck,1
+001D,Forward Entry Free,1
+002A,Back Entry Straight,1
+002B,Back Entry Pike,1
+002C,Back Entry Tuck,1
+002D,Back Entry Free,1
+100A,Forward Jump Straight,1
+100B,Forward Jump Pike,1
+100C,Forward Jump Tuck,1
+100D,Forward Jump Free,1
+101A,Forward Dive Straight,1.4
+101B,Forward Dive Pike,1.3
+101C,Forward Dive Tuck,1.2
+102A,Forward 1 Somersault Straight,1.6
+102B,Forward 1 Somersault Pike,1.5
+102C,Forward 1 Somersault Tuck,1.4
+103A,Forward 1 1/2 Somersault Straight,2
+103B,Forward 1 1/2 Somersault Pike,1.7
+103C,Forward 1 1/2 Somersault Tuck,1.6
+104A,Forward 2 Somersault Straight,2.6
+104B,Forward 2 Somersault Pike,2.3
+104C,Forward 2 Somersault Tuck,2.2
+105B,Forward 2 1/2 Somersault Pike,2.6
+105C,Forward 2 1/2 Somersault Tuck,2.4
+106B,Forward 3 Somersault Pike,3.2
+106C,Forward 3 Somersault Tuck,2.9
+107B,Forward 3 1/2 Somersault Pike,3.3
+107C,Forward 3 1/2 Somersault Tuck,3
+108C,Forward 4 Somersault Tuck,4
+109C,Forward 4 1/2 Somersault Tuck,4.3
+112B,Forward Flying 1 Somersault Pike,1.7
+112C,Forward Flying 1 Somersault Tuck,1.6
+113B,Forward Flying 1 1/2 Somersault Pike,1.9
+113C,Forward Flying 1 1/2 Somersault Tuck,1.8
+200A,Back Jump Straight,1
+200B,Back Jump Pike,1
+200C,Back Jump Tuck,1
+200D,Back Jump Free,1
+201A,Back Dive Straight,1.7
+201B,Back Dive Pike,1.6
+201C,Back Dive Tuck,1.5
+202A,Back 1 Somersault Straight,1.7
+202B,Back 1 Somersault Pike,1.6
+202C,Back 1 Somersault Tuck,1.5
+203A,Back 1 1/2 Somersault Straight,2.5
+203B,Back 1 1/2 Somersault Pike,2.3
+203C,Back 1 1/2 Somersault Tuck,2
+204B,Back 2 Somersault Pike,2.5
+204C,Back 2 Somersault Tuck,2.2
+205B,Back 2 1/2 Somersault Pike,3.2
+205C,Back 2 1/2 Somersault Tuck,3
+206B,Back 3 Somersault Pike,3.2
+206C,Back 3 Somersault Tuck,2.9
+212B,Back Flying 1 Somersault Pike,1.7
+212C,Back Flying 1 Somersault Tuck,1.6
+213C,Back Flying 1 1/2 Somersault Tuck,2.2
+214C,Back Flying 2 Somersault Tuck,2.4
+300A,Reverse Jump Straight,1
+300B,Reverse Jump Pike,1
+300C,Reverse Jump Tuck,1
+300D,Reverse Jump Free,1
+301A,Reverse Dive Straight,1.8
+301B,Reverse Dive Pike,1.7
+301C,Reverse Dive Tuck,1.6
+302A,Reverse 1 Somersault Straight,1.8
+302B,Reverse 1 Somersault Pike,1.7
+302C,Reverse 1 Somersault Tuck,1.6
+303A,Reverse 1 1/2 Somersault Straight,2.7
+303B,Reverse 1 1/2 Somersault Pike,2.4
+303C,Reverse 1 1/2 Somersault Tuck,2.1
+304A,Reverse 2 Somersault Straight,2.9
+304B,Reverse 2 Somersault Pike,2.6
+304C,Reverse 2 Somersault Tuck,2.3
+305B,Reverse 2 1/2 Somersault Pike,3.2
+305C,Reverse 2 1/2 Somersault Tuck,3
+306B,Reverse 3 Somersault Pike,3.3
+306C,Reverse 3 Somersault Tuck,3
+312B,Reverse Flying 1 Somersault Pike,1.8
+312C,Reverse Flying 1 Somersault Tuck,1.7
+313B,Reverse Flying 1 1/2 Somersault Pike,2.6
+313C,Reverse Flying 1 1/2 Somersault Tuck,2.3
+400A,Inward Jump Straight,1
+400B,Inward Jump Pike,1
+400C,Inward Jump Tuck,1
+400D,Inward Jump Free,1
+401A,Inward Dive Straight,1.8
+401B,Inward Dive Pike,1.5
+401C,Inward Dive Tuck,1.4
+402A,Inward 1 Somersault Straight,2
+402B,Inward 1 Somersault Pike,1.7
+402C,Inward 1 Somersault Tuck,1.6
+403B,Inward 1 1/2 Somersault Pike,2.4
+403C,Inward 1 1/2 Somersault Tuck,2.2
+404B,Inward 2 Somersault Pike,3
+404C,Inward 2 Somersault Tuck,2.8
+405B,Inward 2 1/2 Somersault Pike,3.4
+405C,Inward 2 1/2 Somersault Tuck,3.1
+407D,Inward 3 1/2 Somersault Free,3.8
+412B,Inward Flying 1 Somersault Pike,2.1
+412C,Inward Flying 1 Somersault Tuck,2
+413B,Inward Flying 1 1/2 Somersault Pike,2.9
+413C,Inward Flying 1 1/2 Somersault Tuck,2.7
+611A,Armstand Forward 1/2 Somersault Straight,1
+5101A,Forward Jump 1/2 Twist Straight,1
+5101D,Forward Jump 1/2 Twist Free,1
+5102A,Forward Jump 1 Twist Straight,1
+5102D,Forward Jump 1 Twist Free,1
+5104A,Forward Jump 2 Twist Straight,1
+5106A,Forward Jump 3 Twist Straight,1
+5106B,Forward Jump 3 Twist Pike,1
+5106C,Forward Jump 3 Twist Tuck,1
+5111A,Forward Dive 1/2 Twist Straight,1.8
+5111B,Forward Dive 1/2 Twist Pike,1.7
+5111C,Forward Dive 1/2 Twist Tuck,1.6
+5112A,Forward Dive 1 Twist Straight,2
+5112B,Forward Dive 1 Twist Pike,1.9
+5121D,Forward 1 Somersault 1/2 Twist Free,1.7
+5122D,Forward 1 Somersault 1 Twist Free,1.9
+5123D,Forward 1 Somersault 1 1/2 Twist Free,2.1
+5124D,Forward 1 Somersault 2 Twist Free,2.3
+5126D,Forward 1 Somersault 3 Twist Free,2.8
+5131D,Forward 1 1/2 Somersault 1/2 Twist Free,2
+5132D,Forward 1 1/2 Somersault 1 Twist Free,2.2
+5134D,Forward 1 1/2 Somersault 2 Twist Free,2.6
+5136D,Forward 1 1/2 Somersault 3 Twist Free,3.1
+5138D,Forward 1 1/2 Somersault 4 Twist Free,3.5
+5141A,Forward 2 Somersault 1/2 Twist Straight,2.8
+5141B,Forward 2 Somersault 1/2 Twist Pike,2.5
+5141C,Forward 2 Somersault 1/2 Twist Tuck,2.4
+5142B,Forward 2 Somersault 1 Twist Pike,2.7
+5142C,Forward 2 Somersault 1 Twist Tuck,2.6
+5143B,Forward 2 Somersault 1 1/2 Twist Pike,2.9
+5144B,Forward 2 Somersault 2 Twist Pike,3.1
+5151B,Forward 2 1/2 Somersault 1/2 Twist Pike,3
+5151C,Forward 2 1/2 Somersault 1/2 Twist Tuck,2.8
+5152B,Forward 2 1/2 Somersault 1 Twist Pike,3.2
+5152C,Forward 2 1/2 Somersault 1 Twist Tuck,3
+5154B,Forward 2 1/2 Somersault 2 Twist Pike,3.6
+5154C,Forward 2 1/2 Somersault 2 Twist Tuck,3.4
+5156B,Forward 2 1/2 Somersault 3 Twist Pike,4.1
+5201A,Back Jump 1/2 Twist Straight,1
+5201D,Back Jump 1/2 Twist Free,1
+5202A,Back Jump 1 Twist Straight,1
+5202D,Back Jump 1 Twist Free,1
+5203A,Back Jump 1 1/2 Twist Straight,1
+5205A,Back Jump 2 1/2 Twist Straight,1
+5211A,Back Dive 1/2 Twist Straight,1.8
+5211B,Back Dive 1/2 Twist Pike,1.7
+5211C,Back Dive 1/2 Twist Tuck,1.6
+5212A,Back Dive 1 Twist Straight,2
+5213A,Back Dive 1 1/2 Twist Straight,2.4
+5221D,Back 1 Somersault 1/2 Twist Free,1.7
+5222D,Back 1 Somersault 1 Twist Free,1.9
+5223D,Back 1 Somersault 1 1/2 Twist Free,2.3
+5224D,Back 1 Somersault 2 Twist Free,2.3
+5225D,Back 1 Somersault 2 1/2 Twist Free,2.7
+5227D,Back 1 Somersault 3 1/2 Twist Free,3.2
+5231D,Back 1 1/2 Somersault 1/2 Twist Free,2.1
+5233D,Back 1 1/2 Somersault 1 1/2 Twist Free,2.5
+5235D,Back 1 1/2 Somersault 2 1/2 Twist Free,2.9
+5237D,Back 1 1/2 Somersault 3 1/2 Twist Free,3.4
+5241C,Back 2 Somersault 1/2 Twist Tuck,2.6
+5251B,Back 2 1/2 Somersault 1/2 Twist Pike,2.9
+5251C,Back 2 1/2 Somersault 1/2 Twist Tuck,2.7
+5252B,Back 2 1/2 Somersault 1 Twist Pike,3.3
+5301A,Reverse Jump 1/2 Twist Straight,1
+5303A,Reverse Jump 1 1/2 Twist Straight,1
+5303B,Reverse Jump 1 1/2 Twist Pike,1
+5303C,Reverse Jump 1 1/2 Twist Tuck,1
+5305A,Reverse Jump 2 1/2 Twist Straight,1
+5305B,Reverse Jump 2 1/2 Twist Pike,1
+5305C,Reverse Jump 2 1/2 Twist Tuck,1
+5311A,Reverse Dive 1/2 Twist Straight,1.9
+5311B,Reverse Dive 1/2 Twist Pike,1.8
+5311C,Reverse Dive 1/2 Twist Tuck,1.7
+5312A,Reverse Dive 1 Twist Straight,2.1
+5313A,Reverse Dive 1 1/2 Twist Straight,2.5
+5321D,Reverse 1 Somersault 1/2 Twist Free,1.8
+5322D,Reverse 1 Somersault 1 Twist Free,2
+5323D,Reverse 1 Somersault 1 1/2 Twist Free,2.4
+5324D,Reverse 1 Somersault 2 Twist Free,2.4
+5325D,Reverse 1 Somersault 2 1/2 Twist Free,2.8
+5327D,Reverse 1 Somersault 3 1/2 Twist Free,3.4
+5331D,Reverse 1 1/2 Somersault 1/2 Twist Free,2.2
+5333D,Reverse 1 1/2 Somersault 1 1/2 Twist Free,2.6
+5335D,Reverse 1 1/2 Somersault 2 1/2 Twist Free,3
+5337D,Reverse 1 1/2 Somersault 3 1/2 Twist Free,3.6
+5342C,Reverse 2 Somersault 1 Twist Tuck,2.7
+5351B,Reverse 2 1/2 Somersault 1/2 Twist Pike,2.9
+5351C,Reverse 2 1/2 Somersault 1/2 Twist Tuck,2.7
+5353B,Reverse 2 1/2 Somersault 1 1/2 Twist Pike,3.5
+5353C,Reverse 2 1/2 Somersault 1 1/2 Twist Tuck,3.3
+5355B,Reverse 2 1/2 Somersault 2 1/2 Twist Pike,3.9
+5355C,Reverse 2 1/2 Somersault 2 1/2 Twist Tuck,3.7
+5411A,Inward Dive 1/2 Twist Straight,2
+5411B,Inward Dive 1/2 Twist Pike,1.7
+5411C,Inward Dive 1/2 Twist Tuck,1.6
+5412A,Inward Dive 1 Twist Straight,2.2
+5412B,Inward Dive 1 Twist Pike,1.9
+5412C,Inward Dive 1 Twist Tuck,1.8
+5413A,Inward Dive 1 1/2 Twist Straight,2.6
+5421D,Inward 1 Somersault 1/2 Twist Free,1.9
+5422D,Inward 1 Somersault 1 Twist Free,2.1
+5426D,Inward 1 Somersault 3 Twist Free,3.2
+5431D,Inward 1 1/2 Somersault 1/2 Twist Free,2.7
+5432D,Inward 1 1/2 Somersault 1 Twist Free,2.7
+5434D,Inward 1 1/2 Somersault 2 Twist Free,3.1
+6111A,Armstand Forward 1/2 Somersault 1/2 Twist Straight,1
+6211A,Armstand Back 1/2 Somersault 1/2 Twist Straight,1
