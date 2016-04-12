@@ -1,46 +1,22 @@
 // JS functions for the make_divelist.html page
 
 function loadDiveData(filename) {
-//    var diveData = getDivesFromCsv(filename);
-//    populateDivelist(diveData);
-//}
-
-    var diveData;
-//function getDivesFromCsv(filename) {
-    // all_dives.csv cols are: ID, name, DD
-    
-//    var dives_set;
-    
     $.ajax({
         type: "GET",
         url: filename,
         dataType: "text",
         contentType: "text/csv;charset=utf-8",
         success: processData
-//        success: function(data) {processData(data);}
     });
-//    function processData(a,b,c){
-//        console.log(a,b,c);
-//    }
-    
-//    function fn(text)
-    
-//    var client = new XMLHttpRequest(); //todo see console warning
-//    client.open('GET', filename, false);
-//    client.send();
-//    var my_csv = client.responseText;
+
     function processData(my_csv) {
-//        console.log(my_csv);
         my_csv = my_csv.split("\n");
-        diveData = new Array();
+        var diveData = new Array();
         for (var i=0;i<my_csv.length;i++){
             diveData.push(my_csv[i].split(","));
         }
-        console.log("inside", diveData);
         populateDivelist(diveData);
     }
-//    console.log("outside", diveData);
-//    return dives_set;
 }
 
 function populateDivelist(diveData) {
@@ -71,7 +47,6 @@ function populateDivelist(diveData) {
 }
 
 function toggleDive(clickedDive) {
-//    var clickedDive = event.currentTarget;
     console.log("toggling:", clickedDive);
     $("#divelist-container").addClass("hide-quicklist"); //todo for dxh: why not just modify #quicklist's properties instead? -jmn
     $(clickedDive).toggleClass("selected");
@@ -85,7 +60,7 @@ function toggleDive(clickedDive) {
 $(document).ready(function() {
     
 //    loadDiveData("all_dives.csv");
-    loadDiveData("dive_data_csv.csv");
+    loadDiveData("dive_data.csv");
     
     // Bind Action Listeners
     $("#filter_all").click(function() { filterDives(this) });
