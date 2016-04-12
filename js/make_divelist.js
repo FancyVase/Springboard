@@ -8,7 +8,7 @@ $(document).ready(function(){
     // Get the dives list from the csv file
     // Cols are: ID, name, DD
     var client = new XMLHttpRequest();
-    client.open('GET', '/dives.csv', false);
+    client.open('GET', './dives.csv', false);
     client.send();
     var my_csv = client.responseText;
     my_csv = my_csv.split("\n");
