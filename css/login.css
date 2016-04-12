@@ -4,9 +4,6 @@ html, body {
 	margin: 0;
 	padding: 0;
 	font-family: Helvetica;
-	background:url('../img/board.png') no-repeat;
-	background-position: center;
-	background-size: 700px 450px;
 }
 
 header {
@@ -31,37 +28,46 @@ header {
 	text-align: center;
 }
 
+.login-form	{
+	background-color: rgba(240, 240, 240, 0.68);
+	padding: 50px 50px;
+	border: 1px rgba(240, 240, 240, 1) solid;
+}
+
 .heading {
-	font-size: 5em;
+	font-size: 2em;
+	margin-bottom: 20px;
 }
 
-.subheading {
-	margin-bottom: 40px;
-	font-weight: 100;
-	font-size: 2.5em;
+.form-label {
+	margin-top: 10px;
 }
 
-a {
-	text-decoration: none;
+.link {
+	margin-bottom: 10px;
 }
 
-.links {
-	margin: 25px 0px;
+input.form-control {
+	border-radius: 0;
+	border: 1px #ddd solid;
+	box-shadow: none;
 }
 
-span.link>a {
+.btn {
+	padding: 0px;
+}
+
+input.btn.btn-success {
+	border: none;
+	border-radius: 0;
+	padding: 10px 30px;
+	background-color: rgba(255,255,255,0);
 	color: #1b7;
 	border: 2px solid #1b7;
-	padding: 15px 50px;
-	font-size: 1em;
 	transition: 0.25s;
 }
 
-span.link>a:hover {
-	color: #F3F3F3;
+input.btn.btn-success:hover {
 	background-color: #1b7;
-}
-
-span.link + span.link {
-	margin-left: 10px;
+	color: #fff;
 }
