@@ -77,6 +77,7 @@ function onFilterByDiveGroup(event) {
     });
 }
 
+
 $(document).ready(function() {
     
     // loadDiveData("all_dives.csv");
@@ -84,4 +85,10 @@ $(document).ready(function() {
     
     // Bind Action Listeners
     $("#filter-dive-group").find("a").click(onFilterByDiveGroup);
+    
+    // Make divelist items sortable/draggable
+    $( ".sortable" ).sortable();
+    $( ".sortable" ).disableSelection();
 });
+
+
