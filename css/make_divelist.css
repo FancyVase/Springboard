@@ -178,6 +178,7 @@ div.scrollable-pane {
 }
 table.dive-database {
     width:100%;
+    /*TODO add space between columns*/
 }
 a.selection-circle {
     text-decoration:none;
@@ -197,8 +198,6 @@ a.selection-circle  {
 tr.dive-entry td {
     border-bottom:1px solid #eee;
     background:#fff;
-    
-
 }
 tr.dive-entry:hover > td a.selection-circle {
     background:#cdf;
@@ -242,6 +241,8 @@ td.dive-selector {
 
 
 #list-view {
+    /*TODO use columns*/
+    /*TODO add space between columns*/
 
 }
 #list-view .selected-dive {
@@ -366,12 +367,13 @@ h1{
 /* } */
 
 
-span.nope {
+span.remove {
     color:#a00;
     float:right;
     text-decoration:underline;
+    cursor:pointer;
 }
 
-.whatever {
+.opt-vol {
     padding-left:1em;
 }

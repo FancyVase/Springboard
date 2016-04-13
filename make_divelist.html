@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,900,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,900,700' rel='stylesheet' type='text/css'> <!--TODO could we *not* refer to external websites? -jmn -->
 
     <title>Springboard | Make Divelist</title>
 
@@ -98,10 +98,10 @@
           </td>
           <td id="btns-edit">
             &nbsp;
-            <!--todo add a way of retrieving a saved list-->
-            <button id="btn-save">Save as...</button> <!--todo make buttons do something, even if it's just popping up an alert!--> <!--todo message "Saving..."-->
-            <button id="btn-export">Export</button>
+            <button id="btn-save">Save as...</button> <!--TODO ask dxh: shouldn't this be just "Save"?, a la Google docs?-->
+            <button id="btn-export">Export</button> <!--TODO should this be export as?-->
             <button id="btn-newlist">New List</button>
+            <button id="btn-open">Open...</button> <!--TODO this prob shouldn't be a button-->
           </td>
         </tr>
 
@@ -115,7 +115,7 @@
               or <strong>autogenerate a divelist based on</strong>
               <ul id="quicklist-options">
                 <!--todo fix cursor on autogenerate links!-->
-                <li><a onclick="autoGen('HighScore')">Highest predicted score</a> &raquo;</li>
+                <li><a onclick="autoGen('HighScore')">Highest predicted score &raquo;</a></li>
                 <li><a onclick="autoGen('Practiced')">Most practiced dives &raquo;</a></li>
                 <li><a onclick="autoGen('Recent')">Most recently performed dives &raquo;</a></li>
               </ul>

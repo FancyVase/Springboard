@@ -54,26 +54,25 @@ function toggleDive(clickedDive) {
     console.log("toggling:", clickedDive);
     $(clickedDive).toggleClass("selected");
     if ($(clickedDive).hasClass("selected")) { // Add it to the box
-        var $entry = $('<span class="selected-dive" id="'+clickedDive.id+'_selected">'+clickedDive.id+' &nbsp; <strong>'+$(clickedDive).attr("dive-name")+'</strong></span>').appendTo("#list-view");
+        var $entry = $('<span class="selected-dive" id="'+getDiveID(clickedDive)+'_selected" dive-id="'+getDiveID(clickedDive)+'">'+getDiveID(clickedDive)+' &nbsp; <strong>'+$(clickedDive).attr("dive-name")+'</strong></span>').appendTo("#list-view");
+        
+        var $remove = $("<span class='remove'>[remove]</span>").click(function() {
+            toggleDive(clickedDive);
+        }).appendTo($entry);
 
-	var $nope = $("<span class='nope'>[remove]</span>").click(function() {
-	    $(clickedDive).removeClass("selected");
-	    $entry.remove();
-	}).appendTo($entry);
-
-	var x = (new Date()).getTime().toString();
-	$("<span class='whatever'><input type='radio' checked name='"+x+"'/><label>Voluntary</label> <input type='radio' name='"+x+"'/><label>Optional</label></span>").appendTo($entry);
-	// $("<span><input type='radio' checked/><label>Optional</label><input type='radio'/><label>Voluntary</label></span>").append($entry);
+        var x = (new Date()).getTime().toString();
+        $("<span class='opt-vol'><input type='radio' checked name='"+x+"'/><label>Voluntary</label> <input type='radio' name='"+x+"'/><label>Optional</label></span>").appendTo($entry);
+        // $("<span><input type='radio' checked/><label>Optional</label><input type='radio'/><label>Voluntary</label></span>").append($entry);
 	
     } else { // remove it from the box
-        $('#'+clickedDive.id+'_selected').remove();
+        $('#'+getDiveID(clickedDive)+'_selected').remove();
     }
     
-    if ($("#list-view").children().length > 0){
-        $("#divelist-container").addClass("hide-quicklist"); //TODO for dxh: why not just modify #quicklist's properties instead? -jmn    
-    } else {
-        $("#divelist-container").removeClass("hide-quicklist");
-    }
+    ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+}
+
+function getDiveID(dive) {
+    return $(dive).attr("dive-id");
 }
 
 function onFilterByDiveGroup(event) { //todo support multiple filter types at once (eg filter by dive group and also by experience)
@@ -125,14 +124,38 @@ function onFilterByExperience(event) {
     });
 }
 
+function onSaveButtonClick() {
+    alert("Pretend that a 'Save As' dialogue appeared. (This feature is not implemented yet.)");
+}
+function onExportButtonClick() {
+    alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)");
+}
+function onNewListButtonClick() {
+    //TODO add "Autosaving..."
+    console.log("Clearing current divelist");
+    $(".selected-dive").each(function(n,selectedDive) {
+        var dive = $("#"+getDiveID(selectedDive));
+        toggleDive(dive);
+    });
+    $("#divelist-savename").text("Untitled divelist");
+}
+function onOpenButtonClick() {
+    alert("Pretend that an 'Open' dialogue appeared. (This feature is not implemented yet.)");
+}
+
 function autoGen(param) { //todo actually generate correct list of dives
-    
     $(".dive-entry").each(function(n,dive) {
         (n<8) ? toggleDive(dive) : $(dive).show();
     });
-    $("#divelist-container").addClass("hide-quicklist");
+    hideQuicklist();
 }
 
+function showQuicklist() {
+    $("#divelist-container").removeClass("hide-quicklist");
+}
+function hideQuicklist() {
+    $("#divelist-container").addClass("hide-quicklist"); //TODO for dxh: why not just modify #quicklist's properties instead? -jmn
+}
 
 $(document).ready(function() {
     
@@ -143,6 +166,11 @@ $(document).ready(function() {
     $("#filter-dive-group").find("a").click(onFilterByDiveGroup);
     $("#time-box").click(onFilterByTime); //todo listen only on checkboxes
     $("#filter-experience").click(onFilterByExperience);
+    
+    $("#btn-save").click(onSaveButtonClick);
+    $("#btn-export").click(onExportButtonClick);
+    $("#btn-newlist").click(onNewListButtonClick);
+    $("#btn-open").click(onOpenButtonClick);
     
     // Make divelist items sortable/draggable
     //todo make draggable only by arrow (.selected-dive:before)
