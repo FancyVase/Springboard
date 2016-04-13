@@ -51,12 +51,17 @@ function populateDivelist(diveData) {
 
 function toggleDive(clickedDive) {
     console.log("toggling:", clickedDive);
-    $("#divelist-container").addClass("hide-quicklist"); //todo for dxh: why not just modify #quicklist's properties instead? -jmn
     $(clickedDive).toggleClass("selected");
     if ($(clickedDive).hasClass("selected")) { // Add it to the box
         $("#list-view").append('<span class="selected-dive" id="'+clickedDive.id+'_selected">'+clickedDive.id+' &nbsp; <strong>Dive</strong></span>');
     } else { // remove it from the box
         $('#'+clickedDive.id+'_selected').remove();
+    }
+    
+    if ($("#list-view").children().length > 0){
+        $("#divelist-container").addClass("hide-quicklist"); //todo for dxh: why not just modify #quicklist's properties instead? -jmn    
+    } else {
+        $("#divelist-container").removeClass("hide-quicklist");
     }
 }
 
@@ -110,6 +115,13 @@ function onFilterByExperience(event) {
     });
 }
 
+function autoGen(param) {
+    
+    $(".dive-entry").each(function(n,dive) {
+        (n<8) ? toggleDive(dive) : $(dive).show();
+    });
+    $("#divelist-container").addClass("hide-quicklist");
+}
 
 
 $(document).ready(function() {

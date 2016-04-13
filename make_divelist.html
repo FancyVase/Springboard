@@ -101,31 +101,18 @@
           </td>
         </tr>
 
-        <tr id="divelist-container" class="hide-quicklist">
+        <tr id="divelist-container" >
           <td colspan="4">
             <div id="list-view" class="sortable">
-<!-- TODO remove this
-	      <span class="selected-dive">1024Q
-		&nbsp; <strong>Dive</strong></span>
-	      <span class="selected-dive">1024Q
-	      	&nbsp; <strong>Dive</strong></span>
-	      <span class="selected-dive">1024Q
-		&nbsp; <strong>Dive</strong></span>
-	      <span class="selected-dive">1024Q
-		&nbsp; <strong>Dive</strong></span>
-	      <span class="selected-dive">1024Q
-		&nbsp; <strong>Dive</strong></span>
-	      <span class="selected-dive">1024Q
-		&nbsp; <strong>Dive</strong></span>
--->
+                <!-- Dives go here -->
             </div>
             <div id="quicklist" class="lead">
               Select dives from the database on the left,
               or <strong>autogenerate a divelist based on</strong>
               <ul id="quicklist-options">
-                <li><a href="#">Highest predicted score</a> &raquo;</li>
-                <li><a href="#">Most practiced dives &raquo;</a></li>
-                <li><a href="#">Most recently performed dives &raquo;</a></li>
+                <li><a onclick="autoGen('HighScore')">Highest predicted score</a> &raquo;</li>
+                <li><a onclick="autoGen('Practiced')">Most practiced dives &raquo;</a></li>
+                <li><a onclick="autoGen('Recent')">Most recently performed dives &raquo;</a></li>
               </ul>
             </div>
           </td>
