@@ -75,16 +75,26 @@ function getDiveID(dive) {
     return $(dive).attr("dive-id");
 }
 
+function returnFalse() { //todo also move this up if moving var filters
+    return false;
+}
+
 //todo maybe make this non-global or move to top of file
-//filters is a list of functions f(dive) with:
+//filters is a list of functions f(dive) with: //todo update "docstring"
 //  input: dive = a html/js object with class dive-entry
 //  output: true if dive should be hidden, otherwise false (meaning that dive will be shown if f is the only filter, but if there are other filters, they may cause dive to be shown)
-var filters = [function(dive) {return true;}]; //todo NEXT: figure out how to add functions to filters, indexing them in a way that will allow them to later be removed
+var filters = {
+    "diveGroup": returnFalse,
+    "time": returnFalse,
+    "experience": returnFalse,
+};
 
 function applyFilters() {
     $(".dive-entry").each(function(n,dive) {
-        for (var i=0; i<filters.length; i++) { //TODO ask dxh is there 'all' in js?
-            f = filters[i];
+        for (var key in filters) {
+            f = filters[key];
+//        for (var i=0; i<filters.length; i++) { //TODO ask dxh is there 'all' in js?
+//            f = filters[i];
             if (f(dive)) {
                 $(dive).hide();
                 return;
@@ -98,15 +108,16 @@ function onFilterByDiveGroup(event) { //todo support multiple filter types at on
     $("#filter-dive-group").find("a").removeClass("selected");
     $(event.currentTarget).addClass("selected");
         
-    filters = []; //todo don't clear all filters; only clear dive-group filters
+//    filters = []; //todo don't clear all filters; only clear dive-group filters
     var diveGroup = event.currentTarget.getAttribute("dive-group");
     if (diveGroup == "all") {
         console.log("Showing all dives");
+        filters["diveGroup"] = returnFalse;
 //        $(".dive-entry").show();
 //        return;
     } else {
         console.log("Filtering by dive group:", diveGroup);
-        filters.push(function(dive) {
+        filters["diveGroup"] = (function(dive) {
             return dive.getAttribute("dive-group") != diveGroup;
         });
     }
@@ -122,13 +133,18 @@ function onFilterByTime(event) {
     $("#filter-time-dropdown").toggleClass("inactive");
     if ($("#time-box:checked").length == 1){ // if the box is checked, filter
         console.log("Filtering by time: in the last month");
-        $(".dive-entry").each(function(n,dive) {
-            (dive.childNodes[6].innerHTML == "03/05/2016") ? $(dive).show() : $(dive).hide();
+        filters["time"] = (function(dive) {
+            return dive.childNodes[6].innerHTML != "03/05/2016";
         });
+//        $(".dive-entry").each(function(n,dive) {
+//            (dive.childNodes[6].innerHTML == "03/05/2016") ? $(dive).show() : $(dive).hide();
+//        });
     } else {                      // else, unfilter   
         console.log("Showing all dives");
-        $(".dive-entry").show();
+        filters["time"] = returnFalse;
+//        $(".dive-entry").show();
     }
+    applyFilters();
 }
 
 // Filter by experience
@@ -144,9 +160,15 @@ function onFilterByExperience(event) {
         checked.push("◯ Don't know");
     }
     console.log(checked);
-    $(".dive-entry").each(function(n,dive) {
-        (checked.indexOf(dive.childNodes[2].innerHTML) != -1) ? $(dive).show() : $(dive).hide();
+    filters["experience"] = (function(dive) {
+//        console.log(dive.childNodes[2].innerHTML);
+        return !checked.includes(dive.childNodes[2].innerHTML);
+//        return checked.indexOf(dive.childNodes[2].innerHTML) == -1;
     });
+    applyFilters();
+//    $(".dive-entry").each(function(n,dive) {
+//        (checked.indexOf(dive.childNodes[2].innerHTML) != -1) ? $(dive).show() : $(dive).hide();
+//    });
 }
 
 function onSaveButtonClick() {
