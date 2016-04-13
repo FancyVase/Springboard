@@ -95,6 +95,7 @@ function onFilterByDiveGroup(event) { //todo support multiple filter types at on
 // Filter by time
 // TODO: hard coded for lo-fi; will need fixing for hi-fi
 function onFilterByTime(event) {
+    $("#filter-time-dropdown").toggleClass("inactive");
     if ($("#time-box:checked").length == 1){ // if the box is checked, filter
         console.log("Filtering by time: in the last month");
         $(".dive-entry").each(function(n,dive) {
@@ -164,8 +165,8 @@ $(document).ready(function() {
     
     // Bind Action Listeners
     $("#filter-dive-group").find("a").click(onFilterByDiveGroup);
-    $("#time-box").click(onFilterByTime); //todo listen only on checkboxes
-    $("#filter-experience").click(onFilterByExperience);
+    $("#time-box").click(onFilterByTime);
+    $("#filter-experience").find("input").click(onFilterByExperience);
     
     $("#btn-save").click(onSaveButtonClick);
     $("#btn-export").click(onExportButtonClick);
@@ -173,7 +174,7 @@ $(document).ready(function() {
     $("#btn-open").click(onOpenButtonClick);
     
     // Make divelist items sortable/draggable
-    //todo make draggable only by arrow (.selected-dive:before)
+    //TODO dxh make draggable only by arrow (.selected-dive:before)
     $( ".sortable" ).sortable();
     $( ".sortable" ).disableSelection();
 });

@@ -124,7 +124,7 @@ ul#filter-dive-group li {
 }
 .panel-dive-filters select.inactive {
     color:#999;
-
+    /*TODO dxh make dropdown actually inactive*/
 }
 
 #experience-level li {
@@ -330,9 +330,9 @@ ul#quicklist-options {
 
 #quicklist-options li a {
     font-size:1.5em;
-    line-height:2em;
- 
     font-weight:700;
+    line-height:2em;
+    cursor:pointer;
 }
 
 #btns-edit {

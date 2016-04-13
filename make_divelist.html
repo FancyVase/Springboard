@@ -57,7 +57,8 @@
         <div id="filter-time">
           <h5><input type="checkbox" id="time-box">&nbsp;Performed within</h5>
           &nbsp;&nbsp;&nbsp;
-          <select class="inactive"> <!--todo make dropdown active when activated-->
+          <select id="filter-time-dropdown" class="inactive">
+          <!--TODO ask dxh could eliminate checkbox and instead just have always-live dropdown with 'Always' option-->
             <option>1 Month</option>
             <option>3 Months</option> <!--todo enable 3 Months-->
           </select>
@@ -114,7 +115,6 @@
               Select dives from the database on the left,
               or <strong>autogenerate a divelist based on</strong>
               <ul id="quicklist-options">
-                <!--todo fix cursor on autogenerate links!-->
                 <li><a onclick="autoGen('HighScore')">Highest predicted score &raquo;</a></li>
                 <li><a onclick="autoGen('Practiced')">Most practiced dives &raquo;</a></li>
                 <li><a onclick="autoGen('Recent')">Most recently performed dives &raquo;</a></li>
