@@ -63,11 +63,7 @@ function toggleDive(clickedDive) {
 
 	var x = (new Date()).getTime().toString();
 	$("<span class='whatever'><input type='radio' checked name='"+x+"'/><label>Voluntary</label> <input type='radio' name='"+x+"'/><label>Optional</label></span>").appendTo($entry);
-	// $("<span><input type='radio' checked/><label>Optional</label><input type='radio'/><label>Volluntary</label></span>").append($entry);
-
-	
-
-	// $entry = 
+	// $("<span><input type='radio' checked/><label>Optional</label><input type='radio'/><label>Voluntary</label></span>").append($entry);
 	
     } else { // remove it from the box
         $('#'+clickedDive.id+'_selected').remove();
@@ -80,7 +76,7 @@ function toggleDive(clickedDive) {
     }
 }
 
-function onFilterByDiveGroup(event) {
+function onFilterByDiveGroup(event) { //todo support multiple filter types at once (eg filter by dive group and also by experience)
     // Move highlight
     $("#filter-dive-group").find("a").removeClass("selected");
     $(event.currentTarget).addClass("selected");
@@ -113,7 +109,7 @@ function onFilterByTime(event) {
 
 // Filter by experience
 function onFilterByExperience(event) {
-    console.log($("#I know it:checked").length);
+    console.log($("#I know it:checked").length); //todo jmn why is this "I know it"?
     var checked = new Array();
     if ($("#know:checked").length == 1) {
         checked.push("⬤ I know it");
@@ -130,7 +126,7 @@ function onFilterByExperience(event) {
     });
 }
 
-function autoGen(param) {
+function autoGen(param) { //todo actually generate correct list of dives
     
     $(".dive-entry").each(function(n,dive) {
         (n<8) ? toggleDive(dive) : $(dive).show();
@@ -150,6 +146,7 @@ $(document).ready(function() {
     $("#filter-experience").click(onFilterByExperience);
     
     // Make divelist items sortable/draggable
+    //todo make draggable only by arrow (.selected-dive:before)
     $( ".sortable" ).sortable();
     $( ".sortable" ).disableSelection();
 });

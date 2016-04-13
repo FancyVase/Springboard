@@ -57,9 +57,9 @@
         <div id="filter-time">
           <h5><input type="checkbox" id="time-box">&nbsp;Performed within</h5>
           &nbsp;&nbsp;&nbsp;
-          <select class="inactive">
+          <select class="inactive"> <!--todo make dropdown active when activated-->
             <option>1 Month</option>
-            <option>3 Months</option>
+            <option>3 Months</option> <!--todo enable 3 Months-->
           </select>
         </div>
 
@@ -78,11 +78,13 @@
     <!------- DIVE DATABASE PANEL !------>
     <div class="col-md-5 panel-dive-database">
       <div id="search-by-name">
-        <h5>Find dive</h5>&nbsp;&nbsp;<input id="ip-search-by-name">    
+        <h5>Find dive</h5>&nbsp;&nbsp;<input id="ip-search-by-name">    <!--todo make "Find Dive" search for dives-->
       </div>
      
       <div class="scrollable-pane">
         <table class="dive-database" id="dive-database-table">
+            <!--todo column headers!-->
+            <!--todo enable sorting by column headers!-->
             <!-- DIVES GO HERE -->
         </table>
       </div>
@@ -96,7 +98,8 @@
           </td>
           <td id="btns-edit">
             &nbsp;
-            <button id="btn-save">Save as...</button>
+            <!--todo add a way of retrieving a saved list-->
+            <button id="btn-save">Save as...</button> <!--todo make buttons do something, even if it's just popping up an alert!--> <!--todo message "Saving..."-->
             <button id="btn-export">Export</button>
             <button id="btn-newlist">New List</button>
           </td>
@@ -111,6 +114,7 @@
               Select dives from the database on the left,
               or <strong>autogenerate a divelist based on</strong>
               <ul id="quicklist-options">
+                <!--todo fix cursor on autogenerate links!-->
                 <li><a onclick="autoGen('HighScore')">Highest predicted score</a> &raquo;</li>
                 <li><a onclick="autoGen('Practiced')">Most practiced dives &raquo;</a></li>
                 <li><a onclick="autoGen('Recent')">Most recently performed dives &raquo;</a></li>
@@ -120,7 +124,7 @@
         </tr>
         <tr id="divelist-viewchanger">
           <td colspan="4">
-            View as:&nbsp;
+            View as:&nbsp; <!--todo make List/Chart view work-->
             <a href="#" id="btn-view-as-list"><img src="img/view_list.png"/>&nbsp;List</a>
             &nbsp;
             <a href="#" id="btn-view-as-chart"><img src="img/view_chart.png"/>&nbsp;Chart</a>
@@ -132,7 +136,6 @@
 
   <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
   <script type="text/javascript" src="js/jquery-ui-1.11.4.js"></script>
-<!--  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>-->
   <script type="text/javascript" src="js/make_divelist.js"></script>
 
 </html>
