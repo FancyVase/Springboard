@@ -70,7 +70,7 @@ function toggleDive(clickedDive) {
     }
     
     if ($("#list-view").children().length > 0){
-        $("#divelist-container").addClass("hide-quicklist"); //todo for dxh: why not just modify #quicklist's properties instead? -jmn    
+        $("#divelist-container").addClass("hide-quicklist"); //TODO for dxh: why not just modify #quicklist's properties instead? -jmn    
     } else {
         $("#divelist-container").removeClass("hide-quicklist");
     }
@@ -109,7 +109,6 @@ function onFilterByTime(event) {
 
 // Filter by experience
 function onFilterByExperience(event) {
-    console.log($("#I know it:checked").length); //todo jmn why is this "I know it"?
     var checked = new Array();
     if ($("#know:checked").length == 1) {
         checked.push("⬤ I know it");
@@ -142,7 +141,7 @@ $(document).ready(function() {
     
     // Bind Action Listeners
     $("#filter-dive-group").find("a").click(onFilterByDiveGroup);
-    $("#time-box").click(onFilterByTime);
+    $("#time-box").click(onFilterByTime); //todo listen only on checkboxes
     $("#filter-experience").click(onFilterByExperience);
     
     // Make divelist items sortable/draggable

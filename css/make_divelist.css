@@ -4,8 +4,8 @@ body {
     background:#fff url("../img/tiles-3.jpg");
     background-size:25%;
 }
-/*todo consistent color scheme*/
-/*todo make it work with a narrow window (eg horizontal scrollbar)*/
+/*TODO consistent color scheme*/
+/*TODO make it work with a narrow window (eg horizontal scrollbar)*/
 a {
     outline:0;
 }
@@ -19,7 +19,7 @@ table {
 }
 /********************* PAGE HEADER**/
 .header #logo {
-    display:none; /*todo ask dxh why logo is hidden*/
+    display:none; /*TODO ask dxh why logo is hidden*/
 }
 div.header {
     position:relative;
@@ -218,7 +218,7 @@ tr.dive-entry:hover > td {
 
 
 tr.dive-entry > td {
-    /*todo reformat like Google results rather than spreadsheet*/
+    /*TODO reformat like Google results rather than spreadsheet*/
     padding:0.25em 0;
     cursor:pointer;
 }
