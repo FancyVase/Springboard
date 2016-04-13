@@ -77,6 +77,40 @@ function onFilterByDiveGroup(event) {
     });
 }
 
+// Filter by time
+// TODO: hard coded for lo-fi; will need fixing for hi-fi
+function onFilterByTime(event) {
+    if ($("#time-box:checked").length == 1){ // if the box is checked, filter
+        console.log("Filtering by time: in the last month");
+        $(".dive-entry").each(function(n,dive) {
+            (dive.childNodes[6].innerHTML == "03/05/2016") ? $(dive).show() : $(dive).hide();
+        });
+    } else {                      // else, unfilter   
+        console.log("Showing all dives");
+        $(".dive-entry").show();
+    }
+}
+
+// Filter by experience
+function onFilterByExperience(event) {
+    console.log($("#I know it:checked").length);
+    var checked = new Array();
+    if ($("#know:checked").length == 1) {
+        checked.push("⬤ I know it");
+    }
+    if ($("#learning:checked").length == 1) {
+        checked.push("◐ still learning");
+    }
+    if ($("#unknown:checked").length == 1) {
+        checked.push("◯ Don't know");
+    }
+    console.log(checked);
+    $(".dive-entry").each(function(n,dive) {
+        (checked.indexOf(dive.childNodes[2].innerHTML) != -1) ? $(dive).show() : $(dive).hide();
+    });
+}
+
+
 
 $(document).ready(function() {
     
@@ -85,6 +119,8 @@ $(document).ready(function() {
     
     // Bind Action Listeners
     $("#filter-dive-group").find("a").click(onFilterByDiveGroup);
+    $("#time-box").click(onFilterByTime);
+    $("#filter-experience").click(onFilterByExperience);
     
     // Make divelist items sortable/draggable
     $( ".sortable" ).sortable();
