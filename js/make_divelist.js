@@ -75,21 +75,45 @@ function getDiveID(dive) {
     return $(dive).attr("dive-id");
 }
 
-function onFilterByDiveGroup(event) { //todo support multiple filter types at once (eg filter by dive group and also by experience)
-    // Move highlight
+//todo maybe make this non-global or move to top of file
+//filters is a list of functions f(dive) with:
+//  input: dive = a html/js object with class dive-entry
+//  output: true if dive should be hidden, otherwise false (meaning that dive will be shown if f is the only filter, but if there are other filters, they may cause dive to be shown)
+var filters = [function(dive) {return true;}]; //todo NEXT: figure out how to add functions to filters, indexing them in a way that will allow them to later be removed
+
+function applyFilters() {
+    $(".dive-entry").each(function(n,dive) {
+        for (var i=0; i<filters.length; i++) { //TODO ask dxh is there 'all' in js?
+            f = filters[i];
+            if (f(dive)) {
+                $(dive).hide();
+                return;
+            }
+        }
+        $(dive).show(); //all filters returned false
+    });
+}
+
+function onFilterByDiveGroup(event) { //todo support multiple filter types at once    // Move highlight
     $("#filter-dive-group").find("a").removeClass("selected");
     $(event.currentTarget).addClass("selected");
         
+    filters = []; //todo don't clear all filters; only clear dive-group filters
     var diveGroup = event.currentTarget.getAttribute("dive-group");
     if (diveGroup == "all") {
         console.log("Showing all dives");
-        $(".dive-entry").show();
-        return;
+//        $(".dive-entry").show();
+//        return;
+    } else {
+        console.log("Filtering by dive group:", diveGroup);
+        filters.push(function(dive) {
+            return dive.getAttribute("dive-group") != diveGroup;
+        });
     }
-    console.log("Filtering by dive group:", diveGroup);
-    $(".dive-entry").each(function(n,dive) {
-        (dive.getAttribute("dive-group") == diveGroup) ? $(dive).show() : $(dive).hide();
-    });
+    applyFilters();
+//    $(".dive-entry").each(function(n,dive) {
+//        (dive.getAttribute("dive-group") == diveGroup) ? $(dive).show() : $(dive).hide();
+//    });
 }
 
 // Filter by time
