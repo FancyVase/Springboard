@@ -38,6 +38,7 @@ function populateDivelist(diveData) {
             "dive-selector": diveSelector,
         };
         for (var key in diveProperties) {
+	    $newDiveRow.attr(key, diveProperties[key]);
             var value = diveProperties[key];
             $td = $("<td></td>", {"class":key}).html(value);
             $newDiveRow.append($td);
@@ -53,7 +54,21 @@ function toggleDive(clickedDive) {
     console.log("toggling:", clickedDive);
     $(clickedDive).toggleClass("selected");
     if ($(clickedDive).hasClass("selected")) { // Add it to the box
-        $("#list-view").append('<span class="selected-dive" id="'+clickedDive.id+'_selected">'+clickedDive.id+' &nbsp; <strong>Dive</strong></span>');
+        var $entry = $('<span class="selected-dive" id="'+clickedDive.id+'_selected">'+clickedDive.id+' &nbsp; <strong>'+$(clickedDive).attr("dive-name")+'</strong></span>').appendTo("#list-view");
+
+	var $nope = $("<span class='nope'>[remove]</span>").click(function() {
+	    $(clickedDive).removeClass("selected");
+	    $entry.remove();
+	}).appendTo($entry);
+
+	var x = (new Date()).getTime().toString();
+	$("<span class='whatever'><input type='radio' checked name='"+x+"'/><label>Voluntary</label> <input type='radio' name='"+x+"'/><label>Optional</label></span>").appendTo($entry);
+	// $("<span><input type='radio' checked/><label>Optional</label><input type='radio'/><label>Volluntary</label></span>").append($entry);
+
+	
+
+	// $entry = 
+	
     } else { // remove it from the box
         $('#'+clickedDive.id+'_selected').remove();
     }

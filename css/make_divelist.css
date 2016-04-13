@@ -361,3 +361,14 @@ h1{
 /*     background:#17b !important; */
 /*     color:#fff !important; */
 /* } */
+
+
+span.nope {
+    color:#a00;
+    float:right;
+    text-decoration:underline;
+}
+
+.whatever {
+    padding-left:1em;
+}
