@@ -289,6 +289,7 @@ $(document).ready(function() {
     
     $("#ip-search-by-name").click(alertNotImplemented);
     $(".navbar").find("a").click(alertNotImplemented);
+    $("#btn-view-as-chart").click(alertNotImplemented);
     
     // Make divelist items sortable/draggable
     $( ".sortable" ).sortable({"handle" : ".drag-handle"});

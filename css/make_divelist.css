@@ -183,7 +183,6 @@ div.scrollable-pane {
 }
 table.dive-database {
     width:100%;
-    /*TODO add space between columns*/
 }
 a.selection-circle {
     text-decoration:none;
@@ -223,7 +222,7 @@ tr.dive-entry:hover > td {
 
 tr.dive-entry > td {
     /*TODO reformat like Google results rather than spreadsheet*/
-    padding:0.25em 0;
+    padding:0.25em 0.2em;
     cursor:pointer;
 }
 
@@ -245,11 +244,6 @@ td.dive-selector {
 }
 
 
-#list-view {
-    /*TODO use columns*/
-    /*TODO add space between columns*/
-
-}
 #list-view .selected-dive {
     display:block;
     text-align:left;
