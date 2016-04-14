@@ -98,6 +98,14 @@ function toggleDive(clickedDive) {
     ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
 }
 
+function resizeTableHeader() {
+    for (var col in $("#dive-database-header").find("td")) {
+        var colName = $(col).attr("column-name");
+        $(col).width($("."+colName).width());
+    }
+//    $("#header-A").width($("#corresponding-column-A").width());
+}
+
 function setOptional(dive) {
     //input dive can be a dive-entry or a selected dive
     var selectedDive = $("#"+getDiveID(dive)+"_selected");
@@ -112,25 +120,25 @@ function getDiveID(dive) {
 function applyFilters() {
     $(".dive-entry").each(function(n,dive) {
 
-	var any = function(predicate, list) {
-	    $(list).each(function(index, x) {
-		if(predicate(x)) {
-		    return true;
-		}
-	    });
-	    return false;
-	};
-	var all = function(predicate, list) {
-	    $(list).each(function(index, x) {
-		if(!predicate(x)) {
-		    return false;
-		}
-	    });
-	    return true;
-	};
+        //todo remove all/any or use
+        var any = function(predicate, list) {
+            $(list).each(function(index, x) {
+            if(predicate(x)) {
+                return true;
+            }
+            });
+            return false;
+        };
+        var all = function(predicate, list) {
+            $(list).each(function(index, x) {
+            if(!predicate(x)) {
+                return false;
+            }
+            });
+            return true;
+        };
 	
-        for (var key in filters) { //TODO ask dxh is there 'all' or 'any' in js?
-	    // dxh: not as far as I know; see above.
+        for (var key in filters) {
             f = filters[key];
             if (f(dive)) {
                 $(dive).hide();
@@ -139,6 +147,7 @@ function applyFilters() {
         }
         $(dive).show(); //all filters returned false
     });
+    resizeTableHeader();
 }
 
 function onFilterByDiveGroup(event) {

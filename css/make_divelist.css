@@ -168,6 +168,11 @@ div#search-by-name {
     
 }
 
+#dive-database-header td {
+    font-size:8pt; /*todo make font normal size*/
+    /*todo add word wrap*/
+}
+
 
 /*** ----- dive database table entries ----- ***/
 div.scrollable-pane {
