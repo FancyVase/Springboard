@@ -69,28 +69,39 @@ function populateDivelist(diveData) {
 }
 
 function toggleDive(clickedDive) {
-    console.log("toggling:", clickedDive);
+    console.log("toggling:", getDiveID(clickedDive));
     $(clickedDive).toggleClass("selected");
     if ($(clickedDive).hasClass("selected")) { // Add it to the box
         var $entry = $('<span class="selected-dive" id="'+getDiveID(clickedDive)+'_selected" dive-id="'+getDiveID(clickedDive)+'">'+getDiveID(clickedDive)+' &nbsp; <strong>'+$(clickedDive).attr("dive-name")+'</strong></span>').appendTo("#list-view");
 
-	$("<span/>",{"class":"arrow-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
+	$("<span/>",{"class":"drag-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
 	
         var $remove = $("<span class='remove'>[remove]</span>").click(function() {
             toggleDive(clickedDive);
         }).appendTo($entry);
 
-        var x = (new Date()).getTime().toString();
+        var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
 
-	// todo: less stringy, more like $('...', {})
-	$("<span class='opt-vol'><input type='radio' checked name='"+x+"'/><label>Voluntary</label> <input type='radio' name='"+x+"'/><label>Optional</label></span>").appendTo($entry);
-        // $("<span><input type='radio' checked/><label>Optional</label><input type='radio'/><label>Voluntary</label></span>").append($entry); //TODO remove (dxh)
-	
+        // todo: less stringy, more like $('...', {})
+        var $span = $("<span class='opt-vol'></span>");
+        $span.append("<input type='radio' class='radio-opt' name='"+radioName+"'/>");
+        $span.append("<label>Optional</label>");
+        $span.append("<input type='radio' class='radio-vol' checked name='"+radioName+"'/>");
+        $span.append("<label>Voluntary</label>");
+        $entry.append($span);
+//        $("<span class='opt-vol'><input type='radio' checked name='"+x+"'/><label>Voluntary</label> <input type='radio' name='"+x+"'/><label>Optional</label></span>").appendTo($entry);
+
     } else { // remove it from the box
         $('#'+getDiveID(clickedDive)+'_selected').remove();
     }
     
     ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+}
+
+function setOptional(dive) {
+    //input dive can be a dive-entry or a selected dive
+    var selectedDive = $("#"+getDiveID(dive)+"_selected");
+    $(selectedDive).find(".radio-opt").attr('checked', true);
 }
 
 function getDiveID(dive) {
@@ -184,7 +195,7 @@ function onFilterByExperience(event) {
 }
 
 function onSaveButtonClick() {
-    alert("Pretend that a 'Save As' dialogue appeared. (This feature is not implemented yet.)");
+    alert("Pretend that a 'Save a copy as...' dialogue appeared. (This feature is not implemented yet.)");
 }
 function onExportButtonClick() {
     alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)");
@@ -199,26 +210,31 @@ function animate_autosave(fn_when_finished) {
 }
 
 function onNewListButtonClick() {
-    //TODO add "Autosaving..."
     // dxh: this is a mockup animation
     animate_autosave(function() {
-	console.log("Clearing current divelist");
-	$(".selected-dive").each(function(n,selectedDive) {
-	    var dive = $("#"+getDiveID(selectedDive));
-	    toggleDive(dive);
-	});
-	$("#divelist-savename").text("Untitled divelist");
+        console.log("Clearing current divelist");
+        $(".selected-dive").each(function(n,selectedDive) {
+            var dive = $("#"+getDiveID(selectedDive));
+            toggleDive(dive);
+        });
+        $("#divelist-savename").text("Untitled divelist");
 	
     });
 
 }
-function onOpenButtonClick() {
-    alert("Pretend that an 'Open' dialogue appeared. (This feature is not implemented yet.)");
+
+function onLoadDropdownClick() {
+    alert("Pretend that this dropdown is populated with your saved lists. (This feature is not implemented yet.)");
+}
+
+function alertNotImplemented() {
+    alert("(This feature is not implemented yet.)");
 }
 
 function autoGen(param) { //todo actually generate correct list of dives
     $(".dive-entry").each(function(n,dive) {
-        (n<8) ? toggleDive(dive) : $(dive).show();
+        (n<11) ? toggleDive(dive) : $(dive).show();
+        (n<6) ? setOptional(dive) : null; //todo lazy hack
     });
     hideQuicklist();
 }
@@ -242,11 +258,13 @@ $(document).ready(function() {
     $("#btn-save").click(onSaveButtonClick);
     $("#btn-export").click(onExportButtonClick);
     $("#btn-newlist").click(onNewListButtonClick);
-    $("#btn-open").click(onOpenButtonClick);
+    $("#btn-load").mousedown(onLoadDropdownClick); //todo change id (not a button)
+    
+    $("#ip-search-by-name").click(alertNotImplemented);
+    $(".navbar").find("a").click(alertNotImplemented);
     
     // Make divelist items sortable/draggable
-    //TODO dxh make draggable only by arrow (.selected-dive:before)
-    $( ".sortable" ).sortable({"handle" : ".arrow-handle"});
+    $( ".sortable" ).sortable({"handle" : ".drag-handle"});
     $( ".sortable" ).disableSelection();
 });
 

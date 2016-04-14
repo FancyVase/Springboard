@@ -267,8 +267,10 @@ td.dive-selector {
 #list-view strong {
 
 }
-#list-view .selected-dive > .arrow-handle {
-    cursor:grab;
+#list-view .selected-dive > .drag-handle {
+/*    cursor:grab;*/
+    cursor: -webkit-grab;
+    cursor: grab;
     font-size:1.5em;
     margin-right:0.5em;
     background:#aaa;
