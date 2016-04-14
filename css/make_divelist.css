@@ -432,3 +432,12 @@ span.remove {
     width:12em;
     display:none;
 }
+
+#dive-database-header th {
+    background:#eee;
+    text-align:left;
+    border-right:1px solid #aaa;
+    white-space: nowrap;
+    overflow: hidden;
+    padding:0 0.1em;
+}
