@@ -317,7 +317,9 @@ td.dive-selector {
     border-color:#aaa;
 }
 
-
+.inputlike:focus {
+    cursor:text;
+}
 
 .panel-dive-list {
     margin-left:1em;

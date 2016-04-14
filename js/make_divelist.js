@@ -99,14 +99,6 @@ function toggleDive(clickedDive) {
 }
 
 function resizeTableHeader() {
-//    for (var col in $("#dive-database-header").find("td")) {
-//        console.log(col);
-//        var colName = $(col).attr("column-name");
-//        $(col).width($("."+colName).width());
-//    }
-//    $("#header-A").width($("#corresponding-column-A").width());
-//=======
-
     // TODO: this timeout is a debug statement
     setTimeout(function() {
     
