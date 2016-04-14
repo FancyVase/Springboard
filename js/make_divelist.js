@@ -99,11 +99,25 @@ function toggleDive(clickedDive) {
 }
 
 function resizeTableHeader() {
-    for (var col in $("#dive-database-header").find("td")) {
-        var colName = $(col).attr("column-name");
-        $(col).width($("."+colName).width());
-    }
-//    $("#header-A").width($("#corresponding-column-A").width());
+
+    // TODO: this timeout is a debug statement
+    setTimeout(function() {
+    
+	var $headers = $("#dive-database-header th");
+	var $firstRow = $($("#dive-database-table tr.dive-entry").filter(":visible")[0]);
+	
+	$firstRow.children().each(function(i, col) {
+	    $headers.eq(i).width($(col).width())
+		//.html($(col).html()); // debug
+	});
+	console.log($firstRow.width());
+    }, 500);
+	
+    // for (var col in $("#dive-database-header").find("td")) {
+//         var colName = $(col).attr("column-name");
+//         $(col).width($("."+colName).width());
+//     }
+// //    $("#header-A").width($("#corresponding-column-A").width());
 }
 
 function setOptional(dive) {
@@ -275,6 +289,8 @@ $(document).ready(function() {
     // Make divelist items sortable/draggable
     $( ".sortable" ).sortable({"handle" : ".drag-handle"});
     $( ".sortable" ).disableSelection();
+
+    resizeTableHeader();
 });
 
 // TODO: Make entries in the user's list of dives have more consistent spacing. That is, the dive names should all line up vertically and so on via a table structure, or by automatically setting the widths via jquery.
