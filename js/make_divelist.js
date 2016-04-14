@@ -73,13 +73,17 @@ function toggleDive(clickedDive) {
     $(clickedDive).toggleClass("selected");
     if ($(clickedDive).hasClass("selected")) { // Add it to the box
         var $entry = $('<span class="selected-dive" id="'+getDiveID(clickedDive)+'_selected" dive-id="'+getDiveID(clickedDive)+'">'+getDiveID(clickedDive)+' &nbsp; <strong>'+$(clickedDive).attr("dive-name")+'</strong></span>').appendTo("#list-view");
-        
+
+	$("<span/>",{"class":"arrow-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
+	
         var $remove = $("<span class='remove'>[remove]</span>").click(function() {
             toggleDive(clickedDive);
         }).appendTo($entry);
 
         var x = (new Date()).getTime().toString();
-        $("<span class='opt-vol'><input type='radio' checked name='"+x+"'/><label>Voluntary</label> <input type='radio' name='"+x+"'/><label>Optional</label></span>").appendTo($entry);
+
+	// todo: less stringy, more like $('...', {})
+	$("<span class='opt-vol'><input type='radio' checked name='"+x+"'/><label>Voluntary</label> <input type='radio' name='"+x+"'/><label>Optional</label></span>").appendTo($entry);
         // $("<span><input type='radio' checked/><label>Optional</label><input type='radio'/><label>Voluntary</label></span>").append($entry); //TODO remove (dxh)
 	
     } else { // remove it from the box
@@ -96,7 +100,26 @@ function getDiveID(dive) {
 
 function applyFilters() {
     $(".dive-entry").each(function(n,dive) {
+
+	var any = function(predicate, list) {
+	    $(list).each(function(index, x) {
+		if(predicate(x)) {
+		    return true;
+		}
+	    });
+	    return false;
+	};
+	var all = function(predicate, list) {
+	    $(list).each(function(index, x) {
+		if(!predicate(x)) {
+		    return false;
+		}
+	    });
+	    return true;
+	};
+	
         for (var key in filters) { //TODO ask dxh is there 'all' or 'any' in js?
+	    // dxh: not as far as I know; see above.
             f = filters[key];
             if (f(dive)) {
                 $(dive).hide();
@@ -166,14 +189,28 @@ function onSaveButtonClick() {
 function onExportButtonClick() {
     alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)");
 }
+
+function animate_autosave(fn_when_finished) {
+        $("#autosaving").show(0,
+			  function() {
+			      setTimeout(function(){
+				  $("#autosaving").hide(0, fn_when_finished);
+			      }, 1000)});
+}
+
 function onNewListButtonClick() {
     //TODO add "Autosaving..."
-    console.log("Clearing current divelist");
-    $(".selected-dive").each(function(n,selectedDive) {
-        var dive = $("#"+getDiveID(selectedDive));
-        toggleDive(dive);
+    // dxh: this is a mockup animation
+    animate_autosave(function() {
+	console.log("Clearing current divelist");
+	$(".selected-dive").each(function(n,selectedDive) {
+	    var dive = $("#"+getDiveID(selectedDive));
+	    toggleDive(dive);
+	});
+	$("#divelist-savename").text("Untitled divelist");
+	
     });
-    $("#divelist-savename").text("Untitled divelist");
+
 }
 function onOpenButtonClick() {
     alert("Pretend that an 'Open' dialogue appeared. (This feature is not implemented yet.)");
@@ -209,8 +246,10 @@ $(document).ready(function() {
     
     // Make divelist items sortable/draggable
     //TODO dxh make draggable only by arrow (.selected-dive:before)
-    $( ".sortable" ).sortable();
+    $( ".sortable" ).sortable({"handle" : ".arrow-handle"});
     $( ".sortable" ).disableSelection();
 });
+
+// TODO: Make entries in the user's list of dives have more consistent spacing. That is, the dive names should all line up vertically and so on via a table structure, or by automatically setting the widths via jquery.
 
 

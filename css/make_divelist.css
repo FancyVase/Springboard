@@ -253,15 +253,37 @@ td.dive-selector {
     border:1px solid #aaa;
     border-top-width:0px;
     background:#fff;
-    cursor:grab;
+    
 }
 
-#list-view .selected-dive:before {
-    content:"\2195";
-    font-size:1.5em;
-    padding-right:0.5em;
-    color:#aaa;;
+/* #list-view .selected-dive:before { */
+/*     content:"\2195"; */
+/*     font-size:1.5em; */
+/*     padding-right:0.5em; */
+/*     color:#aaa; */
+/*     display:none; */
+/* } */
+
+#list-view strong {
+
 }
+#list-view .selected-dive > .arrow-handle {
+    cursor:grab;
+    font-size:1.5em;
+    margin-right:0.5em;
+    background:#aaa;
+    color:#fff;
+    text-align:center;
+    display:block;
+    float:left;
+    border-radius:0.1em;
+    height:2.1em;
+
+    width:0.5em;
+    background:#ccc;
+}
+
+
 #list-view .selected-dive:hover:before {
     color:#c00;
 }
@@ -376,4 +398,30 @@ span.remove {
 
 .opt-vol {
     padding-left:1em;
+    display:block;
+}
+.opt-vol input {
+    padding-left:1em;
+    transform:scale(1.2);
+}
+.opt-vol label {
+    padding-right:1em;
+    padding-left:0.2em;
+    color:#888;
+    font-weight:normal
+}
+
+
+
+#autosaving {
+    padding:0.2em;
+    border-radius:0.2em;
+    background:#b17;
+    background:#cf0;
+    position:absolute;
+    margin:0 auto;
+    top:0.5em;
+    left:50%;
+    width:12em;
+    display:none;
 }

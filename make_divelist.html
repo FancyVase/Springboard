@@ -14,6 +14,7 @@
   </head>
 
   <body>
+    <span id="autosaving">Saving your work first ...</span>
     <div class="header">
 
     <!-------- dxh comments (TODO)
@@ -58,7 +59,9 @@
           <h5><input type="checkbox" id="time-box">&nbsp;Performed within</h5>
           &nbsp;&nbsp;&nbsp;
           <select id="filter-time-dropdown" class="inactive">
-          <!--TODO ask dxh could eliminate checkbox and instead just have always-live dropdown with 'Always' option-->
+          <!--TODO ask dxh could eliminate checkbox and instead just
+          have always-live dropdown with 'Always' option-->
+	  <!-- o.k. !-->
             <option>1 Month</option>
 <!--            <option>3 Months</option> todo enable 3 Months-->
           </select>
@@ -99,10 +102,17 @@
           </td>
           <td id="btns-edit">
             &nbsp;
-            <button id="btn-save">Save as...</button> <!--TODO ask dxh: shouldn't this be just "Save"?, a la Google docs?-->
+            <button id="btn-save">Save a copy</button> <!--TODO ask
+            dxh: shouldn't this be just "Save"?, a la Google docs?-->
+	    <!--- It's "save a copy", as in clone this list and rename
+            it.!-->
+	    <!-- W.S.T.Ch !>
             <button id="btn-export">Export</button> <!--TODO should this be export as?-->
             <button id="btn-newlist">New List</button>
-            <button id="btn-open">Open...</button> <!--TODO this prob shouldn't be a button-->
+            <select id="btn-open"><option>Load</option></select>
+            <!--TODO this prob shouldn't be a button-->
+	    <!-- TODO: This should have a longer name, but then it
+            won't fit. !-->
           </td>
         </tr>
 
