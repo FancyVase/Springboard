@@ -110,7 +110,7 @@ function resizeTableHeader() {
 		//.html($(col).html()); // debug
 	});
 	console.log($firstRow.width());
-    }, 500);
+    }, 0);
 	
     // for (var col in $("#dive-database-header").find("td")) {
 //         var colName = $(col).attr("column-name");
@@ -291,6 +291,14 @@ $(document).ready(function() {
     $(".navbar").find("a").click(alertNotImplemented);
     $("#btn-view-as-chart").click(alertNotImplemented);
     
+    $("#divelist-savename").on("keydown", function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            event.currentTarget.blur();
+            onSaveButtonClick();
+        }
+    });
+
     // Make divelist items sortable/draggable
     $( ".sortable" ).sortable({"handle" : ".drag-handle"});
     $( ".sortable" ).disableSelection();

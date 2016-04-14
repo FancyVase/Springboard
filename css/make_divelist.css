@@ -267,6 +267,7 @@ td.dive-selector {
 
 }
 #list-view .selected-dive > .drag-handle {
+/*    todo make dive tiles look more draggable*/
 /*    cursor:grab;*/
     cursor: -webkit-grab;
     cursor: grab;
@@ -295,6 +296,10 @@ td.dive-selector {
 .inputlike {
     min-width:8em;
     display:block;
+    overflow:hidden;
+    white-space:nowrap;
+    max-width: 10em;
+/*    text-align: left; todo left-align text after defocus*/
 
     height:2em;
     border-radius:0.2em;
