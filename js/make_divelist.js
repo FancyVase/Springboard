@@ -1,4 +1,22 @@
-// JS functions for the make_divelist.html page
+// BASIC FUNCTIONS
+function returnFalse() { return false; }
+
+//////////////////////////////////////////////////
+// GLOBAL VARIABLES
+
+// filters is a dictionary mapping filter types (strings) to boolean functions.
+// Each filter function f(dive) takes in a dive (js object) and returns true if
+// the dive should be hidden, or false if the filter does not require the dive
+// to be hidden.  The dive entries that are shown will be exactly those for 
+// which all filter functions return false.
+var filters = {
+    "diveGroup": returnFalse,
+    "time": returnFalse,
+    "experience": returnFalse,
+};
+
+//////////////////////////////////////////////////
+// JS FUNCTIONS FOR make_divelist.html
 
 function loadDiveData(filename) {
     $.ajax({
@@ -62,7 +80,7 @@ function toggleDive(clickedDive) {
 
         var x = (new Date()).getTime().toString();
         $("<span class='opt-vol'><input type='radio' checked name='"+x+"'/><label>Voluntary</label> <input type='radio' name='"+x+"'/><label>Optional</label></span>").appendTo($entry);
-        // $("<span><input type='radio' checked/><label>Optional</label><input type='radio'/><label>Voluntary</label></span>").append($entry);
+        // $("<span><input type='radio' checked/><label>Optional</label><input type='radio'/><label>Voluntary</label></span>").append($entry); //TODO remove (dxh)
 	
     } else { // remove it from the box
         $('#'+getDiveID(clickedDive)+'_selected').remove();
@@ -75,26 +93,11 @@ function getDiveID(dive) {
     return $(dive).attr("dive-id");
 }
 
-function returnFalse() { //todo also move this up if moving var filters
-    return false;
-}
-
-//todo maybe make this non-global or move to top of file
-//filters is a list of functions f(dive) with: //todo update "docstring"
-//  input: dive = a html/js object with class dive-entry
-//  output: true if dive should be hidden, otherwise false (meaning that dive will be shown if f is the only filter, but if there are other filters, they may cause dive to be shown)
-var filters = {
-    "diveGroup": returnFalse,
-    "time": returnFalse,
-    "experience": returnFalse,
-};
 
 function applyFilters() {
     $(".dive-entry").each(function(n,dive) {
-        for (var key in filters) {
+        for (var key in filters) { //TODO ask dxh is there 'all' or 'any' in js?
             f = filters[key];
-//        for (var i=0; i<filters.length; i++) { //TODO ask dxh is there 'all' in js?
-//            f = filters[i];
             if (f(dive)) {
                 $(dive).hide();
                 return;
@@ -104,17 +107,15 @@ function applyFilters() {
     });
 }
 
-function onFilterByDiveGroup(event) { //todo support multiple filter types at once    // Move highlight
+function onFilterByDiveGroup(event) {
+    // Move highlight
     $("#filter-dive-group").find("a").removeClass("selected");
     $(event.currentTarget).addClass("selected");
         
-//    filters = []; //todo don't clear all filters; only clear dive-group filters
     var diveGroup = event.currentTarget.getAttribute("dive-group");
     if (diveGroup == "all") {
         console.log("Showing all dives");
         filters["diveGroup"] = returnFalse;
-//        $(".dive-entry").show();
-//        return;
     } else {
         console.log("Filtering by dive group:", diveGroup);
         filters["diveGroup"] = (function(dive) {
@@ -122,9 +123,6 @@ function onFilterByDiveGroup(event) { //todo support multiple filter types at on
         });
     }
     applyFilters();
-//    $(".dive-entry").each(function(n,dive) {
-//        (dive.getAttribute("dive-group") == diveGroup) ? $(dive).show() : $(dive).hide();
-//    });
 }
 
 // Filter by time
@@ -136,13 +134,9 @@ function onFilterByTime(event) {
         filters["time"] = (function(dive) {
             return dive.childNodes[6].innerHTML != "03/05/2016";
         });
-//        $(".dive-entry").each(function(n,dive) {
-//            (dive.childNodes[6].innerHTML == "03/05/2016") ? $(dive).show() : $(dive).hide();
-//        });
     } else {                      // else, unfilter   
         console.log("Showing all dives");
         filters["time"] = returnFalse;
-//        $(".dive-entry").show();
     }
     applyFilters();
 }
@@ -161,14 +155,9 @@ function onFilterByExperience(event) {
     }
     console.log(checked);
     filters["experience"] = (function(dive) {
-//        console.log(dive.childNodes[2].innerHTML);
         return !checked.includes(dive.childNodes[2].innerHTML);
-//        return checked.indexOf(dive.childNodes[2].innerHTML) == -1;
     });
     applyFilters();
-//    $(".dive-entry").each(function(n,dive) {
-//        (checked.indexOf(dive.childNodes[2].innerHTML) != -1) ? $(dive).show() : $(dive).hide();
-//    });
 }
 
 function onSaveButtonClick() {
@@ -206,7 +195,6 @@ function hideQuicklist() {
 
 $(document).ready(function() {
     
-    // loadDiveData("all_dives.csv");
     loadDiveData("dive_data.csv");
     
     // Bind Action Listeners
