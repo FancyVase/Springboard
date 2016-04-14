@@ -100,6 +100,7 @@ function toggleDive(clickedDive) {
 
 function resizeTableHeader() {
     for (var col in $("#dive-database-header").find("td")) {
+        console.log(col);
         var colName = $(col).attr("column-name");
         $(col).width($("."+colName).width());
     }
@@ -109,7 +110,7 @@ function resizeTableHeader() {
 function setOptional(dive) {
     //input dive can be a dive-entry or a selected dive
     var selectedDive = $("#"+getDiveID(dive)+"_selected");
-    $(selectedDive).find(".radio-opt").attr('checked', true);
+    $(selectedDive).find(".radio-opt").prop('checked', true);
 }
 
 function getDiveID(dive) {
@@ -203,8 +204,13 @@ function onFilterByExperience(event) {
     applyFilters();
 }
 
-function onSaveButtonClick() {
-    alert("Pretend that a 'Save a copy as...' dialogue appeared. (This feature is not implemented yet.)");
+function onSaveButtonClick() { //todo don't copy/paste from autosaving
+//    alert("Pretend that a 'Save a copy as...' dialogue appeared. (This feature is not implemented yet.)"); //todo do we want Save or Save a copy?
+    $("#saving").show(0, function() {
+        setTimeout(function(){
+            $("#saving").hide(0);
+        }, 1000);
+     });
 }
 function onExportButtonClick() {
     alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)");
@@ -261,8 +267,8 @@ $(document).ready(function() {
     
     // Bind Action Listeners
     $("#filter-dive-group").find("a").click(onFilterByDiveGroup);
-    $("#time-box").click(onFilterByTime);
-    $("#filter-experience").find("input").click(onFilterByExperience);
+    $("#time-box").prop("checked",false).click(onFilterByTime);
+    $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience);
     
     $("#btn-save").click(onSaveButtonClick);
     $("#btn-export").click(onExportButtonClick);
