@@ -260,7 +260,7 @@ function alertNotImplemented() {
 
 function autoGen(param) { //todo actually generate correct list of dives
     $(".dive-entry").each(function(n,dive) {
-        (n<11) ? toggleDive(dive) : $(dive).show();
+        (n<11) ? toggleDive(dive) : null;
         (n<6) ? setOptional(dive) : null; //todo lazy hack
     });
     hideQuicklist();
