@@ -168,7 +168,7 @@ div#search-by-name {
     
 }
 
-#dive-database-header td {
+#dive-database-header th {
     font-size:8pt; /*todo make font normal size*/
     /*todo add word wrap*/
 }
@@ -433,7 +433,9 @@ span.remove {
     background:#eee;
     text-align:left;
     border-right:1px solid #aaa;
+/*
     white-space: nowrap;
     overflow: hidden;
+*/
     padding:0 0.1em;
 }
