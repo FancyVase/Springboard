@@ -15,6 +15,11 @@ var filters = {
     "experience": returnFalse,
 };
 
+
+// DIVES
+var dive_database = [];
+
+
 //////////////////////////////////////////////////
 // JS FUNCTIONS FOR make_divelist.html
 
@@ -33,36 +38,154 @@ function loadDiveData(filename) {
         for (var i=0;i<my_csv.length;i++){
             diveData.push(my_csv[i].split(","));
         }
-        populateDivelist(diveData);
+        populateDiveDatabase(diveData);
+	drawDiveDatabase();
     }
 }
 
-function populateDivelist(diveData) {
-    var diveSelector = '<a class="selection-circle"></a>';
-    for (var i=0; i<diveData.length; i++) {
-        var diveID = diveData[i][0];
-        var diveGroup = diveID.substring(0,1);
-        var $newDiveRow = $("<tr></tr>", {"class":"dive-entry", "id":diveID,
-                                          "dive-group":diveGroup});
-        var diveProperties = {
-            "dive-id": diveID,
-            "dive-name": diveData[i][1],
-            // "dive-dd": diveData[i][2], //for all_dives.csv
-            "dive-experience": diveData[i][2],
-            "dive-predicted-score": diveData[i][3],
-            "dive-high-score": diveData[i][4],
-            "dive-average-score": diveData[i][5],
-            "dive-last-performed": diveData[i][6],
-            "dive-selector": diveSelector,
-        };
-        for (var key in diveProperties) {
-	    $newDiveRow.attr(key, diveProperties[key]);
-            var value = diveProperties[key];
-            $td = $("<td></td>", {"class":key}).html(value);
-            $newDiveRow.append($td);
-        }
-        $("#dive-database-table").append($newDiveRow);
+function populateDiveDatabase(diveData) {
+    // dxh: creating model-view distinction
+
+    var dive_attributes = ["dive-id",
+		      "dive-name",
+		      "dive-experience",
+		      "dive-predicted-score",
+		      "dive-high-score",
+		      "dive-average-score",
+		      "dive-last-performed"];
+    $(diveData).each(function(i, datum) {
+	var map = {};
+	$(dive_attributes).each(function(j, key) {
+	    map[key] = datum[j];
+	});
+	map["diveGroup"] = map["dive-id"].substring(0,1);
+	console.log(map);
+	dive_database.push(map);
+    });
+}
+
+function drawDiveDatabase(database) {
+
+    if(typeof(database) === "undefined") {
+	database = dive_database; // global variable as default
     }
+
+    $(database).each(function(i, dive) {
+	var $newDiveRow = $("<tr></tr>", {"class":"dive-entry",
+					  "id": dive["dive-id"],
+                                          "dive-group":dive["diveGroup"]})
+	    .appendTo("#dive-database-table");
+	//$("#dive-database-table").append($newDiveRow);
+
+
+
+	for(var key in dive) {
+	    $newDiveRow.attr(key, dive[key]);
+         //   var value = dive[key];
+         //   $td = $("<td></td>", {"class":key}).html(value);
+         //   $newDiveRow.append($td);
+	}
+	
+	var $diveSelector = $('<a/>',{"class":"selection-circle"});
+
+	var $td = $("<td/>").appendTo($newDiveRow);
+
+	$("<h4/>",{"class":"dive-name",
+		   "html" : dive["dive-name"]})
+	    .prepend(
+		"<div class='dive-id'>"+dive["dive-id"]+"</div>"
+	    )
+	    .appendTo($td);
+
+	
+	$details = $("<span/>", {"class":"nondescript"});
+
+	if(dive["dive-experience"].match(/know/i)) {
+	    
+	    $("<span/>", {"class" : "known known-well"} ).append("Known well")
+		.appendTo($details);
+
+	}
+	else if(dive["dive-experience"].match(/learn/i)) {
+	    
+	    $("<span/>", {"class" : "known known-ok"} ).append("Learning")
+		.appendTo($details);
+
+	}
+	else {
+	    
+	    $("<span/>", {"class" : "known known-not"} ).append("Don't know")
+		.appendTo($details);
+	}
+
+	
+	    
+	if(dive["dive-last-performed"]) {
+	    // DXH todo: measure time in words 'Last March'
+	    // mention meet name and/instead of time
+	    $details.append("<span class='last-performed'>" + dive["dive-last-performed"]+"</span>"); 
+	}
+	$details.appendTo($td);
+
+
+	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
+	if(dive["dive-average-score"]){
+	    $td.append("<span class='score'>"+dive["dive-average-score"]+"</span>");
+	    $("<span/>",{"class":"scoring"})
+		.html("Average")
+		.appendTo($td);
+	
+	}
+
+	// todo: most recent score?
+	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
+	if(dive["dive-high-score"]) {
+	    $td.append("<span class='score'>"+dive["dive-high-score"]+"</span>");
+	    $("<span/>",{"class":"scoring"})
+	    .html("Best")
+	    .appendTo($td);
+
+	}
+
+	
+	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
+	if(dive["dive-predicted-score"]) {
+	    $td.append("<span class='score'>"+dive["dive-predicted-score"]+"</span>");
+	    $("<span/>",{"class":"scoring"})
+	    .html("Predicted")
+	    .appendTo($td);
+
+	}
+
+	$td = $("<td/>",{"class":"selector"}).appendTo($newDiveRow);
+	$td.append($diveSelector);
+    });
+    
+    // var diveSelector = '<a class="selection-circle"></a>';
+    // for (var i=0; i<diveData.length; i++) {
+    //     var diveID = diveData[i][0];
+    //     var diveGroup = diveID.substring(0,1);
+    //     var $newDiveRow = $("<tr></tr>", {"class":"dive-entry", "id":diveID,
+    //                                       "dive-group":diveGroup});
+    //     var diveProperties = {
+    //         "dive-id": diveID,
+    //         "dive-name": diveData[i][1],
+    //         // "dive-dd": diveData[i][2], //for all_dives.csv
+    //         "dive-experience": diveData[i][2],
+    //         "dive-predicted-score": diveData[i][3],
+    //         "dive-high-score": diveData[i][4],
+    //         "dive-average-score": diveData[i][5],
+    //         "dive-last-performed": diveData[i][6],
+    //         "dive-selector": diveSelector,
+    //     };
+    //     for (var key in diveProperties) {
+    // 	    $newDiveRow.attr(key, diveProperties[key]);
+    //         var value = diveProperties[key];
+    //         $td = $("<td></td>", {"class":key}).html(value);
+    //         $newDiveRow.append($td);
+    //     }
+    //     $("#dive-database-table").append($newDiveRow);
+    // }
     
     // Bind click listener for dives
     $(".dive-entry").click(function() { toggleDive(this) });
@@ -110,7 +233,7 @@ function resizeTableHeader() {
 		//.html($(col).html()); // debug
 	});
 	console.log($firstRow.width());
-    }, 0);
+    }, 100);
 	
     // for (var col in $("#dive-database-header").find("td")) {
 //         var colName = $(col).attr("column-name");

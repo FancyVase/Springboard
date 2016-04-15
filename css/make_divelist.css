@@ -105,6 +105,7 @@ ul#filter-dive-group a {
 ul#filter-dive-group .selected {
     background:#fff;
     background:#cf0;
+    
     border-radius:0.2em;
 }
 
@@ -192,6 +193,10 @@ a.selection-circle  {
     display:block;
     width:1.4em;
     height:1.4em;
+
+
+    width:2em;
+    height:2em;
     border:0.1em solid #888;
     border-radius:4em;
     background:#fff;
@@ -202,9 +207,14 @@ a.selection-circle  {
 tr.dive-entry td {
     border-bottom:1px solid #eee;
     background:#fff;
+    padding:1em 0em!important;
 }
 tr.dive-entry:hover > td a.selection-circle {
     background:#cdf;
+
+    background:#fdc;
+    background:#ffc;
+    background:inherit;
 }
 .selected a.selection-circle, tr:active a.selection-circle {
 				  background:#4af;
@@ -216,6 +226,7 @@ tr.dive-entry:hover > td {
     background:#fff;
     background:#ff0;
     background:#cf0;
+    background:#e0f8ff;
 }
 
 
@@ -443,4 +454,82 @@ span.remove {
     overflow: hidden;
 */
     padding:0 0.1em;
+
+    display:none; /*** dxh: debug todo ***/
+
+}
+
+
+
+.known {
+    width:6em;
+    background:#eee;
+    display:block;
+    text-align:center;
+    border-radius:0.2em;
+    color:#555;
+    float:left;
+    margin-right:1em;
+
+    margin-left:5em;
+}
+
+.known-well {
+    background:#efb;
+    background:#f8ffd0;
+    color:#080;
+}
+.known-ok {
+    background:#ffb;
+    background:#ffc;
+    color:#863;
+    color:#974;
+}
+
+h4.dive-name {
+    font-weight:bolder;
+    color:#444;
+    padding-bottom:0.4em;
+}
+
+span.last-performed {
+    color:#484;
+}
+
+.dive-id {
+    color:#888;
+    display:block;
+    width:4em;
+    font-size:inherit;
+    float:left;
+    text-align:right;
+    padding-right:1em;
+    font-weight:normal;
+    font-weight:bolder;
+}
+
+#filter-dive-group li + li {
+    padding-left:1em;
+}
+
+
+.scoring {
+    text-align:center;
+    color:#49a;
+    color:#9bb;
+}
+.score {
+    display:block;
+    font-size:1.5em;
+    margin:0 auto;
+
+}
+.score-column {
+    padding:0 3em!important;
+    
+}
+
+
+.selector a{
+    margin:0 1em;
 }
