@@ -1,6 +1,10 @@
 // BASIC FUNCTIONS
 function returnFalse() { return false; }
 
+//todo repair checkboxes
+//todo get rid of alerts
+//todo add counting thing for list view (how many of each type of dive)
+
 //////////////////////////////////////////////////
 // GLOBAL VARIABLES
 
