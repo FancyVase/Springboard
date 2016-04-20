@@ -4,6 +4,7 @@ function returnFalse() { return false; }
 //todo repair checkboxes
 //todo get rid of alerts
 //todo add counting thing for list view (how many of each type of dive)
+//todo inward and reverse are flipped (see filtering; see effect of adding dives to chart view)
 
 //////////////////////////////////////////////////
 // GLOBAL VARIABLES
