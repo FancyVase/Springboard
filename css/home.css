@@ -1,0 +1,81 @@
+.submit-form, .edit-form {
+	font-family: Lato;
+	padding: 0px 0px 0px 0px;
+	width: 75%;
+	margin: 50px auto;
+	background-color: #f5f5f5;
+	font-size: 16px;
+	border: 1px solid #e1e1e1;
+}
+
+input.form-control {
+	border-radius: 1px;
+	box-shadow: none;
+}
+
+.edit-btn {
+	border-radius: 0px;
+	font-size: 15px;
+	font-weight: 300;
+	padding: 10px 35px;
+	transition: 0.25s;
+	background-color: #1b7;
+}
+
+.edit-btn:hover {
+	background-color: #12CE83;
+	border-color: #12CE83;
+}
+
+.profile-title {
+	padding: 10px 20px;
+	border-bottom: 1px solid #e1e1e1;
+	background-color: #f0f0f0;
+}
+
+.profile {
+	width: 75%;
+	margin: 0px auto;
+	font-size: 16px;
+	border: 1px solid #e1e1e1;
+}
+
+.row {
+	margin: 0px;
+	padding: 2px 0px;
+	transition: 0.25s;
+}
+
+.row:hover {
+	background-color: #f0f0f0;
+}
+
+.profile>hr {
+	margin: 0px;
+	border-top: 1px solid #e1e1e1;
+}
+
+.item-label {
+	font-weight: normal;
+	color: #565a5c;
+	text-align: right;
+	padding: 10px 20px;
+}
+
+.item-value {
+	padding: 10px 20px;
+	font-size: 15px;
+	font-weight: 200;
+	text-align: left;
+}
+
+@media all and (max-width: 959px) and (min-width: 320px) {
+	div.item-label, div.item-value, div.profile-title { text-align: center; }
+	.profile { width: 90%; }
+}
+
+.edit-profile {
+	margin: 15px;
+	text-align: center;
+}
+
