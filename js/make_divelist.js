@@ -282,8 +282,36 @@ function divelist_lookup(clickedDive) {
 function divelist_redraw() {
     // Render the list of dives in HTML.
 
+
+   
     $("#list-view").html("");
-    // todo: store voluntary/optional status in divelist entries.
+    $("#chart-view").html("");
+
+    // FOR THE CHART VIEW
+    // $("#list-view").hide(); // todo: this is a debug statement
+
+    var groups = ["fwd", "back", "inward", "reverse", "twist"];
+    var $chart = $("<table/>", {"class" : "chart"}).appendTo("#chart-view");
+    $(groups).each(function(_, group){
+	var $tr = $("<tr/>",{"class" : group}).appendTo($chart);
+	var $th = $("<th/>").appendTo($tr).html(group);
+	var $td = $("<td/>", {"class" : "optional"}).appendTo($tr);
+	var $td = $("<td/>", {"class" : "voluntary"}).appendTo($tr);
+    });
+
+
+    $(divelist).each(function(i, entry){
+	var group = groups[entry["dive-id"].substr(0,1)-1]; // haaaaaack
+	var willing = entry["dive-willing"];
+
+	var $entry = $("<span/>", {"class" : "selected-dive"});
+	$entry.append(entry["dive-name"]);
+	
+	$chart
+	    .find("."+group)
+	    .find("."+willing)
+	    .append($entry);
+    });
 
     
     // FOR THE LIST VIEW
@@ -311,7 +339,7 @@ function divelist_redraw() {
 
 
 	var $remove = $("<span class='remove'>[remove]</span>").click(function() {
-	    divelist_remove_dive($me);
+	    divelist_remove_dive($entry);
 	}).appendTo($entry);
 
 	    
@@ -320,14 +348,35 @@ function divelist_redraw() {
 	// todo: less stringy, more like $('...', {})
 	// todo: keep track of radio buttons in divelist
 
-	var $span = $("<span class='opt-vol'></span>")
-	    .append("<input type='radio' class='radio-opt' name='"+radioName+"'/>")
-	    .append("<label>Optional</label>")
-	    .append("<input type='radio' class='radio-vol' checked name='"+radioName+"'/>")
-	    .append("<label>Voluntary</label>");
+	/// -------- CREATE OPT/VOL RADIO BUTTONS
+	var $span = $("<span class='opt-vol'></span>");
+	$("<input/>", {"type" : "radio",
+		       "class" : "radio-opt",
+		       "name" : radioName})
+	    .click(function() {
+		var entry = divelist_lookup($entry);
+		entry["dive-willing"] = "optional";
+	    }).appendTo($span);
+	$span.append("<label>Optional</label>");
+	$("<input/>", {"type" : "radio",
+		       "class" : "radio-vol",
+		       "name" : radioName})
+	    .click(function() {
+		var entry = divelist_lookup($entry);
+		entry["dive-willing"] = "voluntary";
+	    }).appendTo($span);
+	
+	$span.append("<label>Voluntary</label>");
 	$entry.append($span);
 
-
+	if(entry["dive-willing"] == "voluntary") {
+	    $entry.find(".radio-vol").click();
+	}
+	else {
+	    // optional is the default, e.g. if dive-willing is not
+	    // set.
+	    $entry.find(".radio-opt").click();
+	}
 	
     });
 }
@@ -354,13 +403,12 @@ function divelist_remove_dive(clickedDive) {
 
     //todo: include undo functionality?
 }
-function divelist_add_dive(clickedDive) {
+function divelist_add_dive(clickedDive, is_voluntary) {
     // Add a dive from the database to the divelist
     var attributes = get_dive_attributes(clickedDive);
     var dive_order = divelist.length; // linear order in the list; todo: programmatically
     attributes["dive-order"] = dive_order;
-
-    
+    attributes["dive-willing"] = is_voluntary ? "voluntary" : "optional";
     divelist.push(attributes);
     divelist_redraw();
     
@@ -402,10 +450,10 @@ function divelist_add_dive(clickedDive) {
 }
 
 
-function toggleDive(clickedDive) {
+function toggleDive(clickedDive, is_voluntary) {
     $(clickedDive).toggleClass("selected");
     if ($(clickedDive).hasClass("selected")) { // Add it to the box
-	divelist_add_dive(clickedDive);
+	divelist_add_dive(clickedDive, is_voluntary);
     } else { // remove it from the box
 	divelist_remove_dive(clickedDive);
     }
@@ -437,7 +485,7 @@ function resizeTableHeader() {
 function setOptional(dive) {
     //input dive can be a dive-entry or a selected dive
     var selectedDive = $("#"+getDiveID(dive)+"_selected");
-    $(selectedDive).find(".radio-opt").prop('checked', true);
+    $(selectedDive).find(".radio-opt").click();
     
 }
 
@@ -576,8 +624,7 @@ function alertNotImplemented() {
 
 function autoGen(param) { //todo actually generate correct list of dives
     $(".dive-entry").each(function(n,dive) {
-        (n<11) ? toggleDive(dive) : null;
-        (n<6) ? setOptional(dive) : null; //todo lazy hack
+        (n<11) ? toggleDive(dive, n>=6) : null; //todo lazy hack
     });
     hideQuicklist();
 }
@@ -605,7 +652,22 @@ $(document).ready(function() {
     
     $("#ip-search-by-name").click(alertNotImplemented);
     $(".navbar").find("a").click(alertNotImplemented);
-    $("#btn-view-as-chart").click(alertNotImplemented);
+    $("#btn-view-as-chart").click(
+	function() {
+	    $("#list-view").hide();
+	    $("#chart-view").show();
+	    divelist_redraw();
+	}
+    );
+    $("#btn-view-as-list").click(
+	function() {
+	    $("#chart-view").hide();
+	    $("#list-view").show();
+	    divelist_redraw();
+	}
+    );
+   
+
     
     $("#divelist-savename").on("keydown", function(event) {
         if (event.which == 13) {

@@ -208,6 +208,8 @@ tr.dive-entry td {
     border-bottom:1px solid #eee;
     background:#fff;
     padding:1em 0em!important;
+    /*transition: 0.05s;*/
+    
 }
 tr.dive-entry:hover > td a.selection-circle {
     background:#cdf;
@@ -530,6 +532,76 @@ span.last-performed {
 }
 
 
+
 .selector a{
     margin:0 1em;
+}
+
+
+
+
+/***** THE CHART VIEW ****/
+
+#chart-view {
+    display:none;
+}
+.chart {
+    height:50em;
+    display:block;
+    background:#fff;
+    border:1px solid #888;
+    border-collapse:no-collapse;
+}
+.chart th {
+    height:10em;
+    padding:0em;
+    /* /\* Safari *\/ */
+    /* -webkit-transform: rotate(-90deg); */
+
+    /* /\* Firefox *\/ */
+    /* -moz-transform: rotate(-90deg); */
+
+    /* /\* IE *\/ */
+    /* -ms-transform: rotate(-90deg); */
+
+    /* /\* Opera *\/ */
+    /* -o-transform: rotate(-90deg); */
+
+    /* /\* Internet Explorer *\/ */
+    /* filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); */
+
+
+    text-transform:uppercase;
+    border-right:1px solid #ccc;
+    text-align:right;
+    padding:0.5em;
+    background:#e0eeff;
+}
+
+.chart th, .chart td {
+    border-bottom:3px double #ccc;
+    
+}
+.chart td {
+    background:#fff!important;
+    width:50%;
+}
+
+.chart .selected-dive {
+    display:block;
+    width:100%;
+    text-align:left;
+    color:#444;
+    padding:0.1em;
+    background:#fff0e0;
+    border-radius:1em;
+    margin-bottom:0.5em;
+    border:1px solid #f0e0d0;
+    color:#605040;
+    font-weight:bolder;
+    padding:0.5em;
+}
+
+.chart th + td + td {
+    border-left:1px dashed #ccc;
 }
