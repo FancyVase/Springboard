@@ -125,7 +125,7 @@ ul#filter-dive-group li {
 }
 .panel-dive-filters select.inactive {
     color:#999;
-    /*TODO dxh make dropdown actually inactive*/
+    /*todo eliminate inactive state*/
 }
 
 #experience-level li {
@@ -168,12 +168,6 @@ div#search-by-name {
     display:inline;
     
 }
-
-#dive-database-header th {
-    font-size:8pt; /*todo make font normal size*/
-    /*todo add word wrap*/
-}
-
 
 /*** ----- dive database table entries ----- ***/
 div.scrollable-pane {
@@ -234,7 +228,6 @@ tr.dive-entry:hover > td {
 
 
 tr.dive-entry > td {
-    /*TODO reformat like Google results rather than spreadsheet*/
     padding:0.25em 0.2em;
     cursor:pointer;
 }
@@ -446,22 +439,6 @@ span.remove {
     width:12em;
     display:none;
 }
-
-#dive-database-header th {
-    background:#eee;
-    text-align:left;
-    border-right:1px solid #aaa;
-/*
-    white-space: nowrap;
-    overflow: hidden;
-*/
-    padding:0 0.1em;
-
-    display:none; /*** dxh: debug todo ***/
-
-}
-
-
 
 .known {
     width:6em;

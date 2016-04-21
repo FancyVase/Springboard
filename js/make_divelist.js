@@ -227,9 +227,6 @@ function copy_dive_attributes(dive1, dive2) {
     }); 
 }
 
-
-
-
 function is_same_entry(entry1, entry2) {
     // Return true if two entries in the divelist are the same.
     var key_attributes = ["dive-id", "dive-name"];
@@ -239,7 +236,6 @@ function is_same_entry(entry1, entry2) {
 	}
     });
     return true;
-    
 }
 
 function is_match(clickedDive, entry) {
@@ -282,9 +278,6 @@ function divelist_lookup(clickedDive) {
 
 function divelist_redraw() {
     // Render the list of dives in HTML.
-
-
-   
     $("#list-view").html("");
     $("#chart-view").html("");
 
@@ -404,6 +397,7 @@ function divelist_remove_dive(clickedDive) {
 
     //todo: include undo functionality?
 }
+
 function divelist_add_dive(clickedDive, is_voluntary) {
     // Add a dive from the database to the divelist
     var attributes = get_dive_attributes(clickedDive);
@@ -414,39 +408,6 @@ function divelist_add_dive(clickedDive, is_voluntary) {
     divelist_redraw();
     
     return;
-
-    
-    // var dive_id = getDiveID(clickedDive);
-    // var $entry = $("<span/>", {"class" : "selected-dive",
-    // 			       "id" : dive_id+"_selected", // todo: perhaps just use dive id, and add 'selected' as a class
-    // 			       "dive-id" : dive_id
-    // 			      })
-    // 	.append(dive_id)
-    // 	.append("&nbsp;")
-    // 	.append("<strong>"+$(clickedDive).attr("dive-name")+"</strong>")
-    // 	.appendTo("#list-view");
-    
-    // copy_dive_attributes(clickedDive, $entry);
-    
-    // $entry.attr("dive-order", dive_order); 
-
-
-    
-    // $("<span/>",{"class":"drag-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
-    
-    // var $remove = $("<span class='remove'>[remove]</span>").click(function() {
-    //     toggleDive(clickedDive);
-    // }).appendTo($entry);
-
-    // var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
-
-    // // todo: less stringy, more like $('...', {})
-    // var $span = $("<span class='opt-vol'></span>")
-    // 	.append("<input type='radio' class='radio-opt' name='"+radioName+"'/>")
-    // 	.append("<label>Optional</label>")
-    // 	.append("<input type='radio' class='radio-vol' checked name='"+radioName+"'/>")
-    // 	.append("<label>Voluntary</label>");
-    // $entry.append($span);
 
 }
 
@@ -460,27 +421,6 @@ function toggleDive(clickedDive, is_voluntary) {
     }
     
     ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
-}
-
-function resizeTableHeader() {
-    // TODO: this timeout is a debug statement
-    setTimeout(function() {
-    
-	var $headers = $("#dive-database-header th");
-	var $firstRow = $($("#dive-database-table tr.dive-entry").filter(":visible")[0]);
-	
-	$firstRow.children().each(function(i, col) {
-	    $headers.eq(i).width($(col).width())
-		//.html($(col).html()); // debug
-	});
-	console.log($firstRow.width());
-    }, 100);
-	
-    // for (var col in $("#dive-database-header").find("td")) {
-//         var colName = $(col).attr("column-name");
-//         $(col).width($("."+colName).width());
-//     }
-// //    $("#header-A").width($("#corresponding-column-A").width());
 }
 
 function setOptional(dive) {
@@ -525,7 +465,6 @@ function applyFilters() {
         }
         $(dive).show(); //all filters returned false
     });
-    resizeTableHeader();
 }
 
 function onFilterByDiveGroup(event) {
@@ -612,7 +551,6 @@ function onNewListButtonClick() {
         $("#divelist-savename").text("Untitled divelist");
 	
     });
-
 }
 
 function onLoadDropdownClick() {
@@ -667,8 +605,6 @@ $(document).ready(function() {
 	    divelist_redraw();
 	}
     );
-   
-
     
     $("#divelist-savename").on("keydown", function(event) {
         if (event.which == 13) {
@@ -681,8 +617,6 @@ $(document).ready(function() {
     // Make divelist items sortable/draggable
     $( ".sortable" ).sortable({"handle" : ".drag-handle"});
     $( ".sortable" ).disableSelection();
-
-    resizeTableHeader();
 });
 
 // TODO: Make entries in the user's list of dives have more consistent spacing. That is, the dive names should all line up vertically and so on via a table structure, or by automatically setting the widths via jquery.
