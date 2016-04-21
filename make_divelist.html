@@ -51,18 +51,17 @@
           <li><a href="#" dive-group="all" class="selected">All Groups</a></li>
           <li><a href="#" dive-group="1">Forward</a></li>
           <li><a href="#" dive-group="2">Back</a></li>
-          <li><a href="#" dive-group="3">Inward</a></li>
-          <li><a href="#" dive-group="4">Reverse</a></li>
+          <li><a href="#" dive-group="3">Reverse</a></li>
+          <li><a href="#" dive-group="4">Inward</a></li>
           <li><a href="#" dive-group="5">Twist</a></li>
         </ul>
 
         <!-- FILTER BY PERFORMED TIME !-->
         <div id="filter-time">
-          <h5><input type="checkbox" id="time-box">&nbsp;Performed within</h5>
+          <h5>Performed within</h5>
           &nbsp;&nbsp;&nbsp;
-          <select id="filter-time-dropdown" class="inactive">
-          <!--TODO eliminate checkbox and instead just
-          have always-live dropdown with 'Always' option-->
+          <select id="filter-time-dropdown">
+            <option>Anytime</option>
             <option>1 Month</option>
 <!--            <option>3 Months</option> todo enable 3 Months-->
           </select>
@@ -72,9 +71,9 @@
         <div id="filter-experience">
           <h5>Experience level</h5>
           <ul id="experience-level">
-            <li><input type="checkbox" checked id="know">&nbsp;&nbsp;I know it</li>
-            <li><input type="checkbox" checked id="learning">&nbsp;&nbsp;I'm learning it</li>
-            <li><input type="checkbox" checked id="unknown">&nbsp;&nbsp;I don't know it</li>
+            <li><input type="checkbox" checked id="know">Known well</li>
+            <li><input type="checkbox" checked id="learning">Learning</li>
+            <li><input type="checkbox" checked id="unknown">Don't know</li>
           </ul>    
         </div>
       </form>

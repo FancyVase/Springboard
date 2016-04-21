@@ -120,25 +120,18 @@ ul#filter-dive-group li {
     margin:0;
     padding:0;
     width:9em;
-
-
-}
-.panel-dive-filters select.inactive {
-    color:#999;
-    /*todo eliminate inactive state*/
 }
 
 #experience-level li {
     list-style-type:none;
-    
+}
+#experience-level input {
+    margin-right: 0.4em;
 }
 ul#experience-level {
     margin:0;
     padding-left:1em;
 }
-
-
-
 
 /**** PANEL: DIVE DATABASE *****/
 html,body {

@@ -4,7 +4,6 @@ function returnFalse() { return false; }
 //todo repair checkboxes
 //todo get rid of alerts
 //todo add counting thing for list view (how many of each type of dive)
-//todo inward and reverse are flipped (see filtering; see effect of adding dives to chart view)
 
 //////////////////////////////////////////////////
 // GLOBAL VARIABLES
@@ -19,7 +18,6 @@ var filters = {
     "time": returnFalse,
     "experience": returnFalse,
 };
-
 
 // DIVES
 var dive_database = [];
@@ -284,7 +282,7 @@ function divelist_redraw() {
     // FOR THE CHART VIEW
     // $("#list-view").hide(); // todo: this is a debug statement
 
-    var groups = ["fwd", "back", "inward", "reverse", "twist"];
+    var groups = ["fwd", "back", "reverse", "inward", "twist"];
     var $chart = $("<table/>", {"class" : "chart"}).appendTo("#chart-view");
     $(groups).each(function(_, group){
 	var $tr = $("<tr/>",{"class" : group}).appendTo($chart);
@@ -488,13 +486,13 @@ function onFilterByDiveGroup(event) {
 // Filter by time
 // TODO: hard coded for lo-fi; will need fixing for hi-fi
 function onFilterByTime(event) {
-    $("#filter-time-dropdown").toggleClass("inactive");
-    if ($("#time-box:checked").length == 1){ // if the box is checked, filter
+    console.log("filter by time", event);
+    if (true) { //time is 1 Month todo
         console.log("Filtering by time: in the last month");
         filters["time"] = (function(dive) {
             return dive.childNodes[6].innerHTML != "03/05/2016";
         });
-    } else {                      // else, unfilter   
+    } else { //Anytime
         console.log("Showing all dives");
         filters["time"] = returnFalse;
     }
@@ -505,13 +503,13 @@ function onFilterByTime(event) {
 function onFilterByExperience(event) {
     var checked = new Array();
     if ($("#know:checked").length == 1) {
-        checked.push("⬤ I know it");
+        checked.push("Known well"); //todo don't string-match
     }
     if ($("#learning:checked").length == 1) {
-        checked.push("◐ still learning");
+        checked.push("Learning");
     }
     if ($("#unknown:checked").length == 1) {
-        checked.push("◯ Don't know");
+        checked.push("Don't know");
     }
     console.log(checked);
     filters["experience"] = (function(dive) {
@@ -581,7 +579,7 @@ $(document).ready(function() {
     
     // Bind Action Listeners
     $("#filter-dive-group").find("a").click(onFilterByDiveGroup);
-    $("#time-box").prop("checked",false).click(onFilterByTime);
+    $("#filter-time-dropdown").click(onFilterByTime);
     $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience);
     
     $("#btn-save").click(onSaveButtonClick);
