@@ -105,7 +105,7 @@ function drawDiveDatabase(database) {
 	
 	$details = $("<span/>", {"class":"nondescript"});
 
-	if(dive["dive-experience"].match(/know/i)) {
+	if(dive["dive-experience"].match(/I know/i)) {
 	    
 	    $("<span/>", {"class" : "known known-well"} ).append("Known well")
 		.appendTo($details);
@@ -337,8 +337,7 @@ function divelist_redraw() {
 	    $entry.find(".radio-vol").click();
 	}
 	else {
-	    // optional is the default, e.g. if dive-willing is not
-	    // set.
+	    // optional is the default, e.g. if dive-willing is not set.
 	    $entry.find(".radio-opt").click();
 	}
 	
@@ -355,14 +354,11 @@ function divelist_remove_dive(clickedDive) {
     }
 
     $(divelist).each(function(i, entry) {
-	// renumber dives to preserve order;
-	entry["dive-order"] = i;
+        // renumber dives to preserve order;
+        entry["dive-order"] = i;
     });
 
-
-    
-    divelist_redraw();
-    
+    divelist_redraw();    
     $('#'+getDiveID(clickedDive)+'_selected').remove();
 
     //todo: include undo functionality?
@@ -382,9 +378,9 @@ function divelist_add_dive(clickedDive, is_voluntary) {
 function toggleDive(clickedDive, is_voluntary) {
     $(clickedDive).toggleClass("selected");
     if ($(clickedDive).hasClass("selected")) { // Add it to the box
-	divelist_add_dive(clickedDive, is_voluntary);
+	   divelist_add_dive(clickedDive, is_voluntary);
     } else { // remove it from the box
-	divelist_remove_dive(clickedDive);
+	   divelist_remove_dive(clickedDive);
     }
     
     ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
@@ -394,35 +390,14 @@ function setOptional(dive) {
     //input dive can be a dive-entry or a selected dive
     var selectedDive = $("#"+getDiveID(dive)+"_selected");
     $(selectedDive).find(".radio-opt").click();
-    
 }
 
 function getDiveID(dive) {
     return $(dive).attr("dive-id");
 }
 
-
 function applyFilters() {
     $(".dive-entry").each(function(n,dive) {
-
-        //todo remove all/any or use
-        var any = function(predicate, list) {
-            $(list).each(function(index, x) {
-            if(predicate(x)) {
-                return true;
-            }
-            });
-            return false;
-        };
-        var all = function(predicate, list) {
-            $(list).each(function(index, x) {
-            if(!predicate(x)) {
-                return false;
-            }
-            });
-            return true;
-        };
-	
         for (var key in filters) {
             f = filters[key];
             if (f(dive)) {
@@ -454,12 +429,12 @@ function onFilterByDiveGroup(event) {
 
 // Filter by time
 // TODO: hard coded for lo-fi; will need fixing for hi-fi
-function onFilterByTime(event) {
-    console.log("filter by time", event);
-    if (true) { //time is 1 Month todo
+function filterByTime(timeOption) {
+    console.log("filter by time", timeOption);
+    if (timeOption == "1 Month") {
         console.log("Filtering by time: in the last month");
         filters["time"] = (function(dive) {
-            return dive.childNodes[6].innerHTML != "03/05/2016";
+            return $(dive).attr("dive-last-performed") != "03/05/2016";
         });
     } else { //Anytime
         console.log("Showing all dives");
@@ -478,18 +453,18 @@ function onFilterByExperience(event) {
         checked.push("known-ok");
     }
     if ($("#unknown:checked").length == 1) {
-        checked.push("Dunno"); //todo fix class name + add unknown dives to database
+        checked.push("known-not");
     }
     console.log(checked);
-    filters["experience"] = (function(dive) { //returns true when dive should be hidden
+    filters["experience"] = (function(dive) {
         $span = $(dive).find("span.known");
         for (var i in checked) {
             var className = checked[i];
             if ($span.hasClass(className)) {
-                return false;
+                return false; //dive should be shown (not filtered)
             }
         }
-        return true;
+        return true; //dive should be filtered
     });
     applyFilters();
 }
@@ -555,7 +530,10 @@ $(document).ready(function() {
     
     // Bind Action Listeners
     $("#filter-dive-group").find("a").click(onFilterByDiveGroup);
-    $("#filter-time-dropdown").click(onFilterByTime);
+//    $("#filter-time-dropdown").mouseup(onFilterByTime);
+    $("#filter-time-dropdown").change(function() {
+        filterByTime($(this).val());
+    });
     $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience);
     
     $("#btn-save").click(onSaveButtonClick);
