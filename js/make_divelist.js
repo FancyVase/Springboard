@@ -1,7 +1,6 @@
 // BASIC FUNCTIONS
 function returnFalse() { return false; }
 
-//todo repair checkboxes
 //todo get rid of alerts
 //todo add counting thing for list view (how many of each type of dive)
 
@@ -166,33 +165,7 @@ function drawDiveDatabase(database) {
 	$td = $("<td/>",{"class":"selector"}).appendTo($newDiveRow);
 	$td.append($diveSelector);
     });
-    
-    // var diveSelector = '<a class="selection-circle"></a>';
-    // for (var i=0; i<diveData.length; i++) {
-    //     var diveID = diveData[i][0];
-    //     var diveGroup = diveID.substring(0,1);
-    //     var $newDiveRow = $("<tr></tr>", {"class":"dive-entry", "id":diveID,
-    //                                       "dive-group":diveGroup});
-    //     var diveProperties = {
-    //         "dive-id": diveID,
-    //         "dive-name": diveData[i][1],
-    //         // "dive-dd": diveData[i][2], //for all_dives.csv
-    //         "dive-experience": diveData[i][2],
-    //         "dive-predicted-score": diveData[i][3],
-    //         "dive-high-score": diveData[i][4],
-    //         "dive-average-score": diveData[i][5],
-    //         "dive-last-performed": diveData[i][6],
-    //         "dive-selector": diveSelector,
-    //     };
-    //     for (var key in diveProperties) {
-    // 	    $newDiveRow.attr(key, diveProperties[key]);
-    //         var value = diveProperties[key];
-    //         $td = $("<td></td>", {"class":key}).html(value);
-    //         $newDiveRow.append($td);
-    //     }
-    //     $("#dive-database-table").append($newDiveRow);
-    // }
-    
+        
     // Bind click listener for dives
     $(".dive-entry").click(function() { toggleDive(this) });
 }
@@ -503,17 +476,24 @@ function onFilterByTime(event) {
 function onFilterByExperience(event) {
     var checked = new Array();
     if ($("#know:checked").length == 1) {
-        checked.push("Known well"); //todo don't string-match
+        checked.push("known-well");
     }
     if ($("#learning:checked").length == 1) {
-        checked.push("Learning");
+        checked.push("known-ok");
     }
     if ($("#unknown:checked").length == 1) {
-        checked.push("Don't know");
+        checked.push("Dunno"); //todo fix class name + add unknown dives to database
     }
     console.log(checked);
-    filters["experience"] = (function(dive) {
-        return !checked.includes(dive.childNodes[2].innerHTML);
+    filters["experience"] = (function(dive) { //returns true when dive should be hidden
+        $span = $(dive).find("span.known");
+        for (var i in checked) {
+            var className = checked[i];
+            if ($span.hasClass(className)) {
+                return false;
+            }
+        }
+        return true;
     });
     applyFilters();
 }
