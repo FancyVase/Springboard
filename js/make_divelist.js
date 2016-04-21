@@ -217,8 +217,7 @@ function is_match(clickedDive, entry) {
     // for example, excludes vol/opt and dive order
 
     // todo: perhaps include others, such as height (!)
-    var static_attributes = ["dive-id",
-			     "dive-name"];
+    var static_attributes = ["dive-id", "dive-name"];
 
     //  $(clickedDive).attr(key) && entry[key]
     var ret = true;
@@ -239,10 +238,10 @@ function divelist_lookup(clickedDive) {
     var ret = null;
     $(divelist).each(function(_, entry) {
 	if(is_match(clickedDive, entry)) {
-	    ret = entry;
-	    return;
+	    ret = entry; //todo why is this set if it will then return nothing?
+	    return; //todo why is this returning nothing?
 	}});
-    return ret;
+    return ret; //todo WHAT IS EVEN GOING ON IN THIS FUNCTION @dxh
 }
 
 
@@ -291,7 +290,7 @@ function divelist_redraw() {
 	    .append("<strong>"+entry["dive-name"]+"</strong>")
 	    .appendTo("#list-view");
 	
-	// copy_dive_attributes(clickedDive, $entry);
+	// copy_dive_attributes(clickedDive, $entry); //todo rm?
  
 	$(dive_attributes).each(function(_, key) {
 	    $entry.attr(key, entry[key]);
@@ -377,9 +376,6 @@ function divelist_add_dive(clickedDive, is_voluntary) {
     attributes["dive-willing"] = is_voluntary ? "voluntary" : "optional";
     divelist.push(attributes);
     divelist_redraw();
-    
-    return;
-
 }
 
 
@@ -499,12 +495,13 @@ function onFilterByExperience(event) {
 }
 
 function onSaveButtonClick() { //todo don't copy/paste from autosaving
-//    alert("Pretend that a 'Save a copy as...' dialogue appeared. (This feature is not implemented yet.)"); //todo do we want Save or Save a copy?
+    //todo do we want Save or Save a copy?
     $("#saving").show(0, function() {
         setTimeout(function(){
             $("#saving").hide(0);
         }, 1000);
-     });
+    });
+    //todo actually save...
 }
 function onExportButtonClick() {
     alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)");
@@ -527,7 +524,6 @@ function onNewListButtonClick() {
             toggleDive(dive);
         });
         $("#divelist-savename").text("Untitled divelist");
-	
     });
 }
 
@@ -541,7 +537,7 @@ function alertNotImplemented() {
 
 function autoGen(param) { //todo actually generate correct list of dives
     $(".dive-entry").each(function(n,dive) {
-        (n<11) ? toggleDive(dive, n>=6) : null; //todo lazy hack
+        if (n<11) {toggleDive(dive, n>=6);}
     });
     hideQuicklist();
 }
@@ -565,7 +561,7 @@ $(document).ready(function() {
     $("#btn-save").click(onSaveButtonClick);
     $("#btn-export").click(onExportButtonClick);
     $("#btn-newlist").click(onNewListButtonClick);
-    $("#btn-load").mousedown(onLoadDropdownClick); //todo change id (not a button)
+    $("#dropdown-load").mousedown(onLoadDropdownClick);
     
     $("#ip-search-by-name").click(alertNotImplemented);
     $(".navbar").find("a").click(alertNotImplemented);
@@ -598,5 +594,3 @@ $(document).ready(function() {
 });
 
 // TODO: Make entries in the user's list of dives have more consistent spacing. That is, the dive names should all line up vertically and so on via a table structure, or by automatically setting the widths via jquery.
-
-
