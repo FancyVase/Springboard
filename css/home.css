@@ -28,6 +28,7 @@ input.form-control {
 }
 
 .profile-title {
+	font-size: 20px;
 	padding: 10px 20px;
 	border-bottom: 1px solid #e1e1e1;
 	background-color: #f0f0f0;
@@ -57,7 +58,6 @@ input.form-control {
 
 .item-label {
 	font-weight: normal;
-	color: #565a5c;
 	text-align: right;
 	padding: 10px 20px;
 }
