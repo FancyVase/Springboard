@@ -94,6 +94,10 @@ ul.navbar a.current-page {
     height:100%;
  }
 
+ .panel-dive-filters>h5 {
+    font-size: 1.14em;
+ }
+
 ul#filter-dive-group{
     padding:0;
 }
@@ -336,8 +340,7 @@ td.dive-selector {
 }
 
 .panel-dive-list-container {
-    /*width: 95%;*/
-    padding: 10px;
+    padding: 0px 10px;
     margin: 0 auto;
 }
 
