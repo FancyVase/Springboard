@@ -1,0 +1,300 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,900,700' rel='stylesheet' type='text/css'> <!--TODO could we *not* refer to external websites? -jmn -->
+
+    <title>Springboard | Make Divelist</title>
+
+    <link href="css/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--link href="css/make_divelist.css" rel="stylesheet"!-->
+
+    <style type="text/css">
+      html,body {margin:0;padding:0;width:100%;height:100%;}
+
+      ul,li,a,h1,h2,h3,h4,h5,h6{list-style-type:none;
+      text-decoration:none;color:inherit;font-size:inherit;
+      font-weight:normal;margin:0; padding:0;}
+
+      #entire-container {width:100%;height:100%;}
+      
+
+      html{font-size:100%;}
+      body {
+      font-size:18px;
+      line-height:1.4em;
+      font-family:"Lato",Cabin,"Gill Sans", Helvetica,Arial,sans-serif;
+      }
+
+      h1 {
+      font-size:2em;
+      line-height:1em;
+      padding:0.4em 0;
+      font-weight:bolder;
+      }
+      
+      .header img {display:none;}
+      .header {
+      background:#1b7;
+      color:#fff;
+      }
+
+      .header {
+      padding:0 1em;
+      border-bottom:0.5em solid #4ea;
+      height:4em;
+      }
+
+      /*  h1 { */
+      /* display:block; */
+      /* } */
+      .navbar,.navbar li{display:none;}
+
+      /* #scaffold { */
+      /* position:absolute; */
+      /* left:0; */
+      /* top:0; */
+      /* right:0; */
+      /* bottom:0; */
+      /* display:block; */
+      /* width:100%; */
+      /* height:100%; */
+      /* } */
+      /* #scaffold td { */
+      
+      /* } */
+
+      table#scaffold {
+	  
+      width:100%;
+      height:100%;
+
+      }
+      table#scaffold > * > tr > td {
+            vertical-align:top;
+      }
+
+
+      .panel-dive-filters {
+      padding-top:1rem;
+      font-size:1.2em;
+      padding-left:2rem;
+      
+      }
+      td.panel-dive-filters {
+      }
+      .panel-dive-filters #filter-dive-group h5 {display:none;}
+
+      ul#filter-dive-group li {
+      padding:0.2em 0;
+      color:#666;
+      }
+      ul#filter-dive-group .selected {
+      color:#8a0;
+      
+      }
+
+      #filter-time, #filter-experience {
+      margin-top:1.4em;
+      text-align:left;
+      }
+      label {
+      font-weight:normal;
+      padding-left:0.5em;
+      }
+
+      h5 {
+      font-size:1rem;
+      color:#888;
+      margin:0.5em 0;
+      font-weight:bolder;
+      }
+
+      .panel-dive-list {
+      width:20em;
+      }
+      .panel-dive-list #toolbar {
+      
+      height:100%;
+      border-left:1.4em solid #ddd;
+      }
+      .panel-dive-list #toolbar td:first-child {
+      padding-left:2.8em;
+      
+      }
+      .panel-dive-list #toolbar td:last-child {
+      padding-right:1em;
+      }
+      td#btns-edit {
+      height:2em;
+      background:#000;
+
+      }
+      .inputlike {
+      padding:0.5em;
+      font-size:1.4em;
+      cursor:pointer;
+      margin-right:0.5em;
+      border-radius:0.2em;
+      border:2px solid transparent;
+      min-width:12em;
+      overflow:hidden;
+    white-space:nowrap;
+      }
+      .inputlike:hover {
+      border-color:#0ab;
+      }
+
+
+      #divelist-container {
+      vertical-align:top;
+      }
+      #divelist-container > td {
+      padding-top:2em;
+      }
+
+      .panel-dive-database {
+      
+      }
+
+      #search-by-name h5{display:inline;}
+
+      .scrollable-pane {
+      overflow-y:auto;
+      height:80%;
+      }
+    </style>
+  </head>
+
+  <body>
+    
+    <div id="entire-container">
+      <table id="scaffold">
+	<tr>
+	  <td class="header" colspan="3">
+	    
+	      <h1>Springboard</h1>
+	      <ul class="navbar"> 
+		<li><a href="home.html">Home</a></li> 
+		<li><a href="#" class="current-page">Make Divelist</a></li>
+		<li><a href="#">Learn Dives</a></li>
+	      </ul> 
+	      
+	    	    
+	  </td>
+	</tr>
+	<tr>
+	  <td class="panel-dive-filters" style="width:10em;">
+      <form name="filters">
+
+        <!-- FILTER BY GROUP !-->
+        <ul id="filter-dive-group">
+          <li><a href="#" dive-group="all" class="selected">All Groups</a></li>
+          <li><a href="#" dive-group="1">Forward</a></li>
+          <li><a href="#" dive-group="2">Back</a></li>
+          <li><a href="#" dive-group="3">Reverse</a></li>
+          <li><a href="#" dive-group="4">Inward</a></li>
+          <li><a href="#" dive-group="5">Twist</a></li>
+        </ul>
+
+        <!-- FILTER BY PERFORMED TIME !-->
+        <div id="filter-time">
+          <h5>Performed within</h5>
+          <select id="filter-time-dropdown">
+            <option>Anytime</option>
+            <option>1 Month</option>
+<!--            <option>3 Months</option> todo enable 3 Months-->
+          </select>
+        </div>
+
+        <!-- FILTER BY EXPERIENCE !-->
+        <div id="filter-experience">
+          <h5>Experience level</h5>
+          <ul id="experience-level">
+            <li><input type="checkbox" checked id="know"><label>Known well</label></li>
+            <li><input type="checkbox" checked id="learning"><label>Learning</label></li>
+            <li><input type="checkbox" checked id="unknown"><label>Don't know</label></li>
+          </ul>    
+        </div>
+      </form>
+	  </td>
+	  <td class="panel-dive-database">
+	    &nbsp;
+
+	    &nbsp;
+      <div id="search-by-name">
+        <h5>Find dive</h5>&nbsp;&nbsp;<input id="ip-search-by-name">
+        <!--todo make "Find Dive" search for dives-->
+
+	&nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrange by</strong>
+	<select id="ip-sort">
+	  <option>Predicted score (high to low)</option>
+      <!--todo change Arrange to Sort, add more options, and make it sort things-->
+	</select>
+      </div>
+     
+      <div class="scrollable-pane">
+        <table class="dive-database-debug" id="dive-database-table-debug">
+            <!-- DIVES GO HERE -->
+        </table>
+      </div>
+
+	  </td>
+	  
+	  <td class="panel-dive-list">
+
+	    <table id="toolbar">
+        <tr>
+          <td>
+            <div class="inputlike" id="divelist-savename" contenteditable="true">Untitled Divelist</div>
+          </td>
+          <td id="btns-edit">
+            &nbsp;
+            <button id="btn-save">Save</button> 
+            <button id="btn-export">Export</button> <!--TODO should this be export as?-->
+            <button id="btn-newlist">New List</button>
+            <select id="dropdown-load"><option>Load...</option></select>
+          </td>
+        </tr>
+
+        <tr id="divelist-container" >
+          <td colspan="4">
+	    <div id="chart-view" class="sortable">
+	      <!-- Dives also go here -->
+	    </div>
+            <div id="list-view" class="sortable">
+                <!-- Dives go here -->
+            </div>
+            <div id="quicklist" class="lead">
+              Select dives from the database on the left,
+              or <strong>autogenerate a divelist based on</strong>
+              <ul id="quicklist-options">
+                <li><a onclick="autoGen('HighScore')">Highest predicted score &raquo;</a></li>
+                <li><a onclick="autoGen('Practiced')">Most practiced dives &raquo;</a></li>
+                <li><a onclick="autoGen('Recent')">Most recently performed dives &raquo;</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr id="divelist-viewchanger">
+          <td colspan="4">
+            View as:&nbsp; <!--TODO make List/Chart view work-->
+            <a href="#" id="btn-view-as-list"><img src="img/view_list.png"/>&nbsp;List</a>
+            &nbsp;
+            <a href="#" id="btn-view-as-chart"><img src="img/view_chart.png"/>&nbsp;Chart</a>
+          </td>
+        </tr>
+      </table>
+	  </td>
+	</tr>
+      </table>
+    </div>
+
+    <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+      <script type="text/javascript" src="js/jquery-ui-1.11.4.js"></script>
+      <script type="text/javascript" src="js/make_divelist.js"></script>
+
+  </body>
+
+</html>

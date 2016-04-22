@@ -253,7 +253,16 @@ td.dive-selector {
     background:#fff;
     
 }
+#list-view .selected-dive[dive-willing="optional"] .drag-handle {
+    background:#68c;
+    background:#a00;
+    background:#a0a;
+}
 
+#list-view .selected-dive[dive-willing="voluntary"] .drag-handle {
+    background:#aa0;
+    background:#0ff;
+}
 /* #list-view .selected-dive:before { */
 /*     content:"\2195"; */
 /*     font-size:1.5em; */
@@ -516,7 +525,7 @@ span.last-performed {
     display:none;
 }
 .chart {
-    height:50em;
+    
     display:block;
     background:#fff;
     border:1px solid #888;
@@ -555,23 +564,39 @@ span.last-performed {
 .chart td {
     background:#fff!important;
     width:50%;
+    
 }
 
 .chart .selected-dive {
     display:block;
-    width:100%;
+    
     text-align:left;
     color:#444;
     padding:0.1em;
     background:#fff0e0;
-    border-radius:1em;
+    border-radius:0.25em;
     margin-bottom:0.5em;
     border:1px solid #f0e0d0;
     color:#605040;
     font-weight:bolder;
     padding:0.5em;
+    margin:0.25em;
+    font-size:1.14em;
 }
-
+.chart strong {
+    font-weight:normal;
+}
 .chart th + td + td {
     border-left:1px dashed #ccc;
+}
+
+.chart tr.headerRow td {
+    width:0;
+    background:#eee!important;
+    color:#666;
+    font-weight:bold;
+}
+.chart button {
+    font-size:0.9em;
+    display:none;
 }
