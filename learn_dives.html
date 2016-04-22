@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!-- TODO remove &nbsp; -->
+<!-- TODO make accessible for screenreaders -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic,900,700' rel='stylesheet' type='text/css'> <!--TODO could we *not* refer to external websites? -jmn -->
+
+    <title>Springboard | Make Divelist</title>
+
+    <link href="css/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/make_divelist.css" rel="stylesheet">
+      <link href="css/learn_dives.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="header">
+
+    <!-------- dxh comments (TODO)
+    for last performed, maybe include name of meet, or say how
+          long ago
+
+    Highlighting a dive in the database or selected dive list should
+    highlight the dive in the other place. (e.g. hover over dive in
+    selections list to highlight it in database.)
+
+    For the column corresponding to last performed, perhaps include the
+    name of the meet and/or a text string describing how long ago it was.
+    !---->      
+ 
+      <ul class="navbar">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="make_divelist.html" class="current-page">Make Divelist</a></li>
+        <li><a href="#">Learn Dives</a></li>
+      </ul>
+   
+      <h1><img id="logo" src="img/logo.jpg">Springboard</h1>
+      
+    </div>
+
+    <div class="col-md-7 panel-circles">
+        <div class="circleBase" style="left:0;top:0px">
+            <p> 101a </p>
+            <p>Front Flip Spash </p>
+        </div>
+        <div class="circleBase" style="left:250px;top:100px">
+            <p> 101b </p>
+            <p>Front Flip Spash </p>
+        </div>
+        <div class="circleBase" style="left:500px;top:200px">
+            <p> 101c </p>
+            <p>Front Flip Spash </p>
+        </div>
+        <div class="circleBase" style="left:0;top:300px">
+            <p> 102a </p>
+            <p>Two Flip Spash </p>
+        </div>
+        <div class="circleBase" style="left:250px;top:400px">
+            <p> 102b </p>
+            <p>Two Flip Spash </p>
+        </div>
+        <div class="circleBase" style="left:500px;top:500px">
+            <p> 102c </p>
+            <p>Two Flip Spash </p>
+        </div>
+        <div class="circleBase" style="left:0;top:600px">
+            <p> 103a </p>
+            <p>Three Flip Spash </p>
+        </div>
+        <div class="circleBase" style="left:250px;top:700px">
+            <p> 103b </p>
+            <p>Three Flip Spash </p>
+        </div>
+        <div class="circleBase" style="left:500px;top:800px">
+            <p> 103c </p>
+            <p>Three Flip Spash </p>
+        </div>
+        
+<!--        http://stackoverflow.com/questions/4840736/easier-way-to-create-circle-div-than-using-an-image-->
+    </div>
+
+
+    <div class="col-md-5 panel-dive-inspector" style="border:3px solid black">
+        <h2>Dive Inspector</h2>
+        <p> Some dive</p>
+        <p> Some dive info</p>
+        <p> Some dive info</p>
+        <p> Some dive info</p>
+        <p> Some dive info</p>
+        <p> Some dive info</p>
+        <iframe width="450" height="250" src="https://www.youtube.com/embed/0DepKWU6h7s" frameborder="0" allowfullscreen></iframe>
+        
+    </div>
+
+
+  </body>
+
+  <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+  <script type="text/javascript" src="js/jquery-ui-1.11.4.js"></script>
+  <script type="text/javascript" src="js/make_divelist.js"></script>
+
+</html>

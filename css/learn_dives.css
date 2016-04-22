@@ -1,0 +1,11 @@
+
+.circleBase {
+    border-radius: 50%;
+    behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+    width: 200px;
+    height: 200px;
+    background: #ccc;
+    border: 3px solid #337ab7;
+    text-align: center;
+    position: absolute;
+}
