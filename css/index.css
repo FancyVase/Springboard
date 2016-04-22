@@ -50,8 +50,8 @@ a {
 }
 
 span.link>a {
-	color: #1b7;
-	border: 2px solid #1b7;
+	color: #4E7399;
+	border: 2px solid #4E7399;
 	padding: 15px 50px;
 	font-size: 1em;
 	transition: 0.25s;
@@ -59,7 +59,7 @@ span.link>a {
 
 span.link>a:hover {
 	color: #F3F3F3;
-	background-color: #1b7;
+	background-color: #4E7399;
 }
 
 span.link + span.link {

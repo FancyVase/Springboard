@@ -12,6 +12,7 @@ body {
 /*TODO make it work with a narrow window (eg horizontal scrollbar)*/
 a {
     outline:0;
+    color: #4E7399;
 }
 h5 {
     font-weight:700;
