@@ -569,7 +569,6 @@ $(document).ready(function() {
     $("#dropdown-load").mousedown(onLoadDropdownClick);
     
     $("#ip-search-by-name").click(alertNotImplemented);
-    $(".navbar").find("a").click(alertNotImplemented);
     $("#btn-view-as-chart").click(
 	function() {
 	    $("#list-view").hide();
