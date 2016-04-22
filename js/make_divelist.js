@@ -55,6 +55,8 @@ function loadDiveData(filename) {
 
 	// todo: debug to populate divelist
 	$("#quicklist a")[0].click();
+	$("#list-view").hide();
+	$("#chart-view").show();
     }
 }
 
@@ -281,18 +283,60 @@ function divelist_lookup(clickedDive) {
 
 
 function divelist_redraw() {
+
     // Render the list of dives in HTML.
-
-
    
     $("#list-view").html("");
     $("#chart-view").html("");
 
+
+    function add_radio_buttons($entry, is_chart) {
+	var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
+
+	// todo: less stringy, more like $('...', {})
+	// todo: keep track of radio buttons in divelist
+
+	/// -------- CREATE OPT/VOL RADIO BUTTONS
+	var $span = $("<span class='opt-vol'></span>");
+	$("<input/>", {"type" : "radio",
+		       "class" : "radio-opt",
+		       "name" : radioName})
+	    .click(function() {
+		var entry = divelist_lookup($entry);
+		entry["dive-willing"] = "optional";
+		$entry.attr("dive-willing","optional");
+	    }).appendTo($span);
+	
+	$span.append("<label>Optional</label>");
+	if(is_chart) {
+	    $span.append("<br/>");
+	}
+	$("<input/>", {"type" : "radio",
+		       "class" : "radio-vol",
+		       "name" : radioName})
+	    .click(function() {
+		var entry = divelist_lookup($entry);
+		entry["dive-willing"] = "voluntary";
+		$entry.attr("dive-willing","voluntary");
+	    }).appendTo($span);
+	
+	$span.append("<label>Voluntary</label>");
+	$entry.append($span);
+    };
+
+
+    
     // FOR THE CHART VIEW
     // $("#list-view").hide(); // todo: this is a debug statement
 
     var groups = ["fwd", "back", "inward", "reverse", "twist"];
     var $chart = $("<table/>", {"class" : "chart"}).appendTo("#chart-view");
+
+    var $tr = $("<tr/>",{"class" : "headerRow"}).appendTo($chart)
+	.append("<td></td>")
+    	.append("<td>Optional</td>")
+    	.append("<td>Voluntary</td>")
+    ;
     $(groups).each(function(_, group){
 	var $tr = $("<tr/>",{"class" : group}).appendTo($chart);
 	var $th = $("<th/>").appendTo($tr).html(group);
@@ -306,7 +350,11 @@ function divelist_redraw() {
 	var willing = entry["dive-willing"];
 
 	var $entry = $("<span/>", {"class" : "selected-dive"});
+	$entry.append("<strong>"+entry["dive-id"]+"</strong>&nbsp;&nbsp;");
 	$entry.append(entry["dive-name"]);
+
+	$("<button/>",{"class":"toggle-willing",
+		      "html" : willing == "optional" ? "Make Voluntary &raquo;" : "&laquo; Make Optional"}).appendTo($entry);
 	
 	$chart
 	    .find("."+group)
@@ -343,33 +391,9 @@ function divelist_redraw() {
 	    divelist_remove_dive($entry);
 	}).appendTo($entry);
 
-	    
-	var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
+	add_radio_buttons($entry);
 
-	// todo: less stringy, more like $('...', {})
-	// todo: keep track of radio buttons in divelist
-
-	/// -------- CREATE OPT/VOL RADIO BUTTONS
-	var $span = $("<span class='opt-vol'></span>");
-	$("<input/>", {"type" : "radio",
-		       "class" : "radio-opt",
-		       "name" : radioName})
-	    .click(function() {
-		var entry = divelist_lookup($entry);
-		entry["dive-willing"] = "optional";
-	    }).appendTo($span);
-	$span.append("<label>Optional</label>");
-	$("<input/>", {"type" : "radio",
-		       "class" : "radio-vol",
-		       "name" : radioName})
-	    .click(function() {
-		var entry = divelist_lookup($entry);
-		entry["dive-willing"] = "voluntary";
-	    }).appendTo($span);
-	
-	$span.append("<label>Voluntary</label>");
-	$entry.append($span);
-
+	$entry.attr("dive-willing", entry["dive-willing"]);
 	if(entry["dive-willing"] == "voluntary") {
 	    $entry.find(".radio-vol").click();
 	}
@@ -688,3 +712,5 @@ $(document).ready(function() {
 // TODO: Make entries in the user's list of dives have more consistent spacing. That is, the dive names should all line up vertically and so on via a table structure, or by automatically setting the widths via jquery.
 
 
+// Todo: blue dot toggles through blue with opt text, red with vol
+// text, and off.
