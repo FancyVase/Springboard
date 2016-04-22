@@ -70,6 +70,7 @@ function populateDiveDatabase(diveData) {
 }
 
 function drawDiveDatabase(database) {
+    //todo make dive-id be a real column (formatting)
 
     if(typeof(database) === "undefined") {
 	database = dive_database; // global variable as default
