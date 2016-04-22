@@ -1,5 +1,9 @@
+html, body {
+    height: 100%;
+    margin: 0px;
+}
+
 body {
-    margin:0 2em;
     font-family:"Lato",Cabin,"Gill Sans", Helvetica,Arial,sans-serif;
     background:#fff url("../img/tiles-3.jpg");
     background-size:25%;
@@ -29,13 +33,13 @@ div.header {
     
 }
 .header h1 {
+    padding-left: 2%;
     font-weight:700;
     display:inline;
 }
 /** PAGE HEADER NAVIGATION **/
 ul.navbar {
     position:absolute;
-    right:0;
     top:0.75em;
     top:1.5em;
     right:8em;
@@ -73,6 +77,8 @@ ul.navbar a.current-page {
 .panel-dive-filters {
     border-left-width:1px;
     border-top-width:1px;
+    padding: 0px;
+    text-align: center;
 }
 .panel-dive-database {
     border-bottom-right-radius:0.5em;
@@ -93,20 +99,15 @@ ul#filter-dive-group{
 }
 ul#filter-dive-group a {
     color:#555;
-    padding-left:0.75em;
     line-height:1.8em;
     font-size:1.14em;
     text-transform:uppercase;
     display:block;
-    width:9em;
-    border-left:0.25em solid transparent;
 }
 
 ul#filter-dive-group .selected {
-    background:#fff;
-    background:#cf0;
-    
-    border-radius:0.2em;
+    background:#1b7;
+    color: #fff;
 }
 
 ul#filter-dive-group li {
@@ -130,6 +131,8 @@ ul#filter-dive-group li {
 }
 ul#experience-level {
     margin:0;
+    text-align: left;
+    margin-left:20%;
     padding-left:1em;
 }
 
@@ -150,8 +153,7 @@ div#search-by-name {
     border-top-right-radius:0.5em;
     border-top:1px solid #aaa;
     border-right:1px solid #aaa;
-    padding:0.25em 0;
-    
+    padding: 0.2em;
 }
 
 #search-by-name h5 {
@@ -329,16 +331,23 @@ td.dive-selector {
 }
 
 .panel-dive-list {
-    margin-left:1em;
     padding-top:0.5em;
     padding:0;
+}
 
+.panel-dive-list-container {
+    /*width: 95%;*/
+    padding: 10px;
+    margin: 0 auto;
 }
 
 .panel-dive-list #toolbar {
     height:100%;
     width:100%;
+}
 
+.toolbar-buttons {
+    width: 50%;
 }
 
 #divelist-container td {
@@ -356,18 +365,17 @@ td.dive-selector {
 
 
 #quicklist {
-    padding-top:15%;
+    padding:15% 10%;
     display:block;
 }
 
 ul#quicklist-options {
     list-style-type:none;
     text-align:left;
-    margin-top:2em;
+    margin-top:1em;
 }
 
 #quicklist-options li a {
-    font-size:1.5em;
     font-weight:700;
     line-height:2em;
     cursor:pointer;
@@ -490,7 +498,7 @@ span.last-performed {
 }
 
 #filter-dive-group li + li {
-    padding-left:1em;
+    /*padding-left:1em;*/
 }
 
 
