@@ -19,7 +19,7 @@ function loadDiveData(filename) {
     }
 }
 
-function populateBubbles(diveType="Forward") {
+function populateBubbles(diveType) {
 //    for (var i=0;i<diveData.length;i++){
 //        if (diveData[i][1].substring(0,7) == "Forward"){
 ////            console.log(diveData[i][2]);
