@@ -92,7 +92,12 @@
       }
       ul#filter-dive-group .selected {
       color:#8a0;
+      font-weight:bolder;
       
+      }
+      ul#filter-dive-group a {
+      text-decoration:none;
+      outline:0;
       }
 
       #filter-time, #filter-experience {
@@ -118,6 +123,7 @@
       
       height:100%;
       border-left:1.4em solid #ddd;
+      border-color:#fff;
       }
       .panel-dive-list #toolbar td:first-child {
       padding-left:2.8em;
@@ -131,7 +137,7 @@
       background:#000;
 
       }
-      .inputlike {
+      .inputlike,#ip-search-by-name {
       padding:0.5em;
       font-size:1.4em;
       cursor:pointer;
@@ -140,12 +146,16 @@
       border:2px solid transparent;
       min-width:12em;
       overflow:hidden;
-    white-space:nowrap;
+      white-space:nowrap;
       }
       .inputlike:hover {
       border-color:#0ab;
       }
 
+      #ip-search-by-name, #ip-sort {
+      border-color:#ccc;
+      font-size:1em;
+      }
 
       #divelist-container {
       vertical-align:top;
@@ -163,6 +173,38 @@
       .scrollable-pane {
       overflow-y:auto;
       height:80%;
+      }
+
+      .score-column, .nondescript {
+      display:none;
+      }
+       .dive-id {
+      float:left;
+      color:#666;
+      width:4em;
+      text-align:right;
+      padding-right:0.5em;
+      }
+      table#dive-database-table {
+      width:100%;
+      }
+
+      .panel-dive-database #search-by-name + .scrollable-pane {
+      margin-top:1rem;
+      
+      }
+      #dive-database-table td {
+      background:#eee;
+      padding:0.4em 0;
+      border-bottom:1px solid #fff;
+      width:100%;
+
+      font-size:1.15em;
+      padding:1em 0;
+      
+      }
+      #dive-database-table td:hover {
+      background:#cf0;
       }
     </style>
   </head>
@@ -227,15 +269,15 @@
         <h5>Find dive</h5>&nbsp;&nbsp;<input id="ip-search-by-name">
         <!--todo make "Find Dive" search for dives-->
 
-	&nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrange by</strong>
-	<select id="ip-sort">
+	&nbsp;&nbsp;&nbsp;&nbsp; <strong>Sort by</strong>
+	<select id="ip-sort" class="inputlike">
 	  <option>Predicted score (high to low)</option>
       <!--todo change Arrange to Sort, add more options, and make it sort things-->
 	</select>
       </div>
      
       <div class="scrollable-pane">
-        <table class="dive-database-debug" id="dive-database-table-debug">
+        <table class="dive-database" id="dive-database-table">
             <!-- DIVES GO HERE -->
         </table>
       </div>
