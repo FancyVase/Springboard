@@ -1,0 +1,28 @@
+TODO
+-Index: (very low priority)
+    - undo things that were done
+-Profile:
+    - move from key/value to google search result format
+    - include dive history/recently performed dives as meets
+    - stretch goal: "populate makedivelist with one of recent meets"
+    - stretch goal: enter new data from previous meet
+    - Make "Anthony" look different
+    - Make it editable
+-MakeDivelist:
+    - use Aku
+    - static View As location
+    - Add functionality (sorting, performed within, etc.)
+    - Ask diver about makedivelist page, esp. if DD is needed on the page
+    - replace 1/2 with pretty html 1/2
+    - coordinating colors 
+    - stretch: load saved lists; would go well with meets thing on profile page
+-LearnDives:
+    - make it pretty
+    - make it less overwhelming
+    - add left padding
+    - x axis
+    - put actual dive videos in
+    - stretch: inspect dives has a search function
+    
+In general:
+    - address heuristic evals / feedback
