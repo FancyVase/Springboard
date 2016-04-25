@@ -17,18 +17,7 @@
 
   <body>
     <div class="header">
-
-    <!-------- dxh comments (TODO)
-    for last performed, maybe include name of meet, or say how
-          long ago
-
-    Highlighting a dive in the database or selected dive list should
-    highlight the dive in the other place. (e.g. hover over dive in
-    selections list to highlight it in database.)
-
-    For the column corresponding to last performed, perhaps include the
-    name of the meet and/or a text string describing how long ago it was.
-    !---->      
+   
  
       <ul class="navbar">
         <!-- TODO: Add profile picture -->
@@ -40,66 +29,44 @@
       <h1><img id="logo" src="img/logo.jpg">Springboard</h1>
       
     </div>
+      
+      <!-- BEGIN CONTAINER -->
+    <div class="container">
+    
+        <div id="buttons">
+            <p>
+                <button type="button" class="btn btn-default" onclick="populateBubbles('Forward');">Forward</button>
+                <button type="button" class="btn btn-default" onclick="populateBubbles('Back');">Back</button>
+                <button type="button" class="btn btn-default" onclick="populateBubbles('Reverse');">Reverse</button>
+                <button type="button" class="btn btn-default" onclick="populateBubbles('Inward');">Inward</button>
+                <button type="button" class="btn btn-default" onclick="populateBubbles('Twist');">Twist</button>
+                
+            </p>
+            </div>
 
-    <div class="col-md-7 panel-circles">
-        <div class="circleBase" style="left:0;top:0px">
-            <p> 101a </p>
-            <p>Front Flip Spash </p>
+        <div class="col-md-8 panel-circles" id='circle-holder'>
+    <!--        http://stackoverflow.com/questions/4840736/easier-way-to-create-circle-div-than-using-an-image-->
         </div>
-        <div class="circleBase" style="left:250px;top:100px">
-            <p> 101b </p>
-            <p>Front Flip Spash </p>
-        </div>
-        <div class="circleBase" style="left:500px;top:200px">
-            <p> 101c </p>
-            <p>Front Flip Spash </p>
-        </div>
-        <div class="circleBase" style="left:0;top:300px">
-            <p> 102a </p>
-            <p>Two Flip Spash </p>
-        </div>
-        <div class="circleBase" style="left:250px;top:400px">
-            <p> 102b </p>
-            <p>Two Flip Spash </p>
-        </div>
-        <div class="circleBase" style="left:500px;top:500px">
-            <p> 102c </p>
-            <p>Two Flip Spash </p>
-        </div>
-        <div class="circleBase" style="left:0;top:600px">
-            <p> 103a </p>
-            <p>Three Flip Spash </p>
-        </div>
-        <div class="circleBase" style="left:250px;top:700px">
-            <p> 103b </p>
-            <p>Three Flip Spash </p>
-        </div>
-        <div class="circleBase" style="left:500px;top:800px">
-            <p> 103c </p>
-            <p>Three Flip Spash </p>
-        </div>
-        
-<!--        http://stackoverflow.com/questions/4840736/easier-way-to-create-circle-div-than-using-an-image-->
-    </div>
 
 
-    <div class="col-md-5 panel-dive-inspector" style="border:3px solid black">
-        <h2>Dive Inspector</h2>
-        <p> Some dive</p>
-        <p> Some dive info</p>
-        <p> Some dive info</p>
-        <p> Some dive info</p>
-        <p> Some dive info</p>
-        <p> Some dive info</p>
-        <iframe width="450" height="250" src="https://www.youtube.com/embed/0DepKWU6h7s" frameborder="0" allowfullscreen></iframe>
-        
-    </div>
+        <div class="col-md-4 panel-dive-inspector" style="border:3px solid black">
+            <h2>Dive Inspector</h2>
+            <p> Some dive</p>
+            <p> Some dive info</p>
+            <p> Some dive info</p>
+            <p> Some dive info</p>
+            <p> Some dive info</p>
+            <p> Some dive info</p>
+    <!--        <iframe width="100%" height="200" src="https://www.youtube.com/embed/0DepKWU6h7s" frameborder="0" allowfullscreen></iframe>-->
 
+        </div>
+      </div>
 
   </body>
 
   <script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
   <script type="text/javascript" src="js/jquery-ui-1.11.4.js"></script>
-  <script type="text/javascript" src="js/make_divelist.js"></script>
+<!--  <script type="text/javascript" src="js/make_divelist.js"></script>-->
+  <script type="text/javascript" src="js/learn_dives.js"></script>
 
 </html>
