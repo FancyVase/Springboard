@@ -245,6 +245,7 @@ function divelist_lookup(clickedDive) {
 	    return; //todo why is this returning nothing?
 	}});
     return ret; //todo WHAT IS EVEN GOING ON IN THIS FUNCTION @dxh
+    //oh jk it's a lambda function but the tabbing is just weird
 }
 
 
@@ -296,7 +297,7 @@ function divelist_redraw() {
     // FOR THE CHART VIEW
     // $("#list-view").hide(); // todo: this is a debug statement
 
-    var groups = ["fwd", "back", "reverse", "inward", "twist"];
+    var groups = ["fwd", "back", "reverse", "inward", "twist"]; //todo why not "forward"? @dxh
     var $chart = $("<table/>", {"class" : "chart"}).appendTo("#chart-view");
 
     var $tr = $("<tr/>",{"class" : "headerRow"}).appendTo($chart)
@@ -313,7 +314,7 @@ function divelist_redraw() {
 
 
     $(divelist).each(function(i, entry){
-	var group = groups[entry["dive-id"].substr(0,1)-1]; // haaaaaack
+	var group = groups[entry["dive-id"].substr(0,1)-1]; // haaaaaack todo
 	var willing = entry["dive-willing"];
 
 	var $entry = $("<span/>", {"class" : "selected-dive"});
