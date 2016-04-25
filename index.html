@@ -1,5 +1,6 @@
 <html>
-<head>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Kanit:400,600italic,700italic,800italic' rel='stylesheet' type='text/css'>
 	<title>Springboard</title>
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
@@ -9,12 +10,51 @@
 			Springboard
 		</div>
 		<div class="subheading"> 
-			A platform for divers
+			A platform for divers.
 		</div>
-		<div class="links">
-			<span class="link"><a href="login.html">Login</a></span> 
-			<span class="link"><a href="signup.html">Sign up</a></span>
+	
+		  <div class="login-form">
+			<form action="home.html">
+				<h2>Sign in</h2>
+				<div class="form-item">
+					<div class="form-label">Username or email</div>
+					<input type="text"
+					       class="form-control" tabindex="1">
+				</div>
+				<div class="form-item">
+			  <div class="form-label link"
+			  id="forgot"><a href="login.html" tabindex="4">Forgot Password?</a></div>
+				  <div class="form-label">Password</div>
+	
+					<input type="password"
+					       class="form-control" tabindex="2">
+				</div>
+
+				
+
+				<div class="btn">
+					<input type="submit"
+					class="btn btn-success"
+					value="Sign in" tabindex="3"/>
+				</div>
+				<br/>
+				<hr style="opacity:0.4;"/>
+				<br/>
+				<div class="form-label link">
+					<a href="signup.html">New to
+					Springboard? Create an account!</a>
+				</div>
+			</form>
 		</div>
+	
 	</header>
+
+
 </body>
+<script type="text/javascript" src="js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript">
+  $("body").ready(function() {
+  $("input")[0].focus();
+  });
+</script>
 </html>
