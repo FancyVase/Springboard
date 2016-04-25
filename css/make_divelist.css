@@ -537,7 +537,7 @@ span.last-performed {
     display:none;
 }
 .chart {
-    
+/*    todo make chart (and list) be the same height as database; add scrollbar if it goes off the screen*/
     display:block;
     background:#fff;
     border:1px solid #888;

@@ -441,6 +441,7 @@ function applyFilters() {
 }
 
 function onFilterByDiveGroup(event) {
+    //todo don't filter by first digit, b/c 5100 is both 5 and 1, and 001 is 1
     // Move highlight
     $("#filter-dive-group").find("a").removeClass("selected");
     $(event.currentTarget).addClass("selected");
@@ -502,18 +503,15 @@ function onFilterByExperience(event) {
 
 ///////////////// SORTING
 
-function sortDivesBy(timeOption) { //TODOnext
-    console.log("filter by time", timeOption);
-    if (timeOption == "1 Month") {
-        console.log("Filtering by time: in the last month");
-        filters["time"] = (function(dive) {
-            return $(dive).attr("dive-last-performed") != "03/05/2016";
-        });
-    } else { //Anytime
-        console.log("Showing all dives");
-        filters["time"] = returnFalse;
+function sortDivesBy(sortOption) {
+    console.log("sort dives by:", sortOption);
+    if (sortOption == "Predicted score (highest first)") { //todo don't string-match
+        console.log("Sorting dives by predicted score, highest first");
+        //todo actually sort
+    } else {
+        console.error("unimplemented sort option:", sortOption);
     }
-    applyFilters();
+    applyFilters(); //todo prob not needed?
 }
 
 //////////////// BUTTONS
