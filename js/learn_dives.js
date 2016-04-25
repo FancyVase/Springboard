@@ -56,7 +56,18 @@ function populateBubbles(diveType="Forward") {
 
 function inspectBubble(circle){
     var diveID = circle[0].id;
-    $("#dive-inspector").html(diveID);
+    $("#diveID").html("Dive ID: " + diveID);
+    $("#diveName").html("Dive Name: " + getDiveData(diveID)[1]);
+    $("#diveDD").html("Degree of Difficulty: " + getDiveData(diveID)[2]);
+    $("#diveScores").html("Average score: 42");
+}
+
+function getDiveData(diveID){
+    for (var i=0;i<diveData.length;i++) {
+        if (diveData[i][0] == diveID){
+            return diveData[i];
+        }
+    }
 }
 
 $(document).ready(function() {
@@ -66,8 +77,3 @@ $(document).ready(function() {
 //    (".dive-entry").click(function() { toggleDive(this) });
 });
 
-
-//        <div class="circleBase" style="left:500px;top:800px">
-//            <p> 103c </p>
-//            <p>Three Flip Spash </p>
-//        </div>
