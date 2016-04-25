@@ -86,10 +86,16 @@
       <h5>Find dive</h5>&nbsp;&nbsp;<input id="ip-search-by-name">
       <!--todo make "Find Dive" search for dives-->
 
-      &nbsp;&nbsp;&nbsp;&nbsp; <strong>Arrange by</strong>
-      <select id="ip-sort">
-       <option>Predicted score (high to low)</option>
-       <!--todo change Arrange to Sort, add more options, and make it sort things-->
+      &nbsp;&nbsp;&nbsp;&nbsp; <strong>Sort by</strong>
+      <select id="sort-dropdown">
+        <!--todo this really isn't the best interface for sorting... -jmn -->
+        <option>Predicted score (high to low)</option> <!-- todo or "highest first"-->
+        <option>Predicted score (low to high)</option>
+        <option>Dive ID (high to low)</option>
+        <option>Dive ID (low to high)</option>
+        <option>Date last performed (most recent first)</option>
+        <option>Date last performed (oldest first)</option>
+        <!--todo make it sort things-->
      </select>
    </div>
 

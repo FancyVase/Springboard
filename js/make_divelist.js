@@ -425,6 +425,8 @@ function getDiveID(dive) {
     return $(dive).attr("dive-id");
 }
 
+///////////////////// FILTERS
+
 function applyFilters() {
     $(".dive-entry").each(function(n,dive) {
         for (var key in filters) {
@@ -498,6 +500,24 @@ function onFilterByExperience(event) {
     applyFilters();
 }
 
+///////////////// SORTING
+
+function sortDivesBy(timeOption) { //TODOnext
+    console.log("filter by time", timeOption);
+    if (timeOption == "1 Month") {
+        console.log("Filtering by time: in the last month");
+        filters["time"] = (function(dive) {
+            return $(dive).attr("dive-last-performed") != "03/05/2016";
+        });
+    } else { //Anytime
+        console.log("Showing all dives");
+        filters["time"] = returnFalse;
+    }
+    applyFilters();
+}
+
+//////////////// BUTTONS
+
 function onSaveButtonClick() { //todo don't copy/paste from autosaving
     //todo do we want Save or Save a copy?
     $("#saving").show(0, function() {
@@ -564,6 +584,9 @@ $(document).ready(function() {
         filterByTime($(this).val());
     });
     $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience);
+    $("#sort-dropdown").change(function() {
+        sortDivesBy($(this).val());
+    });
     
     $("#btn-save").click(onSaveButtonClick);
     $("#btn-export").click(onExportButtonClick);
