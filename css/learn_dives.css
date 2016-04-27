@@ -66,8 +66,37 @@ svg {
     width:0em;
     overflow:scroll;
     position:relative;
+  
 }
 
 html {
    /* overflow-x:hidden;*/
+}
+.scrolling-debug-xxxx {
+  /*cursor:grab;*/
+}
+
+.dive-info {
+
+    box-shadow:0 0 0.5em rgba(0,0,0,1);
+    position:fixed;
+    bottom:0em;
+    right:0.5em;;
+    width:24em;
+    height:14em;
+    z-index:4;
+    background:#fff;
+    border:1px solid #ccc;
+    border-radius:0.1em;
+    padding:1em;
+    display:none;
+}
+
+.dive-info h2 {
+    font-size:1.4em;
+}
+
+.dive-bubble.selected {
+    border-color:#0a6;
+    background:#4b8;
 }

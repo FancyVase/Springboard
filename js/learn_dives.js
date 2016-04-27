@@ -42,7 +42,7 @@ function loadDiveData(filename) {
 
 	
 	// TODO: uncomment the next line.
-	$(".scrolling-debug-xxxx").hide().show(0);
+	$("#graph").hide().show(1000);
         // populateBubbles("Back");
 
     }
@@ -150,7 +150,7 @@ function render_graph() {
 	if(i%q == 0) {
 	    $svg.line(margin.left*2-8, margin.top + (i/q-min_difficulty)*dy,
 		      ww-margin.left*0, margin.top + (i/q-min_difficulty)*dy,
-    		      {stroke:"#222", strokeWidth:1});
+    		      {stroke:"#fff" || "#222", strokeWidth:3, opacity: 0.8});
 
 	    $axis.text(margin.left*2-16,
 		      margin.top + (i/q-min_difficulty)*dy + 3,
@@ -182,7 +182,7 @@ function render_graph() {
 
 
     // LEGEND TEXT: DEGREE OF DIFFICULTY
-    $axis.text(margin.left*2-40,
+    $axis.text(margin.left*2-40+6,
 	      margin.top/2 + 28,
 	      "D.D" || "DEGREE OF",
 	      {fontFamily: "Lato",
@@ -272,10 +272,18 @@ function render_graph() {
 
     
     // RESIZE THE DIVE VIEWING WINDOW
+
+
+    $(".dive-bubble").click(function() {
+	$(".dive-info").slideDown();
+	$(".selected").removeClass("selected");
+	$(this).addClass("selected");
+    });
     
     //$(".scrolling").width($(window).width());
     $(".scrolling").css("width", $(window).width());
     $(".scrolling").css("height", $(window).height());
+    
     
 }
 
@@ -289,6 +297,7 @@ $(document).ready(function() {
     $(window).scroll(function() {
 	$("#axis").css('left',$(window).scrollLeft()+'px');
     });
+
 //    (".dive-entry").click(function() { toggleDive(this) });
 });
 
