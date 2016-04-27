@@ -16,3 +16,58 @@
     height: 2000px;
     background: url('http://i.imgur.com/GySvQ.png');
 }
+
+
+svg {
+    border:0px solid #000;
+}
+
+#graph {
+    min-width:180em;
+    height:180em;
+    position:relative;
+}
+
+#axis {
+    width:10em;
+    position:absolute;
+    top:0em;
+    left:0em;
+    height:180em;
+
+    z-index:1;
+}
+
+.dive-bubble {
+    position:absolute;
+    top: 0;
+    left:0;
+    white-space:nowrap;
+    overflow:hidden;
+    border-radius:0.4em;
+    border-top:0.2em solid #04c;
+    background:#58d;
+    padding:0.1em 0.4em;
+    color:#fff;
+    height:4em;
+    height:3.8em;
+
+    cursor:pointer;
+    cursor:hand;
+}
+.dive-bubble .dive-id {
+    color:#fff;
+}
+
+.Pike{
+    border-color:"#04c";
+}
+.scrolling {
+    width:0em;
+    overflow:scroll;
+    position:relative;
+}
+
+html {
+   /* overflow-x:hidden;*/
+}
