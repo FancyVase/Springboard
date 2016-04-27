@@ -185,9 +185,9 @@ function get_dive_attributes(htmlObject) {
     // Return a hash of the html object's dive-related attributes, if any.
     var attributes = {};
     $(dive_attributes).each(function(_, k) {
-	if($(htmlObject).attr(k)) {
-	    attributes[k] = $(htmlObject).attr(k);
-	}
+        if($(htmlObject).attr(k)) {
+            attributes[k] = $(htmlObject).attr(k);
+        }
     });
     return attributes;
 }
@@ -195,9 +195,9 @@ function copy_dive_attributes(dive1, dive2) {
     // Copy the dive attributes from dive1 to dive2, overwriting
     // any dive attributes that already exist.
     $(dive_attributes).each(function(_, k) {
-	if($(dive1).attr(k)) {
-	    $(dive2).attr(k, $(dive1).attr(k));
-	}
+        if($(dive1).attr(k)) {
+            $(dive2).attr(k, $(dive1).attr(k));
+        }
     }); 
 }
 
@@ -205,9 +205,9 @@ function is_same_entry(entry1, entry2) {
     // Return true if two entries in the divelist are the same.
     var key_attributes = ["dive-id", "dive-name"];
     $(key_attributes).each(function(_, key) {
-	if(entry1[key] != entry2[key]) {
-	    return false;
-	}
+        if(entry1[key] != entry2[key]) {
+            return false;
+        }
     });
     return true;
 }
@@ -225,10 +225,9 @@ function is_match(clickedDive, entry) {
     //  $(clickedDive).attr(key) && entry[key]
     var ret = true;
     $(static_attributes).each(function(_, key) {
-	if($(clickedDive).attr(key) != entry[key]) {
-	    ret = false;
-	}
-	
+        if($(clickedDive).attr(key) != entry[key]) {
+            ret = false;
+        }
     });
     return ret;
 }
@@ -240,12 +239,12 @@ function divelist_lookup(clickedDive) {
 
     var ret = null;
     $(divelist).each(function(_, entry) {
-	if(is_match(clickedDive, entry)) {
-	    ret = entry; //todo why is this set if it will then return nothing?
-	    return; //todo why is this returning nothing?
-	}});
-    return ret; //todo WHAT IS EVEN GOING ON IN THIS FUNCTION @dxh
-    //oh jk it's a lambda function but the tabbing is just weird
+        if(is_match(clickedDive, entry)) {
+            ret = entry;
+            return; //todo @dxh does this return do anything?
+        }
+    });
+    return ret;
 }
 
 
@@ -257,11 +256,9 @@ function divelist_redraw() {
     $("#list-view").html("");
     $("#chart-view").html("");
 
-
     function add_radio_buttons($entry, is_chart) {
 	var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
 
-	// todo: less stringy, more like $('...', {})
 	// todo: keep track of radio buttons in divelist
 
 	/// -------- CREATE OPT/VOL RADIO BUTTONS
@@ -533,7 +530,7 @@ function animate_autosave(fn_when_finished) {
         $("#autosaving").show(0,
 			  function() {
 			      setTimeout(function(){
-				  $("#autosaving").hide(0, fn_when_finished);
+				      $("#autosaving").hide(0, fn_when_finished);
 			      }, 1000)});
 }
 
