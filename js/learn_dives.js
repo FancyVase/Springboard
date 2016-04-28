@@ -1,5 +1,16 @@
 
 var diveData = new Array();
+
+var position = {"Straight" : "A",
+		"Pike" : "B",
+		"Tuck" : "C",
+		"Free" : "D"};
+
+var unabbreviate_position = {"A" : "Straight",
+			     "B" : "Pike",
+			     "C" : "Tuck",
+			     "D" : "Free"};
+
 function loadDiveData(filename) {
     $.ajax({
         type: "GET",
@@ -10,42 +21,67 @@ function loadDiveData(filename) {
     });
 
     function processData(my_csv) {
-        my_csv = my_csv.split("\n");
-        for (var i=0;i<my_csv.length;i++){
-            diveData.push(my_csv[i].split(","));
-        }
-        populateBubbles("Back");
+        var lines = my_csv.split("\n");
+
+	$(lines).each(function(i, line) {
+	    var attributes = line.split(",");
+	    if(attributes.length == 3) {
+		diveData.push({"dive-id" : attributes[0],
+			       "dive-name" : pretty_name(attributes[1]),
+			       "dive-difficulty" : attributes[2]});
+	    }
+	});
+	
+	
+        // for (var i=0;i<my_csv.length;i++){
+        //     diveData.push(my_csv[i].split(","));
+        // }
+	console.log(diveData[168]);
+
+	render_graph();
+
+	
+	// TODO: uncomment the next line.
+	$("#graph").hide().show(1000);
+        // populateBubbles("Back");
 
     }
 }
 
+function pretty_name(str) {
+    var ret = str;
+    ret = ret.replace(/(\d) 1\/2/g," $1&frac12;");
+    ret = ret.replace(/ 1\/2/g,' &frac12;');
+    return ret;
+}
+
 function populateBubbles(diveType) {
-//    for (var i=0;i<diveData.length;i++){
-//        if (diveData[i][1].substring(0,7) == "Forward"){
-////            console.log(diveData[i][2]);
-//        }
-//    }
+
+
+
+    
         $("#circle-holder").html("");
         $(diveData).each(function(i, dive) {
 //	       var $newDiveRow = $("<div></div>", {"class":"circleBase",
-//					  "id": dive[0],
-//                      "dive-name":dive[1]})
-            
-            if (dive[1].indexOf(diveType) > -1 && "A" == dive[0].substr(dive[0].length - 1)){
-//                console.log(dive[0]);
-                var $newDiveBubble = $('<div class="circleBase" id='+dive[0]+' style="left:600px;top:'+(dive[2]*700-700)+'px"><p> '+dive[0]+' </p><p>'+dive[1]+' </p></div>')
+//					  "id": dive["dive-id"],
+//                      "dive-name":dive["dive-name"]})
+
+	    if(!dive["dive-name"]) {return;}
+            if (dive["dive-name"].indexOf(diveType) > -1 && "A" == get_dive_position(dive)){
+//                console.log(dive["dive-id"]);
+                var $newDiveBubble = $('<div class="circleBase" id='+dive["dive-id"]+' style="left:600px;top:'+(dive["dive-difficulty"]*700-700)+'px"><p> '+dive["dive-id"]+' </p><p>'+dive["dive-name"]+' </p></div>')
                .appendTo("#circle-holder");
-            } else if (dive[1].indexOf(diveType) > -1 && "B" == dive[0].substr(dive[0].length - 1)){
-//                console.log(dive[0]);
-                var $newDiveBubble = $('<div class="circleBase" id='+dive[0]+' style="left:400px;top:'+(dive[2]*700-700)+'px"><p> '+dive[0]+' </p><p>'+dive[1]+' </p></div>')
+            } else if (dive["dive-name"].indexOf(diveType) > -1 && "B" == get_dive_position(dive)){
+//                console.log(dive["dive-id"]);
+                var $newDiveBubble = $('<div class="circleBase" id='+dive["dive-id"]+' style="left:400px;top:'+(dive["dive-difficulty"]*700-700)+'px"><p> '+dive["dive-id"]+' </p><p>'+dive["dive-name"]+' </p></div>')
                .appendTo("#circle-holder");
-            } else if (dive[1].indexOf(diveType) > -1 && "C" == dive[0].substr(dive[0].length - 1)){
-//                console.log(dive[0]);
-                var $newDiveBubble = $('<div class="circleBase" id='+dive[0]+' style="left:200px;top:'+(dive[2]*700-700)+'px"><p> '+dive[0]+' </p><p>'+dive[1]+' </p></div>')
+            } else if (dive["dive-name"].indexOf(diveType) > -1 && "C" == get_dive_position(dive)){
+//                console.log(dive["dive-id"]);
+                var $newDiveBubble = $('<div class="circleBase" id='+dive["dive-id"]+' style="left:200px;top:'+(dive["dive-difficulty"]*700-700)+'px"><p> '+dive["dive-id"]+' </p><p>'+dive["dive-name"]+' </p></div>')
                .appendTo("#circle-holder");
-            } else if (dive[1].indexOf(diveType) > -1 && "D" == dive[0].substr(dive[0].length - 1)){
-//                console.log(dive[0]);
-                var $newDiveBubble = $('<div class="circleBase" id='+dive[0]+' style="left:000px;top:'+(dive[2]*700-700)+'px"><p> '+dive[0]+' </p><p>'+dive[1]+' </p></div>')
+            } else if (dive["dive-name"].indexOf(diveType) > -1 && "D" == get_dive_position(dive)){
+//                console.log(dive["dive-id"]);
+                var $newDiveBubble = $('<div class="circleBase" id='+dive["dive-id"]+' style="left:000px;top:'+(dive["dive-difficulty"]*700-700)+'px"><p> '+dive["dive-id"]+' </p><p>'+dive["dive-name"]+' </p></div>')
                .appendTo("#circle-holder");
             }
         });
@@ -64,16 +100,205 @@ function inspectBubble(circle){
 
 function getDiveData(diveID){
     for (var i=0;i<diveData.length;i++) {
-        if (diveData[i][0] == diveID){
+        if (diveData[i]["dive-id"] == diveID){
             return diveData[i];
         }
     }
 }
 
+
+function get_dive_position(diveObject) {
+    return diveObject["dive-id"].slice(-1);
+}
+
+function render_graph() {
+    $("#axis").svg();
+    $("#graph").svg();
+    
+    
+    
+    var $axis = $("#axis").svg("get");
+
+    var $svg = $("#graph").svg("get");
+
+    var margin = {"top" : 64, "left" : 32};
+    
+
+    var ww = $("#graph").width();
+    var hh = $("#graph").height();
+
+
+    // background
+    $svg.rect(margin.left*2, margin.top,
+	      ww-margin.left*0, hh,
+    	      {fill:"#acf"});
+
+
+    $axis.rect(0, 0,
+	      margin.left*2, hh,
+    	       {fill:"#fff",opacity:0.9});
+    
+    // horizontal grid
+    var min_difficulty = 1;
+    var max_difficulty = 4.3;
+    var dy = (hh-margin.top*2)/(max_difficulty-min_difficulty);
+
+    
+    var q = 10;
+    for(var i=min_difficulty*q;i<=max_difficulty*q; i+=1) {
+
+	if(i%q == 0) {
+	    $svg.line(margin.left*2-8, margin.top + (i/q-min_difficulty)*dy,
+		      ww-margin.left*0, margin.top + (i/q-min_difficulty)*dy,
+    		      {stroke:"#fff" || "#222", strokeWidth:3, opacity: 0.8});
+
+	    $axis.text(margin.left*2-16,
+		      margin.top + (i/q-min_difficulty)*dy + 3,
+		      (i/q).toString(),
+		      {fontFamily: "Lato",
+		       fontSize: 24,
+		       textAnchor: "end",
+		       fill : "#666" ||"#222"
+	      });
+	}
+	else
+	{
+	    $svg.line(margin.left*2, margin.top + (i/q-min_difficulty)*dy,
+		      ww-margin.left*0, margin.top + (i/q-min_difficulty)*dy,
+    		      {stroke:"#fff" ||"#222",strokeWidth:2, strokeDashArray: "2,2"});
+
+
+	    $axis.text(margin.left*2-8,
+		      margin.top + (i/q-min_difficulty)*dy + 3,
+		      (i/q).toString(),
+		      {fontFamily: "Lato",
+		       fontSize: 14,
+		       textAnchor: "end",
+		       fill : "#666" ||"#222"
+	      });
+	}
+	
+    }
+
+
+    // LEGEND TEXT: DEGREE OF DIFFICULTY
+    $axis.text(margin.left*2-40+6,
+	      margin.top/2 + 28,
+	      "D.D" || "DEGREE OF",
+	      {fontFamily: "Lato",
+	       fontSize: 13,
+	       textAnchor: "end",
+	       fill : "#666"
+	      });
+    $axis.text(margin.left*2-40,
+	      margin.top/2 + 28 + 14,
+	      "" && "DIFFICULTY",
+	      {fontFamily: "Lato",
+	       fontSize: 13,
+	       textAnchor: "end",
+	       fill : "#666"
+	      });
+    
+    $axis.line(margin.left*2, margin.top,
+	      margin.left*2, hh,
+    	      {stroke:"#000",strokeWidth:1});
+
+
+    // LEGEND TEXT: DIVE POSITION
+
+    var dx = (ww-margin.left-64)/(4);
+
+
+    // var ddx = (ww-margin.left)/(2*4+1);
+    // for(var i=0; i<4;i++) {
+    // 	$svg.text((2*i+1.25)*ddx,
+    // 		  margin.top - 12,
+    // 		  ["STRAIGHT","PIKE","TUCK","FREE"][i],
+    // 		  {fontFamily: "Lato",
+    // 		   fontSize: 13,
+    // 		   textAnchor: "middle",
+    // 		   fill : "#666"
+    // 		  }
+    // 		 );
+    // }
+    
+
+    
+    
+    // ------- TABULATE THE DIVES TO DRAW THEM WELL
+    var count = {};
+
+    $(diveData).each(function(i, dive) {
+	var pos = get_dive_position(dive);
+	var dd = dive["dive-difficulty"];
+	count[dd] = count[dd] || {};
+	count[dd][pos] = count[dd][pos] || 0;
+	count[dd][pos] += 1;
+    });
+
+    // ------ DRAW DIVE BUBBLES
+    var w = dx * 0.9;
+    var seen = {};
+
+
+    var bin = {"A" : 0, "B" : 1, "C" : 2, "D" : 3};
+    
+    $(diveData).each(function(_, dive) {
+	var pos = get_dive_position(dive);
+	var dd = dive["dive-difficulty"];
+	
+	seen[dd] = seen[dd] || {};
+	seen[dd][pos] = seen[dd][pos] || 0;
+
+	var i = seen[dd][pos];
+
+	var $div = $("<div/>", {"class" : "dive-bubble"})
+	    .addClass(unabbreviate_position[pos])
+	    .appendTo("#graph")
+	    .append("<span class='dive-id'>"+dive["dive-id"]+"</span>")
+	    .append(" " +dive["dive-name"])
+	    .css({"width" : (w/count[dd][pos]-4).toString()+"px"})
+	;
+
+
+	
+	$div.css({"top" : margin.top + dy*(dd-min_difficulty),
+		  "left" : 2*margin.left + 16 + bin[pos]*dx + seen[dd][pos]/count[dd][pos]*w});
+
+	
+	seen[dd][pos] += 1;
+	
+    });
+
+    
+    // RESIZE THE DIVE VIEWING WINDOW
+
+
+    $(".dive-bubble").click(function() {
+	$(".dive-info").slideDown();
+	$(".selected").removeClass("selected");
+	$(this).addClass("selected");
+    });
+    
+    //$(".scrolling").width($(window).width());
+    $(".scrolling").css("width", $(window).width());
+    $(".scrolling").css("height", $(window).height());
+    
+    
+}
+
 $(document).ready(function() {
     
     loadDiveData("all_dives.csv");
-//    console.log("hi");
+
+    
+    console.log("hi");
+
+    $(window).scroll(function() {
+	$("#axis").css('left',$(window).scrollLeft()+'px');
+    });
+
 //    (".dive-entry").click(function() { toggleDive(this) });
 });
+
 
