@@ -35,6 +35,10 @@ a.title {
  line-height: 35px;
 }
 
+.active {
+	color: #4ea;
+}
+
 /* END NAVBAR */
 
 li>a {
