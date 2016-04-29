@@ -23,6 +23,18 @@ a.title {
 	font-weight: bolder;
 }
 
+.profile-pic {
+	height: 35px;
+}
+
+#profile-pic-container {
+	padding-right: 0px;
+}
+
+.navbar-nav li a {
+ line-height: 35px;
+}
+
 /* END NAVBAR */
 
 li>a {
