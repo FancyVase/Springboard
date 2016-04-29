@@ -273,12 +273,22 @@ function render_graph() {
     
     // RESIZE THE DIVE VIEWING WINDOW
 
-
-    $(".dive-bubble").click(function() {
-	$(".dive-info").slideDown();
-	$(".selected").removeClass("selected");
-	$(this).addClass("selected");
+    $(document).click(function(e) {
+        if ($(event.target).is(".dive-bubble")) {
+            $(".dive-info").slideDown("fast");
+            $(".selected").removeClass("selected");
+            $(event.target).addClass("selected");
+        } else {
+            $(".dive-info").slideUp("fast");
+            $(".selected").removeClass("selected");
+        }
     });
+
+    // $(".dive-bubble").click(function() {
+    // 	$(".dive-info").slideDown();
+    // 	$(".selected").removeClass("selected");
+    // 	$(this).addClass("selected");
+    // });
     
     //$(".scrolling").width($(window).width());
     $(".scrolling").css("width", $(window).width());

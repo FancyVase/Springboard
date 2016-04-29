@@ -60,7 +60,9 @@ a {
 
 span.link>a, input.btn {
 	color: #4E7399;
+	color: #1b7;
 	border: 2px solid #4E7399;
+	border: 2px solid #1b7;
 	padding: 15px 50px;
 	font-size: 1em;
 	transition: 0.25s;
@@ -69,6 +71,7 @@ span.link>a, input.btn {
 span.link>a:hover, input.btn:hover {
 	color: #F3F3F3;
 	background-color: #4E7399;
+	background-color: #1b7;
 }
 
 span.link + span.link {
