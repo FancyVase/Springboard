@@ -10,7 +10,7 @@ TODO
     - Make it editable
 -MakeDivelist:
     - static View As location
-    - Add functionality (sorting, performed within, etc.)
+    - Add functionality (find, performed within, etc.)
     - Ask diver about makedivelist page, esp. if DD is needed on the page
     - replace 1/2 with pretty html 1/2
     - coordinating colors 

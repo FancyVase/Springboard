@@ -514,42 +514,11 @@ function sortByAttribute(list, attribute, reverse) {
     }
 }
 
-function sortDivesBy(sortOption) {
-    console.log("sort dives by:", sortOption);
-    switch (sortOption) { //todo don't string-match
-        case "Predicted score (highest first)":
-//            console.log("Sorting dives by predicted score, highest first");
-            sortByAttribute(dive_database, "dive-predicted-score", true);
-            break;
-        case "Predicted score (lowest first)":
-//            console.log("Sorting dives by predicted score, lowest first");
-            sortByAttribute(dive_database, "dive-predicted-score");
-            break;
-        case "Dive ID (001 first)":
-//            console.log("Sorting dives by dive ID, smallest first");
-            sortByAttribute(dive_database, "dive-id");
-            break;
-        case "Dive ID (5434 first)":
-//            console.log("Sorting dives by dive ID, largest first");
-            sortByAttribute(dive_database, "dive-id", true);
-            break;
-        case "Date last performed (most recent first)": //todo don't treat dates as strings
-            sortByAttribute(dive_database, "dive-last-performed", true);
-            break;
-        case "Date last performed (oldest first)":
-            sortByAttribute(dive_database, "dive-last-performed");
-            break;
-        default:
-            console.error("unimplemented sort option:", sortOption);
-    }
-//    if (sortOption == "Predicted score (highest first)") { //todo don't string-match
-//        console.log("Sorting dives by predicted score, highest first");
-//        dive_database.sort()
-//    } else {
-//        console.error("unimplemented sort option:", sortOption);
-//    }
+function sortDivesBy(sortBy, reverse) {
+    console.log("sort dives by:", sortBy, reverse ? "reversed" : "");
+    sortByAttribute(dive_database, sortBy, reverse);
     drawDiveDatabase();
-    applyFilters(); //todo prob not needed?
+    applyFilters();
 }
 
 //////////////// BUTTONS
@@ -621,7 +590,8 @@ $(document).ready(function() {
     });
     $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience);
     $("#sort-dropdown").change(function() {
-        sortDivesBy($(this).val());
+        var option = $(this).find('option:selected');
+        sortDivesBy(option.attr("sort-by"), option.attr("reverse"));
     });
     
     $("#btn-save").click(onSaveButtonClick);
