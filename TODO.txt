@@ -9,9 +9,6 @@ TODO
     - Make "Anthony" look different
     - Make it editable
 -MakeDivelist:
-    - [X] use Aku
-    - add navbar to top of mkdivelist page
-    - re-add html "saving your progress" element to mkdivelist
     - static View As location
     - Add functionality (sorting, performed within, etc.)
     - Ask diver about makedivelist page, esp. if DD is needed on the page

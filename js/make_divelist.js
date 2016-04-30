@@ -61,15 +61,18 @@ function populateDiveDatabase(diveData) {
     // dxh: creating model-view distinction
 
     $(diveData).each(function(i, datum) {
-	var map = {};
-	$(dive_attributes).each(function(j, key) {
-	    map[key] = datum[j];
-	});
-	map["diveGroup"] = map["dive-id"].substring(0,1);
-	
-	dive_database.push(map);
+        var map = {};
+        $(dive_attributes).each(function(j, key) {
+            map[key] = datum[j];
+        });
+        map["diveGroup"] = map["dive-id"].substring(0,1);
+
+        dive_database.push(map);
     });
+    console.log(dive_database);
 }
+
+/// ------------------- DRAW DIVELIST
 
 function drawDiveDatabase(database) {
     //todo make dive-id be a real column (formatting)
@@ -172,11 +175,6 @@ function drawDiveDatabase(database) {
     // Bind click listener for dives
     $(".dive-entry").click(function() { toggleDive(this) });
 }
-
-
-
-/// ------------------- DRAW DIVELIST
-
 
 
 /// ------------------- MANIPULATE DIVELIST
