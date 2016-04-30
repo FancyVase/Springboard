@@ -74,11 +74,14 @@ function populateDiveDatabase(diveData) {
 
 /// ------------------- DRAW DIVELIST
 
-function drawDiveDatabase(database) {
+function drawDiveDatabase(database) { //todo @dxh why does this take in an argument at all?
     //todo make dive-id be a real column (formatting)
+    
+    //clear old dives
+    $("#dive-database-table").find("tr").remove();
 
     if(typeof(database) === "undefined") {
-	database = dive_database; // global variable as default
+	   database = dive_database; // global variable as default
     }
 
     $(database).each(function(i, dive) {
@@ -86,9 +89,6 @@ function drawDiveDatabase(database) {
 					  "id": dive["dive-id"],
                                           "dive-group":dive["diveGroup"]})
 	    .appendTo("#dive-database-table");
-	//$("#dive-database-table").append($newDiveRow);
-
-
 
 	for(var key in dive) {
 	    $newDiveRow.attr(key, dive[key]);
@@ -498,14 +498,57 @@ function onFilterByExperience(event) {
 
 ///////////////// SORTING
 
+function sortByAttribute(list, attribute, reverse) {
+    //sorts list in-place, ascending (unless reverse==true, then descending)
+    list.sort(function (a, b) {
+        if (a[attribute] > b[attribute]) {
+            return 1;
+        } else if (a[attribute] < b[attribute]) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+    if (reverse) {
+        list.reverse();
+    }
+}
+
 function sortDivesBy(sortOption) {
     console.log("sort dives by:", sortOption);
-    if (sortOption == "Predicted score (highest first)") { //todo don't string-match
-        console.log("Sorting dives by predicted score, highest first");
-        //todo actually sort
-    } else {
-        console.error("unimplemented sort option:", sortOption);
+    switch (sortOption) { //todo don't string-match
+        case "Predicted score (highest first)":
+//            console.log("Sorting dives by predicted score, highest first");
+            sortByAttribute(dive_database, "dive-predicted-score", true);
+            break;
+        case "Predicted score (lowest first)":
+//            console.log("Sorting dives by predicted score, lowest first");
+            sortByAttribute(dive_database, "dive-predicted-score");
+            break;
+        case "Dive ID (001 first)":
+//            console.log("Sorting dives by dive ID, smallest first");
+            sortByAttribute(dive_database, "dive-id");
+            break;
+        case "Dive ID (5434 first)":
+//            console.log("Sorting dives by dive ID, largest first");
+            sortByAttribute(dive_database, "dive-id", true);
+            break;
+        case "Date last performed (most recent first)": //todo don't treat dates as strings
+            sortByAttribute(dive_database, "dive-last-performed", true);
+            break;
+        case "Date last performed (oldest first)":
+            sortByAttribute(dive_database, "dive-last-performed");
+            break;
+        default:
+            console.error("unimplemented sort option:", sortOption);
     }
+//    if (sortOption == "Predicted score (highest first)") { //todo don't string-match
+//        console.log("Sorting dives by predicted score, highest first");
+//        dive_database.sort()
+//    } else {
+//        console.error("unimplemented sort option:", sortOption);
+//    }
+    drawDiveDatabase();
     applyFilters(); //todo prob not needed?
 }
 
