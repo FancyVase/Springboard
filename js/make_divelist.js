@@ -589,7 +589,7 @@ $(document).ready(function() {
         filterByTime($(this).val());
     });
     $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience); //todo enable clicking on label too
-    
+
     $("#sort-dropdown").change(function() {
         var option = $(this).find('option:selected');
         sortDivesBy(option.attr("sort-by"), option.attr("reverse"));
