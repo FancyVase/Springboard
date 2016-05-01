@@ -48,6 +48,7 @@ function loadDiveData(filename) {
             diveData.push(my_csv[i].split(","));
         }
         populateDiveDatabase(diveData);
+        sortDivesBy("dive-predicted-score", true); //initially, sort by predicted score
 	drawDiveDatabase();
 
 	// todo: debug to populate divelist
@@ -456,16 +457,29 @@ function onFilterByDiveGroup(event) {
 
 // Filter by time
 // TODO: hard coded for lo-fi; will need fixing for hi-fi
+//TODO IMPORTANT: This is hard coded and assumes that today is March 31, 2016.
 function filterByTime(timeOption) {
     console.log("filter by time", timeOption);
-    if (timeOption == "1 Month") {
-        console.log("Filtering by time: in the last month");
-        filters["time"] = (function(dive) {
-            return $(dive).attr("dive-last-performed") != "03/05/2016";
-        });
-    } else { //Anytime
-        console.log("Showing all dives");
-        filters["time"] = returnFalse;
+    switch (timeOption) {
+        case "1 Month":
+//    }
+//    if (timeOption == "1 Month") {
+            console.log("Filtering by time: in the last month");
+            filters["time"] = (function(dive) {
+                return $(dive).attr("dive-last-performed") != "2016/03/05";
+            });
+            break;
+        case "3 Months":
+            console.log("Filtering by time: in the last month");
+            var validDates = ["2016/03/05", "2016/02/12", "2016/01/15", "2016/01/07"]
+            filters["time"] = (function(dive) {
+                return validDates.indexOf($(dive).attr("dive-last-performed")) == -1;
+            });
+            break;
+        default:
+//    } else { //Anytime
+            console.log("Showing all dives");
+            filters["time"] = returnFalse;
     }
     applyFilters();
 }
