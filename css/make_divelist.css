@@ -149,7 +149,7 @@ td#btns-edit {
     border-color:#0ab;
 }
 
-#ip-search-by-name, #ip-sort { /*todo merge ip-sort name*/
+#ip-search-by-name, #sort-dropdown {
     border-color:#ccc;
     font-size:1em;
 }

@@ -48,6 +48,7 @@ function loadDiveData(filename) {
             diveData.push(my_csv[i].split(","));
         }
         populateDiveDatabase(diveData);
+        sortDivesBy("dive-predicted-score", true); //initially, sort by predicted score
 	drawDiveDatabase();
 
 	// todo: debug to populate divelist
@@ -74,11 +75,14 @@ function populateDiveDatabase(diveData) {
 
 /// ------------------- DRAW DIVELIST
 
-function drawDiveDatabase(database) {
+function drawDiveDatabase(database) { //todo @dxh why does this take in an argument at all?
     //todo make dive-id be a real column (formatting)
+    
+    //clear old dives
+    $("#dive-database-table").find("tr").remove();
 
     if(typeof(database) === "undefined") {
-	database = dive_database; // global variable as default
+	   database = dive_database; // global variable as default
     }
 
     $(database).each(function(i, dive) {
@@ -86,9 +90,6 @@ function drawDiveDatabase(database) {
 					  "id": dive["dive-id"],
                                           "dive-group":dive["diveGroup"]})
 	    .appendTo("#dive-database-table");
-	//$("#dive-database-table").append($newDiveRow);
-
-
 
 	for(var key in dive) {
 	    $newDiveRow.attr(key, dive[key]);
@@ -456,16 +457,29 @@ function onFilterByDiveGroup(event) {
 
 // Filter by time
 // TODO: hard coded for lo-fi; will need fixing for hi-fi
+//TODO IMPORTANT: This is hard coded and assumes that today is March 31, 2016.
 function filterByTime(timeOption) {
     console.log("filter by time", timeOption);
-    if (timeOption == "1 Month") {
-        console.log("Filtering by time: in the last month");
-        filters["time"] = (function(dive) {
-            return $(dive).attr("dive-last-performed") != "03/05/2016";
-        });
-    } else { //Anytime
-        console.log("Showing all dives");
-        filters["time"] = returnFalse;
+    switch (timeOption) {
+        case "1 Month":
+//    }
+//    if (timeOption == "1 Month") {
+            console.log("Filtering by time: in the last month");
+            filters["time"] = (function(dive) {
+                return $(dive).attr("dive-last-performed") != "2016/03/05";
+            });
+            break;
+        case "3 Months":
+            console.log("Filtering by time: in the last month");
+            var validDates = ["2016/03/05", "2016/02/12", "2016/01/15", "2016/01/07"]
+            filters["time"] = (function(dive) {
+                return validDates.indexOf($(dive).attr("dive-last-performed")) == -1;
+            });
+            break;
+        default:
+//    } else { //Anytime
+            console.log("Showing all dives");
+            filters["time"] = returnFalse;
     }
     applyFilters();
 }
@@ -498,15 +512,27 @@ function onFilterByExperience(event) {
 
 ///////////////// SORTING
 
-function sortDivesBy(sortOption) {
-    console.log("sort dives by:", sortOption);
-    if (sortOption == "Predicted score (highest first)") { //todo don't string-match
-        console.log("Sorting dives by predicted score, highest first");
-        //todo actually sort
-    } else {
-        console.error("unimplemented sort option:", sortOption);
+function sortByAttribute(list, attribute, reverse) {
+    //sorts list in-place, ascending (unless reverse==true, then descending)
+    list.sort(function (a, b) {
+        if (a[attribute] > b[attribute]) {
+            return 1;
+        } else if (a[attribute] < b[attribute]) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+    if (reverse) {
+        list.reverse();
     }
-    applyFilters(); //todo prob not needed?
+}
+
+function sortDivesBy(sortBy, reverse) {
+    console.log("sort dives by:", sortBy, reverse ? "reversed" : "");
+    sortByAttribute(dive_database, sortBy, reverse);
+    drawDiveDatabase();
+    applyFilters();
 }
 
 //////////////// BUTTONS
@@ -576,9 +602,11 @@ $(document).ready(function() {
     $("#filter-time-dropdown").change(function() {
         filterByTime($(this).val());
     });
-    $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience);
+    $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience); //todo enable clicking on label too
+
     $("#sort-dropdown").change(function() {
-        sortDivesBy($(this).val());
+        var option = $(this).find('option:selected');
+        sortDivesBy(option.attr("sort-by"), option.attr("reverse"));
     });
     
     $("#btn-save").click(onSaveButtonClick);

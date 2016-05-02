@@ -81,7 +81,8 @@
           <select id="filter-time-dropdown">
             <option>Anytime</option>
             <option>1 Month</option>
-<!--            <option>3 Months</option> todo enable 3 Months-->
+            <option>3 Months</option>
+<!--            todo add other options-->
           </select>
         </div>
 
@@ -109,13 +110,12 @@
       &nbsp;&nbsp;&nbsp;&nbsp; <strong>Sort by</strong>
       <select id="sort-dropdown" class="inputlike">
         <!--todo replace dropdown with fake column headers -->
-        <option>Predicted score (highest first)</option>
-        <option>Predicted score (lowest first)</option>
-        <option>Dive ID (001 first)</option>
-        <option>Dive ID (5434 first)</option>
-        <option>Date last performed (most recent first)</option>
-        <option>Date last performed (oldest first)</option>
-        <!--todo make it sort things-->
+        <option sort-by="dive-predicted-score" reverse="true">Predicted score (highest first)</option>
+        <option sort-by="dive-predicted-score">Predicted score (lowest first)</option>
+        <option sort-by="dive-id">Dive ID (001 first)</option>
+        <option sort-by="dive-id" reverse="true">Dive ID (5434 first)</option>
+        <option sort-by="dive-last-performed" reverse="true">Date last performed (most recent first)</option>
+        <option sort-by="dive-last-performed">Date last performed (oldest first)</option>
 	</select>
       </div>
      
