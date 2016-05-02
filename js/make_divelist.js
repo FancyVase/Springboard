@@ -572,12 +572,13 @@ function onNewListButtonClick() {
 }
 
 function onLoadDropdownClick() {
+    listName = $(this).val();
 //    alert("Pretend that this dropdown is populated with your saved lists. (This feature is not implemented yet.)");
     $(".selected-dive").each(function(n,selectedDive) {
             var dive = $("#"+getDiveID(selectedDive));
             toggleDive(dive);
         });
-    localStorageToDivelist();
+    localStorageToDivelist(listName);
     divelist_redraw();
     $(".selected-dive").each(function(n,selectedDive) {
         var dive = $("#"+getDiveID(selectedDive));
@@ -606,13 +607,16 @@ function hideQuicklist() {
 
 // Parse divelist var into text for local storange and save it there
 function divelistToLocalStorage() {
-    localStorage.savedList = JSON.stringify(divelist);
+    var listName = $("#divelist-savename").html();
+    localStorage.setItem(listName, JSON.stringify(divelist));
+    $("#dropdown-load").html($("#dropdown-load").html()+"<option>"+listName+"</option>")
 }
 
 // Parse the text in local storange and save it as the divelist var,
 // plus update the toggled things
-function localStorageToDivelist() {
-    divelist = JSON.parse(localStorage.savedList);
+function localStorageToDivelist(listName) {
+    console.log(localStorage);
+    divelist = JSON.parse(localStorage.getItem(listName));
 }
 
 $(document).ready(function() {
@@ -635,7 +639,7 @@ $(document).ready(function() {
     $("#btn-save").click(onSaveButtonClick);
     $("#btn-export").click(onExportButtonClick);
     $("#btn-newlist").click(onNewListButtonClick);
-    $("#dropdown-load").mousedown(onLoadDropdownClick);
+    $("#dropdown-load").change(onLoadDropdownClick);
     
     $("#ip-search-by-name").click(alertNotImplemented);
     $("#btn-view-as-chart").click(
