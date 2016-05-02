@@ -51,7 +51,7 @@ function loadDiveData(filename) {
 	drawDiveDatabase();
 
 	// todo: debug to populate divelist
-	$("#quicklist a")[0].click();
+	//$("#quicklist a")[0].click();
 	$("#list-view").hide();
 	$("#chart-view").show();
     }
@@ -540,7 +540,7 @@ function onNewListButtonClick() {
             var dive = $("#"+getDiveID(selectedDive));
             toggleDive(dive);
         });
-        $("#divelist-savename").text("Untitled divelist");
+        $("#divelist-savename").text("Unnamed divelist");
     });
 }
 
