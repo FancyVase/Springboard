@@ -52,7 +52,7 @@ function loadDiveData(filename) {
 	drawDiveDatabase();
 
 	// todo: debug to populate divelist
-	$("#quicklist a")[0].click();
+	//$("#quicklist a")[0].click();
 	$("#list-view").hide();
 	$("#chart-view").show();
     }
@@ -258,7 +258,6 @@ function divelist_redraw() {
     function add_radio_buttons($entry, is_chart) {
 	var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
 
-	// todo: keep track of radio buttons in divelist
 
 	/// -------- CREATE OPT/VOL RADIO BUTTONS
 	var $span = $("<span class='opt-vol'></span>");
@@ -319,6 +318,23 @@ function divelist_redraw() {
 
 	$("<button/>",{"class":"toggle-willing",
 		      "html" : willing == "optional" ? "Make Voluntary &raquo;" : "&laquo; Make Optional"}).appendTo($entry);
+
+
+	add_radio_buttons($entry, true);
+	// // TODO: Something goes awry when trying to uncomment the
+	// lines below that give functionality to the radio buttons.
+	// Something about the lookup_dive_entry returning null, i.e.
+	// "Dive in divelist doesn't match any dive in database".
+	// TODO: Personally not going to worry about it now.
+	
+	// $entry.attr("dive-willing", entry["dive-willing"]
+	// if(entry["dive-willing"] == "voluntary") {
+	//     $entry.find(".radio-vol").click();
+	// }
+	// else {
+	//     // optional is the default, e.g. if dive-willing is not set.
+	//     $entry.find(".radio-opt").click();
+	// }
 	
 	$chart
 	    .find("."+group)
@@ -354,8 +370,8 @@ function divelist_redraw() {
 	var $remove = $("<span class='remove'>[remove]</span>").click(function() {
 	    divelist_remove_dive($entry);
 	}).appendTo($entry);
-
-	add_radio_buttons($entry);
+ 
+ 	add_radio_buttons($entry);
 
 	$entry.attr("dive-willing", entry["dive-willing"]);
 	if(entry["dive-willing"] == "voluntary") {
@@ -567,17 +583,18 @@ function onNewListButtonClick() {
             var dive = $("#"+getDiveID(selectedDive));
             toggleDive(dive);
         });
-        $("#divelist-savename").text("Untitled divelist");
+        $("#divelist-savename").text("Unnamed divelist");
     });
 }
 
 function onLoadDropdownClick() {
+    listName = $(this).val();
 //    alert("Pretend that this dropdown is populated with your saved lists. (This feature is not implemented yet.)");
     $(".selected-dive").each(function(n,selectedDive) {
             var dive = $("#"+getDiveID(selectedDive));
             toggleDive(dive);
         });
-    localStorageToDivelist();
+    localStorageToDivelist(listName);
     divelist_redraw();
     $(".selected-dive").each(function(n,selectedDive) {
         var dive = $("#"+getDiveID(selectedDive));
@@ -606,13 +623,16 @@ function hideQuicklist() {
 
 // Parse divelist var into text for local storange and save it there
 function divelistToLocalStorage() {
-    localStorage.savedList = JSON.stringify(divelist);
+    var listName = $("#divelist-savename").html();
+    localStorage.setItem(listName, JSON.stringify(divelist));
+    $("#dropdown-load").html($("#dropdown-load").html()+"<option>"+listName+"</option>")
 }
 
 // Parse the text in local storange and save it as the divelist var,
 // plus update the toggled things
-function localStorageToDivelist() {
-    divelist = JSON.parse(localStorage.savedList);
+function localStorageToDivelist(listName) {
+    console.log(localStorage);
+    divelist = JSON.parse(localStorage.getItem(listName));
 }
 
 $(document).ready(function() {
@@ -635,7 +655,7 @@ $(document).ready(function() {
     $("#btn-save").click(onSaveButtonClick);
     $("#btn-export").click(onExportButtonClick);
     $("#btn-newlist").click(onNewListButtonClick);
-    $("#dropdown-load").mousedown(onLoadDropdownClick);
+    $("#dropdown-load").change(onLoadDropdownClick);
     
     $("#ip-search-by-name").click(alertNotImplemented);
     $("#btn-view-as-chart").click(

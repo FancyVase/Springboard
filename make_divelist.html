@@ -20,11 +20,12 @@
     <script type="text/javascript"> //todo move to .js
       function resize() {
       $(".scrollable-pane").height(function(_,_) {
-      
       return $(window).height() - $(this).offset().top -12;
-
       });
-      
+
+       $(".separator").height(function(_,_) {
+      return $(window).height() - $(this).offset().top -12;
+      });
       }
       $("body").ready(function() {
       $(window).resize(resize);
@@ -128,7 +129,7 @@
 	  </td>
 	  
 	  <td class="panel-dive-list">
-
+	    <div class="separator">
       <table id="toolbar">
         <tr>
           <td>
@@ -145,9 +146,11 @@
 
         <tr id="divelist-container" >
           <td colspan="4">
+	    <div class="scrollable-pane-xxxdebug">
             <div id="chart-view" class="sortable">
               <!-- Dives also go here -->
             </div>
+	    </div>
             <div id="list-view" class="sortable">
                 <!-- Dives go here -->
             </div>
@@ -172,6 +175,7 @@
           </td>
         </tr>
       </table>
+      </div>
           </td>
         </tr>
       </table>
