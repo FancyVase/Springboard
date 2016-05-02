@@ -273,12 +273,22 @@ function render_graph() {
     
     // RESIZE THE DIVE VIEWING WINDOW
 
-
-    $(".dive-bubble").click(function() {
-	$(".dive-info").slideDown();
-	$(".selected").removeClass("selected");
-	$(this).addClass("selected");
+    $(document).click(function(e) {
+        if ($(event.target).is(".dive-bubble")) {
+            $(".dive-info").slideDown("fast");
+            $(".selected").removeClass("selected");
+            $(event.target).addClass("selected");
+        } else {
+            $(".dive-info").slideUp("fast");
+            $(".selected").removeClass("selected");
+        }
     });
+
+    // $(".dive-bubble").click(function() {
+    // 	$(".dive-info").slideDown();
+    // 	$(".selected").removeClass("selected");
+    // 	$(this).addClass("selected");
+    // });
     
     //$(".scrolling").width($(window).width());
     $(".scrolling").css("width", $(window).width());
@@ -298,7 +308,23 @@ $(document).ready(function() {
 	$("#axis").css('left',$(window).scrollLeft()+'px');
     });
 
-//    (".dive-entry").click(function() { toggleDive(this) });
+    // Click-and-drag scrolling
+    // by Josh Parrett
+    // http://codepen.io/JTParrett/pen/rkofB
+    var curYPos = 0,
+    curXPos = 0,
+    curDown = false;
+
+    window.addEventListener('mousemove', function(e){ 
+      if(curDown === true){
+        window.scrollTo(document.body.scrollLeft + (curXPos - e.pageX), document.body.scrollTop + (curYPos - e.pageY));
+      }
+    });
+
+    window.addEventListener('mousedown', function(e){ curDown = true; curYPos = e.pageY; curXPos = e.pageX; });
+    window.addEventListener('mouseup', function(e){ curDown = false; });
+
+   // (".dive-entry").click(function() { toggleDive(this) });
 });
 
 

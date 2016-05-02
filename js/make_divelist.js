@@ -48,6 +48,7 @@ function loadDiveData(filename) {
             diveData.push(my_csv[i].split(","));
         }
         populateDiveDatabase(diveData);
+        sortDivesBy("dive-predicted-score", true); //initially, sort by predicted score
 	drawDiveDatabase();
 
 	// todo: debug to populate divelist
@@ -61,21 +62,27 @@ function populateDiveDatabase(diveData) {
     // dxh: creating model-view distinction
 
     $(diveData).each(function(i, datum) {
-	var map = {};
-	$(dive_attributes).each(function(j, key) {
-	    map[key] = datum[j];
-	});
-	map["diveGroup"] = map["dive-id"].substring(0,1);
-	
-	dive_database.push(map);
+        var map = {};
+        $(dive_attributes).each(function(j, key) {
+            map[key] = datum[j];
+        });
+        map["diveGroup"] = map["dive-id"].substring(0,1);
+
+        dive_database.push(map);
     });
+    console.log(dive_database);
 }
 
-function drawDiveDatabase(database) {
+/// ------------------- DRAW DIVELIST
+
+function drawDiveDatabase(database) { //todo @dxh why does this take in an argument at all?
     //todo make dive-id be a real column (formatting)
+    
+    //clear old dives
+    $("#dive-database-table").find("tr").remove();
 
     if(typeof(database) === "undefined") {
-	database = dive_database; // global variable as default
+	   database = dive_database; // global variable as default
     }
 
     $(database).each(function(i, dive) {
@@ -83,9 +90,6 @@ function drawDiveDatabase(database) {
 					  "id": dive["dive-id"],
                                           "dive-group":dive["diveGroup"]})
 	    .appendTo("#dive-database-table");
-	//$("#dive-database-table").append($newDiveRow);
-
-
 
 	for(var key in dive) {
 	    $newDiveRow.attr(key, dive[key]);
@@ -174,20 +178,15 @@ function drawDiveDatabase(database) {
 }
 
 
-
-/// ------------------- DRAW DIVELIST
-
-
-
 /// ------------------- MANIPULATE DIVELIST
 
 function get_dive_attributes(htmlObject) {
     // Return a hash of the html object's dive-related attributes, if any.
     var attributes = {};
     $(dive_attributes).each(function(_, k) {
-	if($(htmlObject).attr(k)) {
-	    attributes[k] = $(htmlObject).attr(k);
-	}
+        if($(htmlObject).attr(k)) {
+            attributes[k] = $(htmlObject).attr(k);
+        }
     });
     return attributes;
 }
@@ -195,9 +194,9 @@ function copy_dive_attributes(dive1, dive2) {
     // Copy the dive attributes from dive1 to dive2, overwriting
     // any dive attributes that already exist.
     $(dive_attributes).each(function(_, k) {
-	if($(dive1).attr(k)) {
-	    $(dive2).attr(k, $(dive1).attr(k));
-	}
+        if($(dive1).attr(k)) {
+            $(dive2).attr(k, $(dive1).attr(k));
+        }
     }); 
 }
 
@@ -205,9 +204,9 @@ function is_same_entry(entry1, entry2) {
     // Return true if two entries in the divelist are the same.
     var key_attributes = ["dive-id", "dive-name"];
     $(key_attributes).each(function(_, key) {
-	if(entry1[key] != entry2[key]) {
-	    return false;
-	}
+        if(entry1[key] != entry2[key]) {
+            return false;
+        }
     });
     return true;
 }
@@ -225,10 +224,9 @@ function is_match(clickedDive, entry) {
     //  $(clickedDive).attr(key) && entry[key]
     var ret = true;
     $(static_attributes).each(function(_, key) {
-	if($(clickedDive).attr(key) != entry[key]) {
-	    ret = false;
-	}
-	
+        if($(clickedDive).attr(key) != entry[key]) {
+            ret = false;
+        }
     });
     return ret;
 }
@@ -240,12 +238,12 @@ function divelist_lookup(clickedDive) {
 
     var ret = null;
     $(divelist).each(function(_, entry) {
-	if(is_match(clickedDive, entry)) {
-	    ret = entry; //todo why is this set if it will then return nothing?
-	    return; //todo why is this returning nothing?
-	}});
-    return ret; //todo WHAT IS EVEN GOING ON IN THIS FUNCTION @dxh
-    //oh jk it's a lambda function but the tabbing is just weird
+        if(is_match(clickedDive, entry)) {
+            ret = entry;
+            return; //todo @dxh does this return do anything?
+        }
+    });
+    return ret;
 }
 
 
@@ -257,11 +255,9 @@ function divelist_redraw() {
     $("#list-view").html("");
     $("#chart-view").html("");
 
-
     function add_radio_buttons($entry, is_chart) {
 	var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
 
-	// todo: less stringy, more like $('...', {})
 	// todo: keep track of radio buttons in divelist
 
 	/// -------- CREATE OPT/VOL RADIO BUTTONS
@@ -461,16 +457,29 @@ function onFilterByDiveGroup(event) {
 
 // Filter by time
 // TODO: hard coded for lo-fi; will need fixing for hi-fi
+//TODO IMPORTANT: This is hard coded and assumes that today is March 31, 2016.
 function filterByTime(timeOption) {
     console.log("filter by time", timeOption);
-    if (timeOption == "1 Month") {
-        console.log("Filtering by time: in the last month");
-        filters["time"] = (function(dive) {
-            return $(dive).attr("dive-last-performed") != "03/05/2016";
-        });
-    } else { //Anytime
-        console.log("Showing all dives");
-        filters["time"] = returnFalse;
+    switch (timeOption) {
+        case "1 Month":
+//    }
+//    if (timeOption == "1 Month") {
+            console.log("Filtering by time: in the last month");
+            filters["time"] = (function(dive) {
+                return $(dive).attr("dive-last-performed") != "2016/03/05";
+            });
+            break;
+        case "3 Months":
+            console.log("Filtering by time: in the last month");
+            var validDates = ["2016/03/05", "2016/02/12", "2016/01/15", "2016/01/07"]
+            filters["time"] = (function(dive) {
+                return validDates.indexOf($(dive).attr("dive-last-performed")) == -1;
+            });
+            break;
+        default:
+//    } else { //Anytime
+            console.log("Showing all dives");
+            filters["time"] = returnFalse;
     }
     applyFilters();
 }
@@ -503,15 +512,27 @@ function onFilterByExperience(event) {
 
 ///////////////// SORTING
 
-function sortDivesBy(sortOption) {
-    console.log("sort dives by:", sortOption);
-    if (sortOption == "Predicted score (highest first)") { //todo don't string-match
-        console.log("Sorting dives by predicted score, highest first");
-        //todo actually sort
-    } else {
-        console.error("unimplemented sort option:", sortOption);
+function sortByAttribute(list, attribute, reverse) {
+    //sorts list in-place, ascending (unless reverse==true, then descending)
+    list.sort(function (a, b) {
+        if (a[attribute] > b[attribute]) {
+            return 1;
+        } else if (a[attribute] < b[attribute]) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+    if (reverse) {
+        list.reverse();
     }
-    applyFilters(); //todo prob not needed?
+}
+
+function sortDivesBy(sortBy, reverse) {
+    console.log("sort dives by:", sortBy, reverse ? "reversed" : "");
+    sortByAttribute(dive_database, sortBy, reverse);
+    drawDiveDatabase();
+    applyFilters();
 }
 
 //////////////// BUTTONS
@@ -533,7 +554,7 @@ function animate_autosave(fn_when_finished) {
         $("#autosaving").show(0,
 			  function() {
 			      setTimeout(function(){
-				  $("#autosaving").hide(0, fn_when_finished);
+				      $("#autosaving").hide(0, fn_when_finished);
 			      }, 1000)});
 }
 
@@ -581,9 +602,11 @@ $(document).ready(function() {
     $("#filter-time-dropdown").change(function() {
         filterByTime($(this).val());
     });
-    $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience);
+    $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience); //todo enable clicking on label too
+
     $("#sort-dropdown").change(function() {
-        sortDivesBy($(this).val());
+        var option = $(this).find('option:selected');
+        sortDivesBy(option.attr("sort-by"), option.attr("reverse"));
     });
     
     $("#btn-save").click(onSaveButtonClick);

@@ -62,13 +62,13 @@ input.btn.btn-success {
 	border-radius: 0;
 	padding: 10px 30px;
 	background-color: rgba(255,255,255,0);
-	color: #4E7399;
-	border: 2px solid #4E7399;
+	color: #1b7;
+	border: 2px solid #1b7;
 	transition: 0.25s;
 }
 
 input.btn.btn-success:hover {
-	background-color: #4E7399;
+	background-color: #1b7;
 	color: #fff;
 }
 

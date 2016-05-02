@@ -1,0 +1,614 @@
+html, body {
+    height: 100%;
+    margin: 0px;
+}
+
+body {
+    font-family:"Lato",Cabin,"Gill Sans", Helvetica,Arial,sans-serif;
+    background:#fff url("../img/tiles-3.jpg");
+    background-size:25%;
+}
+/*TODO consistent color scheme*/
+/*TODO make it work with a narrow window (eg horizontal scrollbar)*/
+a {
+    outline:0;
+    color: #4E7399;
+}
+h5 {
+    font-weight:700;
+
+}
+
+table {
+    border-collapse:collapse;
+}
+/********************* PAGE HEADER**/
+.header #logo {
+    display:none; /*TODO ask dxh why logo is hidden*/
+}
+div.header {
+    position:relative;
+    padding-bottom:0.5em;
+    padding-top:1.5em;
+    padding-bottom:1em;
+    
+}
+.header h1 {
+    padding-left: 2%;
+    font-weight:700;
+    display:inline;
+}
+/** PAGE HEADER NAVIGATION **/
+ul.navbar {
+    position:absolute;
+    top:0.75em;
+    top:1.5em;
+    right:8em;
+
+}
+
+ul.navbar li {
+    display:inline;
+}
+
+ul.navbar li > a {
+    padding:0.5em 0.5em;
+    
+    border-radius:0.25em;
+    min-width:4em;
+    font-weight:bolder;
+    font-size:1.2em;
+    
+}
+ul.navbar a.current-page {
+    color:inherit;
+    
+    cursor:inherit;
+    border-bottom:0em solid #c60;
+    border-radius:0;
+}
+
+
+/***** AFFECTING MULTIPLE DIVE PANELS ****/
+.panel-dive-filters, .panel-dive-database, .panel-dive-list {
+    border:0px solid #aaa;
+    border-bottom-width:1px;
+    height:100%;
+}
+.panel-dive-filters {
+    border-left-width:1px;
+    border-top-width:1px;
+    padding: 0px;
+    text-align: center;
+}
+.panel-dive-database {
+    border-bottom-right-radius:0.5em;
+    border-bottom-width:1px;
+}
+.panel-dive-filters, div#search-by-name {
+   background:#f0f0f0;
+
+}
+    
+/**** MAKE-DIVELIST FILTER PANE ****/
+.panel-dive-filters {
+    height:100%;
+ }
+
+ .panel-dive-filters>h5 {
+    font-size: 1.14em;
+ }
+
+ul#filter-dive-group{
+    padding:0;
+}
+ul#filter-dive-group a {
+    color:#555;
+    line-height:1.8em;
+    font-size:1.14em;
+    text-transform:uppercase;
+    display:block;
+}
+
+ul#filter-dive-group .selected {
+    background:#1b7;
+    color: #fff;
+}
+
+ul#filter-dive-group li {
+    list-style-type:none;
+    
+}
+
+#panel-dive-filters select {
+    display:block;
+    width:100%:
+    margin:0;
+    padding:0;
+    width:9em;
+}
+
+#experience-level li {
+    list-style-type:none;
+}
+#experience-level input {
+    margin-right: 0.4em;
+}
+ul#experience-level {
+    margin:0;
+    text-align: left;
+    margin-left:20%;
+    padding-left:1em;
+}
+
+/**** PANEL: DIVE DATABASE *****/
+html,body {
+    height:90%;
+}
+.panel-dive-database {
+    background:#fff;
+    height:100%;
+    padding:0;
+}
+.panel-dive-database > * {
+    padding-left:0.5em;
+}
+
+div#search-by-name {
+    border-top-right-radius:0.5em;
+    border-top:1px solid #aaa;
+    border-right:1px solid #aaa;
+    padding: 0.2em;
+}
+
+#search-by-name h5 {
+    display:inline;
+}
+#ip-search-by-name {
+    display:inline;
+    
+}
+
+/*** ----- dive database table entries ----- ***/
+div.scrollable-pane {
+    height:94%;
+    overflow-y:scroll;
+    border-left:1px solid #aaa;
+    border-top:1px solid #aaa;
+}
+table.dive-database {
+    width:100%;
+}
+a.selection-circle {
+    text-decoration:none;
+    outline:0;
+}
+a.selection-circle  {
+    display:block;
+    width:1.4em;
+    height:1.4em;
+
+
+    width:2em;
+    height:2em;
+    border:0.1em solid #888;
+    border-radius:4em;
+    background:#fff;
+    vertical-align:middle;
+    
+}
+
+tr.dive-entry td {
+    border-bottom:1px solid #eee;
+    background:#fff;
+    padding:1em 0em!important;
+    /*transition: 0.05s;*/
+    
+}
+tr.dive-entry:hover > td a.selection-circle {
+    background:#cdf;
+
+    background:#fdc;
+    background:#ffc;
+    background:inherit;
+}
+.selected a.selection-circle, tr:active a.selection-circle {
+				  background:#4af;
+				  background:#17b!important;
+				  
+}
+
+tr.dive-entry:hover > td {
+    background:#fff;
+    background:#ff0;
+    background:#cf0;
+    background:#e0f8ff;
+}
+
+
+
+tr.dive-entry > td {
+    padding:0.25em 0.2em;
+    cursor:pointer;
+}
+
+td.dive-selector {
+    width:3em;
+}
+
+.dive-id {
+    font-weight:900;
+    font-size:1.5em;
+    color:#444;
+    color:#0a6;
+}
+
+
+/******************** DIVE LIST PANEL ******/
+.hide-quicklist #quicklist, #hide-quicklist #quicklist-options {
+    display:none;
+}
+
+
+#list-view .selected-dive {
+    display:block;
+    text-align:left;
+    padding:0.5em;
+
+    border:1px solid #aaa;
+    border-top-width:0px;
+    background:#fff;
+    
+}
+#list-view .selected-dive[dive-willing="optional"] .drag-handle {
+    background:#68c;
+    background:#a00;
+    background:#a0a;
+}
+
+#list-view .selected-dive[dive-willing="voluntary"] .drag-handle {
+    background:#aa0;
+    background:#0ff;
+}
+/* #list-view .selected-dive:before { */
+/*     content:"\2195"; */
+/*     font-size:1.5em; */
+/*     padding-right:0.5em; */
+/*     color:#aaa; */
+/*     display:none; */
+/* } */
+
+#list-view strong {
+
+}
+#list-view .selected-dive > .drag-handle {
+/*    todo make dive tiles look more draggable*/
+/*    cursor:grab;*/
+    cursor: -webkit-grab;
+    cursor: grab;
+    font-size:1.5em;
+    margin-right:0.5em;
+    background:#aaa;
+    color:#fff;
+    text-align:center;
+    display:block;
+    float:left;
+    border-radius:0.1em;
+    height:2.1em;
+
+    width:0.5em;
+    background:#ccc;
+}
+
+
+#list-view .selected-dive:hover:before {
+    color:#c00;
+}
+#list-view .selected-dive:first-child {
+    border-top-width:1px;
+}
+
+.inputlike {
+    min-width:8em;
+    display:block;
+    overflow:hidden;
+    white-space:nowrap;
+    max-width: 10em;
+/*    text-align: left; todo left-align text after defocus*/
+
+    height:2em;
+    border-radius:0.2em;
+    padding:0.1em 0.2em;
+    font-size:1.25em;
+    border:1px solid transparent;
+    border-radius:0.2em;
+    cursor:pointer;
+    font-weight:bolder;
+
+}
+
+.inputlike:hover {
+    border-color:#aaa;
+}
+
+.inputlike:focus {
+    cursor:text;
+}
+
+.panel-dive-list {
+    padding-top:0.5em;
+    padding:0;
+}
+
+.panel-dive-list-container {
+    padding: 0px 10px;
+    margin: 0 auto;
+}
+
+.panel-dive-list #toolbar {
+    height:100%;
+    width:100%;
+}
+
+.toolbar-buttons {
+    width: 50%;
+}
+
+#divelist-container td {
+    vertical-align:top;
+    height:100%;
+    text-align:center;
+    background:#fff8d0;
+}
+
+#divelist-viewchanger {
+    height:1em;
+    background:#fff;
+}
+
+
+
+#quicklist {
+    padding:15% 10%;
+    display:block;
+}
+
+ul#quicklist-options {
+    list-style-type:none;
+    text-align:left;
+    margin-top:1em;
+}
+
+#quicklist-options li a {
+    font-weight:700;
+    line-height:2em;
+    cursor:pointer;
+}
+
+#btns-edit {
+    text-align:right;
+}
+
+.divelist-viewchanger img {
+
+}
+
+body {
+    background:#c4dfe6;
+    background:#fff;
+}
+.panel-dive-filters, div#search-by-name {
+    /* background:#66a5ad; */
+    /* background:#c4dfe6; */
+
+    /* background:#66ffbb!important; */
+    
+}
+
+h1{
+ color:#1b7!important;
+ 
+}
+
+/* a{color:#17b} */
+/* a.selected{ */
+/*     background:#17b !important; */
+/*     color:#fff !important; */
+/* } */
+
+
+span.remove {
+    color:#a00;
+    float:right;
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+.opt-vol {
+    padding-left:1em;
+    display:block;
+}
+.opt-vol input {
+    padding-left:1em;
+    transform:scale(1.2);
+}
+.opt-vol label {
+    padding-right:1em;
+    padding-left:0.2em;
+    color:#888;
+    font-weight:normal
+}
+
+
+
+#autosaving, #saving {
+    padding:0.2em;
+    border-radius:0.2em;
+    background:#b17;
+    background:#cf0;
+    position:absolute;
+    margin:0 auto;
+    top:0.5em;
+    left:50%;
+    width:12em;
+    display:none;
+}
+
+.known {
+    width:6em;
+    background:#eee;
+    display:block;
+    text-align:center;
+    border-radius:0.2em;
+    color:#555;
+    float:left;
+    margin-right:1em;
+
+    margin-left:5em;
+}
+
+.known-well {
+    background:#efb;
+    background:#f8ffd0;
+    color:#080;
+}
+.known-ok {
+    background:#ffb;
+    background:#ffc;
+    color:#863;
+    color:#974;
+}
+
+h4.dive-name {
+    font-weight:bolder;
+    color:#444;
+    padding-bottom:0.4em;
+}
+
+span.last-performed {
+    color:#484;
+}
+
+.dive-id {
+    color:#888;
+    display:block;
+    width:4em;
+    font-size:inherit;
+    float:left;
+    text-align:right;
+    padding-right:1em;
+    font-weight:normal;
+    font-weight:bolder;
+}
+
+#filter-dive-group li + li {
+    /*padding-left:1em;*/
+}
+
+
+.scoring {
+    text-align:center;
+    color:#49a;
+    color:#9bb;
+}
+.score {
+    display:block;
+    font-size:1.5em;
+    margin:0 auto;
+
+}
+.score-column {
+    padding:0 3em!important;
+    
+}
+
+
+
+.selector a{
+    margin:0 1em;
+}
+
+
+
+
+/***** THE CHART VIEW ****/
+
+#chart-view {
+    display:none;
+}
+.chart {
+/*    todo make chart (and list) be the same height as database; add scrollbar if it goes off the screen*/
+    display:block;
+    background:#fff;
+    border:1px solid #888;
+    border-collapse:no-collapse;
+}
+.chart th {
+    height:10em;
+    padding:0em;
+    /* /\* Safari *\/ */
+    /* -webkit-transform: rotate(-90deg); */
+
+    /* /\* Firefox *\/ */
+    /* -moz-transform: rotate(-90deg); */
+
+    /* /\* IE *\/ */
+    /* -ms-transform: rotate(-90deg); */
+
+    /* /\* Opera *\/ */
+    /* -o-transform: rotate(-90deg); */
+
+    /* /\* Internet Explorer *\/ */
+    /* filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); */
+
+
+    text-transform:uppercase;
+    border-right:1px solid #ccc;
+    text-align:right;
+    padding:0.5em;
+    background:#e0eeff;
+}
+
+.chart th, .chart td {
+    border-bottom:3px double #ccc;
+    
+}
+.chart td {
+    background:#fff!important;
+    width:50%;
+    
+}
+
+.chart .selected-dive {
+    display:block;
+    
+    text-align:left;
+    color:#444;
+    padding:0.1em;
+    background:#fff0e0;
+    border-radius:0.25em;
+    margin-bottom:0.5em;
+    border:1px solid #f0e0d0;
+    color:#605040;
+    font-weight:bolder;
+    padding:0.5em;
+    margin:0.25em;
+    font-size:1.14em;
+}
+.chart strong {
+    font-weight:normal;
+}
+.chart th + td + td {
+    border-left:1px dashed #ccc;
+}
+
+.chart tr.headerRow td {
+    width:0;
+    background:#eee!important;
+    color:#666;
+    font-weight:bold;
+}
+.chart button {
+    font-size:0.9em;
+    display:none;
+}

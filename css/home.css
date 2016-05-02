@@ -1,3 +1,46 @@
+/* NAVBAR */
+.navbar {
+	background-color: #1b7;
+	padding: 0.5em 1em;
+	font-family: Lato;
+	border-radius: 0;
+	border-bottom: 0.5em solid #4ea;
+	font-size: 1.2em;
+}
+
+.navbar>ul>li>a {
+	color: #fff;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+	text-decoration: none;
+	background-color: #1b7;
+	color: #eee;
+}
+
+a.title {
+	font-size: 2em;
+	font-weight: bolder;
+}
+
+.profile-pic {
+	height: 35px;
+}
+
+#profile-pic-container {
+	padding-right: 0px;
+}
+
+.navbar-nav li a {
+ line-height: 35px;
+}
+
+.active {
+	color: #4ea;
+}
+
+/* END NAVBAR */
+
 li>a {
 	color: #4E7399;
 }
@@ -22,18 +65,36 @@ input.form-control {
 }
 
 .edit-btn {
+	color: #fff;
 	border-radius: 0px;
 	font-size: 15px;
 	font-weight: 300;
 	padding: 10px 35px;
+	/*background-color: #4E7399;*/
+	background-color: #1b7;
+	/*border-color: #4E7399;*/
+	border-color: #1b7;
 	transition: 0.25s;
-	background-color: #4E7399;
-	border-color: #4E7399;
 }
 
 .edit-btn:hover {
-	background-color: #41607F;
-	border-color: #41607F;
+	color: #fff;
+	/*background-color: #41607F;*/
+	background-color: #11aa6d;
+	/*border-color: #41607F;*/
+	border-color: #11aa6d;
+}
+
+.edit-btn:active {
+	color: #fff;
+	/*background-color: #4E7399;*/
+	background-color: #1b7;
+	/*border-color: #4E7399;*/
+	border-color: #1b7;
+}
+
+.edit-btn:focus {
+	color: #fff;
 }
 
 .profile-title {
