@@ -4,10 +4,15 @@
     behavior: url(PIE.htc); /* remove if you don't care about IE8 */
     width: 120px;
     height: 120px;
-    background: #ccc;
-    border: 3px solid #337ab7;
+    background: #e6e6e6;
+    background: #eee;
+    border: 3px solid #4E7399;
     text-align: center;
     position: absolute;
+}
+
+.circleBase:hover {
+    background-color: #e6e6e6;
 }
 
 
