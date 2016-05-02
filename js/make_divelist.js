@@ -258,7 +258,6 @@ function divelist_redraw() {
     function add_radio_buttons($entry, is_chart) {
 	var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
 
-	// todo: keep track of radio buttons in divelist
 
 	/// -------- CREATE OPT/VOL RADIO BUTTONS
 	var $span = $("<span class='opt-vol'></span>");
@@ -319,6 +318,23 @@ function divelist_redraw() {
 
 	$("<button/>",{"class":"toggle-willing",
 		      "html" : willing == "optional" ? "Make Voluntary &raquo;" : "&laquo; Make Optional"}).appendTo($entry);
+
+
+	add_radio_buttons($entry, true);
+	// // TODO: Something goes awry when trying to uncomment the
+	// lines below that give functionality to the radio buttons.
+	// Something about the lookup_dive_entry returning null, i.e.
+	// "Dive in divelist doesn't match any dive in database".
+	// TODO: Personally not going to worry about it now.
+	
+	// $entry.attr("dive-willing", entry["dive-willing"]
+	// if(entry["dive-willing"] == "voluntary") {
+	//     $entry.find(".radio-vol").click();
+	// }
+	// else {
+	//     // optional is the default, e.g. if dive-willing is not set.
+	//     $entry.find(".radio-opt").click();
+	// }
 	
 	$chart
 	    .find("."+group)
@@ -354,8 +370,8 @@ function divelist_redraw() {
 	var $remove = $("<span class='remove'>[remove]</span>").click(function() {
 	    divelist_remove_dive($entry);
 	}).appendTo($entry);
-
-	add_radio_buttons($entry);
+ 
+ 	add_radio_buttons($entry);
 
 	$entry.attr("dive-willing", entry["dive-willing"]);
 	if(entry["dive-willing"] == "voluntary") {
