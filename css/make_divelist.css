@@ -34,10 +34,16 @@ h1 {
     height:4em;
 }
 
+/* custom styling for make divelist's navbar*/
+.navbar {
+    font-size: 0.933em;
+    margin-bottom: 0px;
+}
+
     /*  h1 { */
     /* display:block; */
     /* } */
-.navbar,.navbar li{display:none;}
+/*.navbar,.navbar li{display:none;}*/
 
     /* #scaffold { */
     /* position:absolute; */
