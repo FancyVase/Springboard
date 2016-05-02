@@ -44,10 +44,10 @@ input.form-control {
 }
 
 .profile {
-	width: 75%;
+/*	width: 75%;*/
 	margin: 0px auto;
 	font-size: 16px;
-	border: 1px solid #e1e1e1;
+/*	border: 1px solid #e1e1e1;*/
 }
 
 .row {
