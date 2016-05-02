@@ -112,8 +112,8 @@ h5 {
 .panel-dive-list #toolbar {
 
     height:100%;
-    border-left:1.4em solid #ddd;
-    border-color:#fff;
+    /*border-left:1.4em solid #ddd;
+    border-color:#fff;*/
     width:100%;
 }
 .panel-dive-list #toolbar {
@@ -562,4 +562,10 @@ span.remove {
     left:50%;
     width:12em;
     display:none;
+}
+.separator {
+    padding-left:2em;
+    height:100%;
+    box-shadow:0.25em 0.0em 0.5em #aaa inset;
+    border-left:1em solid #eee;
 }
