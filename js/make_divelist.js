@@ -573,18 +573,17 @@ function onNewListButtonClick() {
 
 function onLoadDropdownClick() {
 //    alert("Pretend that this dropdown is populated with your saved lists. (This feature is not implemented yet.)");
+    $(".selected-dive").each(function(n,selectedDive) {
+            var dive = $("#"+getDiveID(selectedDive));
+            toggleDive(dive);
+        });
     localStorageToDivelist();
-    console.log(divelist);
     divelist_redraw();
     $(".selected-dive").each(function(n,selectedDive) {
         var dive = $("#"+getDiveID(selectedDive));
         dive.addClass("selected");
     });
-//    if (divelist[divelist.length/2]["dive-id"] != undefined && divelist[0]["dive-id"] == divelist[divelist.length/2]["dive-id"]){
-//        divelist = divelist.slice(0, divelist.length/2);
-//    }
     divelist_redraw();
-    console.log(divelist);
 }
 
 function alertNotImplemented() {
