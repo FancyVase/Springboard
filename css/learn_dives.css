@@ -17,6 +17,40 @@
     background: url('http://i.imgur.com/GySvQ.png');
 }
 
+.btn {
+    background-color: #eee;
+}
+
+#buttons>p>button {
+    margin-left: 5vh;
+    padding: 7px 20px;
+    border-radius: 0;
+    font-weight: 300;
+    outline: none;
+}
+
+button + button {
+	margin-left: 10px;
+}
+
+.active-btn {
+    background-color: #4E7399;
+    border-color: #4E7399;
+    color: #fff;
+}
+
+.active-btn:hover {
+    color: #fff;
+    background-color: #3F5D7D;
+    border-color: #3F5D7D;
+}
+
+#buttons>p>button.active-btn:active, .active-btn:focus {
+    color: #fff;
+    background-color: #4E7399;
+    border-color: #4E7399;
+    outline: none;
+}
 
 svg {
     border:0px solid #000;
@@ -26,6 +60,10 @@ svg {
     min-width:180em;
     height:180em;
     position:relative;
+}
+
+.axis>h2 {
+    left: 10px;
 }
 
 #axis {

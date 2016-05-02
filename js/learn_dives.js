@@ -56,9 +56,13 @@ function pretty_name(str) {
 }
 
 function populateBubbles(diveType) {
-
-
-
+    
+        $("#" + diveType).blur(); // remove focus
+    
+        // highlight current button
+        $("#" + diveType).addClass("active-btn")
+        .siblings('[type="button"]')
+        .removeClass('active-btn');
     
         $("#circle-holder").html("");
         $(diveData).each(function(i, dive) {
