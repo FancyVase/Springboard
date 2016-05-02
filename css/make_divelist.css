@@ -135,8 +135,7 @@ td#btns-edit {
 
 }
 .inputlike,#ip-search-by-name {
-    padding:0.5em;
-    font-size:1.4em;
+    padding:0.4em;
     cursor:pointer;
     margin-right:0.5em;
     border-radius:0.2em;
@@ -144,6 +143,7 @@ td#btns-edit {
     min-width:12em;
     overflow:hidden;
     white-space:nowrap;
+    width:24rem;
 }
 .inputlike:hover {
     border-color:#0ab;
@@ -154,6 +154,9 @@ td#btns-edit {
     font-size:1em;
 }
 
+#ip-search-by-name {
+    font-size:1.4em;
+}
 #divelist-container {
     vertical-align:top;
 }
@@ -568,4 +571,13 @@ span.remove {
     height:100%;
     box-shadow:0.25em 0.0em 0.5em #aaa inset;
     border-left:1em solid #eee;
+}
+
+
+.shady .panel-dive-filters {
+    opacity:0.2;
+    transition:200ms;
+}
+.shady #ip-search-by-name {
+    border-color:#08e;
 }
