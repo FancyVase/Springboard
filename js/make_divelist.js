@@ -544,7 +544,8 @@ function onSaveButtonClick() { //todo don't copy/paste from autosaving
             $("#saving").hide(0);
         }, 1000);
     });
-    //todo actually save...
+    // actually save
+    divelistToLocalStorage();
 }
 function onExportButtonClick() {
     alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)");
@@ -571,7 +572,18 @@ function onNewListButtonClick() {
 }
 
 function onLoadDropdownClick() {
-    alert("Pretend that this dropdown is populated with your saved lists. (This feature is not implemented yet.)");
+//    alert("Pretend that this dropdown is populated with your saved lists. (This feature is not implemented yet.)");
+    $(".selected-dive").each(function(n,selectedDive) {
+            var dive = $("#"+getDiveID(selectedDive));
+            toggleDive(dive);
+        });
+    localStorageToDivelist();
+    divelist_redraw();
+    $(".selected-dive").each(function(n,selectedDive) {
+        var dive = $("#"+getDiveID(selectedDive));
+        dive.addClass("selected");
+    });
+    divelist_redraw();
 }
 
 function alertNotImplemented() {
@@ -590,6 +602,17 @@ function showQuicklist() {
 }
 function hideQuicklist() {
     $("#divelist-container").addClass("hide-quicklist"); //TODO for dxh: why not just modify #quicklist's properties instead? -jmn
+}
+
+// Parse divelist var into text for local storange and save it there
+function divelistToLocalStorage() {
+    localStorage.savedList = JSON.stringify(divelist);
+}
+
+// Parse the text in local storange and save it as the divelist var,
+// plus update the toggled things
+function localStorageToDivelist() {
+    divelist = JSON.parse(localStorage.savedList);
 }
 
 $(document).ready(function() {
@@ -620,6 +643,7 @@ $(document).ready(function() {
 	    $("#list-view").hide();
 	    $("#chart-view").show();
 	    divelist_redraw();
+        
 	}
     );
     $("#btn-view-as-list").click(
