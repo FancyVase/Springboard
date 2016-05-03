@@ -100,6 +100,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	}
 	
 	var $diveSelector = $('<a/>',{"class":"selection-circle"});
+    //todo make selector look more like a checkbox and less like a radio button, to show that you can select multiple dives (external consistency)
 
 	var $td = $("<td/>").appendTo($newDiveRow);
 
@@ -115,7 +116,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 
 	if(dive["dive-experience"].match(/I know/i)) {
 	    
-	    $("<span/>", {"class" : "known known-well"} ).append("Known well")
+	    $("<span/>", {"class" : "known known-well"} ).append("Known well") //todo could use "Mastered"
 		.appendTo($details);
 
 	}
@@ -130,7 +131,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	    $("<span/>", {"class" : "known known-not"} ).append("Don't know")
 		.appendTo($details);
 	}
-
+    //todo add additional levels of knowledge (e.g. numerical, or "familiar", "beginner", etc)
 	
 	    
 	if(dive["dive-last-performed"]) {
@@ -139,8 +140,11 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	    $details.append("<span class='last-performed'>" + dive["dive-last-performed"]+"</span>"); 
 	}
 	$details.appendTo($td);
+    //todo it's unclear why there's a date next to the dive. should indicate somehow that it's the date the dive was last performed (maybe on mouseover? better: on mouseover, show list of dates and meets at which the dive was performed), and should use gmail-style "last week", "2 months ago", etc
+    //todo use more consistent date format (internationalization)
 
-
+    //todo consistent number of digits in scores
+    
 	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
 	if(dive["dive-average-score"]){
 	    $td.append("<span class='score'>"+dive["dive-average-score"]+"</span>");
@@ -170,6 +174,8 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 
 	}
 
+    //todo explain somewhere what predicted score is
+    
 	$td = $("<td/>",{"class":"selector"}).appendTo($newDiveRow);
 	$td.append($diveSelector);
     });
@@ -292,6 +298,11 @@ function divelist_redraw() {
     
     // FOR THE CHART VIEW
     // $("#list-view").hide(); // todo: this is a debug statement
+    
+    //todo fix awkward word-wrap for long dive names
+    //todo put radio buttons on a single line
+    //todo add functionality to radio buttons
+    //todo TODO important!! add REMOVE link for dive tiles in chart view
 
     var groups = ["fwd", "back", "reverse", "inward", "twist"]; //todo why not "forward"? @dxh
     var $chart = $("<table/>", {"class" : "chart"}).appendTo("#chart-view");
@@ -344,7 +355,7 @@ function divelist_redraw() {
     });
 
     
-    // FOR THE LIST VIEW
+    // FOR THE LIST VIEW //todo could make it more clear why dives are reorderable
     $(divelist).each(function(i, entry) {
 	var dive_id = entry["dive-id"];
 	var $entry = $("<span/>", {"class" : "selected-dive",
@@ -403,7 +414,7 @@ function divelist_remove_dive(clickedDive) {
     divelist_redraw();    
     $('#'+getDiveID(clickedDive)+'_selected').remove();
 
-    //todo: include undo functionality?
+    //todo: include undo functionality!!
 }
 
 function divelist_add_dive(clickedDive, is_voluntary) {
@@ -539,6 +550,8 @@ function filterBySearchText(searchText) {
     }
     applyFilters();    
 }
+
+//todo if no dives show, message "There are no dives that match your filters."
 
 
 ///////////////// SORTING
