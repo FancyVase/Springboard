@@ -154,7 +154,7 @@ td#btns-edit {
     width:24rem;
 }
 
-#ip-search-by-name {
+#ip-search-by-name, #divelist-savename {
     cursor: text;
 }
 
