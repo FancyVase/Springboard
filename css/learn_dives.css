@@ -159,3 +159,43 @@ html {
     -ms-user-select: none;
     user-select: none;
 }
+
+
+.dive-filter-group {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    width:100%;
+    z-index:6831;
+    background:#fff;
+    background:#f8f0c0;
+    background:#efd;
+    border-bottom:1px solid #888;
+    padding:0.25em 3em;
+    color:#666;
+
+}
+ul.dive-filters {
+    display:inline;
+    font-size:1.4em;
+    
+}
+ul.dive-filters li {
+    display:inline;
+    list-style-type:none;
+    padding-right:1em;
+    color:#08c;
+    vertical-align:middle!important;
+    cursor:pointer;
+}
+ul.dive-filters li:hover {
+    text-decoration:underline;
+}
+ul.dive-filters li.current {
+    color:#444;
+    color:rgba(0,0,0,0.6);
+    text-decoration:none!important;
+    font-weight:bolder;
+    
+}
