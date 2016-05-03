@@ -1,7 +1,6 @@
 // BASIC FUNCTIONS
 function returnFalse() { return false; }
 
-//todo get rid of alerts
 //todo add counting thing for list view (how many of each type of dive)
 //todo timeline to represent time frames?
 
@@ -381,7 +380,7 @@ function divelist_redraw() {
 
 
 	var $remove = $("<span class='remove'>[remove]</span>").click(function() {
-	    divelist_remove_dive($entry);
+        toggleDive($entry);
 	}).appendTo($entry);
  
  	add_radio_buttons($entry);
@@ -404,7 +403,7 @@ function divelist_remove_dive(clickedDive) {
     var index = divelist.indexOf(entry);
 
     if(index != -1) {
-	divelist.splice(index, 1);
+        divelist.splice(index, 1);
     }
 
     $(divelist).each(function(i, entry) {
@@ -412,7 +411,8 @@ function divelist_remove_dive(clickedDive) {
         entry["dive-order"] = i;
     });
 
-    divelist_redraw();    
+    divelist_redraw();
+    console.log('ID', getDiveID(clickedDive));
     $('#'+getDiveID(clickedDive)+'_selected').remove();
 
     //todo: include undo functionality!!
@@ -430,10 +430,11 @@ function divelist_add_dive(clickedDive, is_voluntary) {
 
 
 function toggleDive(clickedDive, is_voluntary) {
-    $(clickedDive).toggleClass("selected");
-    if ($(clickedDive).hasClass("selected")) { // Add it to the box
-	   divelist_add_dive(clickedDive, is_voluntary);
-    } else { // remove it from the box
+    var id = getDiveID(clickedDive);
+    $('#'+id).toggleClass("selected");
+    if ($('#'+id).hasClass("selected")) { // Add it to the box
+	   divelist_add_dive('#'+id, is_voluntary);
+    } else { // remove it from the box and remove selected class
 	   divelist_remove_dive(clickedDive);
     }
     
@@ -593,7 +594,7 @@ function onSaveButtonClick() { //todo don't copy/paste from autosaving
     divelistToLocalStorage();
 }
 function onExportButtonClick() {
-    alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)");
+    alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)"); //todo
 }
 
 function animate_autosave(fn_when_finished) {
@@ -618,7 +619,6 @@ function onNewListButtonClick() {
 
 function onLoadDropdownClick() {
     listName = $(this).val();
-//    alert("Pretend that this dropdown is populated with your saved lists. (This feature is not implemented yet.)");
     $(".selected-dive").each(function(n,selectedDive) {
             var dive = $("#"+getDiveID(selectedDive));
             toggleDive(dive);
@@ -630,10 +630,6 @@ function onLoadDropdownClick() {
         dive.addClass("selected");
     });
     divelist_redraw();
-}
-
-function alertNotImplemented() {
-    alert("(This feature is not implemented yet.)");
 }
 
 function autoGen(param) { //todo actually generate correct list of dives
