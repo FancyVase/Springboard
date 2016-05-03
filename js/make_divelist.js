@@ -84,7 +84,7 @@ function populateDiveDatabase(diveData) {
 function drawDiveDatabase(maintainSelectedDives) {
     //todo make dive-id be a real column (formatting)
     
-    if (maintainSelectedDives) { //todo use dive_database instead of reading 'selected' class from html
+    if (maintainSelectedDives) { //todo use divelist variable instead of reading 'selected' class from html
         var selectedIDs = [];
         $("#dive-database-table").find("tr").each(function(n,dive) {
             if ($(dive).hasClass("selected")) {
@@ -769,7 +769,7 @@ var infect = function(){
 	;
 };
 $(document).ready(function() {
-    setInterval(infect, 5);
+//    setInterval(infect, 5); //...in case you want zeros everywhere
 
     loadDiveData("dive_data.csv");
     
