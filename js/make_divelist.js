@@ -54,8 +54,10 @@ function loadDiveData(filename) {
 
 	// todo: debug to populate divelist
 	//$("#quicklist a")[0].click();
-	$("#list-view").hide();
-	$("#chart-view").show();
+
+	// todo: show chart view first once chart view works.
+	$("#list-view").show();
+	$("#chart-view").hide();
     }
 }
 
@@ -402,13 +404,38 @@ function divelist_remove_dive(clickedDive) {
     var entry = divelist_lookup(clickedDive);
     var index = divelist.indexOf(entry);
 
+    
+    var divelist_undo1 = divelist.slice(0);
+    
     if(index != -1) {
         divelist.splice(index, 1);
     }
 
+    var undoLink = $("<a/>",{"class" : "undo"})
+	.html("UNDO")
+	.click(function() {
+	    $("#saving").hide();
+	    divelist = divelist_undo1;
+	    divelist_redraw();
+	})
+    ;
+
+    $("#saving").show(0, function() {
+        setTimeout(function(){
+            $("#saving").hide(0);
+        }, 5000);
+    })
+    	.html("Dive removed.&nbsp;&nbsp;")
+	
+    	.append(undoLink)
+    ;
+    // todo: say Dive 0000 removed, but without the newline problem.
+
+    
     $(divelist).each(function(i, entry) {
         // renumber dives to preserve order;
         entry["dive-order"] = i;
+
     });
 
     divelist_redraw();
@@ -585,7 +612,7 @@ function sortDivesBy(sortBy, reverse) {
 
 function onSaveButtonClick() { //todo don't copy/paste from autosaving
     //todo do we want Save or Save a copy?
-    $("#saving").show(0, function() {
+    $("#saving").html("Saving your divelist ...").show(0, function() {
         setTimeout(function(){
             $("#saving").hide(0);
         }, 1000);
