@@ -151,6 +151,11 @@ td#btns-edit {
     overflow:hidden;
     white-space:nowrap;
 }
+
+#ip-search-by-name {
+    cursor: text;
+}
+
 .inputlike:hover {
     border-color:#0ab;
 }
