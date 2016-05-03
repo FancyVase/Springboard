@@ -614,7 +614,7 @@ $(document).ready(function() {
     $("#btn-newlist").click(onNewListButtonClick);
     $("#dropdown-load").mousedown(onLoadDropdownClick);
     
-    $("#ip-search-by-name").click(alertNotImplemented);
+    $("#ip-search-by-name").click(alertNotImplemented); //todo have this also show filtered-out dives, but with some distinguisher such as [color] or [filtered items shown first and the rest shown after a horizontal divider].
     $("#btn-view-as-chart").click(
 	function() {
 	    $("#list-view").hide();
