@@ -118,8 +118,6 @@ h5 {
 .panel-dive-list #toolbar {
 
     height:100%;
-    /*border-left:1.4em solid #ddd;
-    border-color:#fff;*/
     width:100%;
 }
 .panel-dive-list #toolbar {
@@ -172,9 +170,7 @@ td#btns-edit {
 }
 #divelist-container {
     vertical-align:top;
-}
-#divelist-container > td {
-
+    height: 10px;
 }
 
 .panel-dive-database {
@@ -182,11 +178,6 @@ td#btns-edit {
 }
 
 #search-by-name h5{display:inline;}
-
-.scrollable-pane {
-    overflow-y:auto;
-    height:80%;
-}
 
 .score-column, .nondescript {
 
@@ -229,7 +220,7 @@ table#dive-database-table td:first-child {
 
 /*** ----- dive database table entries ----- ***/
 div.scrollable-pane {
-    height:94%;
+    height:60%;
     overflow-y:scroll;
     border-left:0px solid #aaa; /*todo rm if 0px? -jmn*/
     border-top:0px solid #aaa;
@@ -586,10 +577,11 @@ span.remove {
 .separator {
     padding-left:2em;
     height:100%;
+    height:81%;
+    overflow-y: auto;
     box-shadow:0.25em 0.0em 0.5em #aaa inset;
     border-left:1em solid #eee;
 }
-
 
 .shady .panel-dive-filters {
     opacity:0.2;
