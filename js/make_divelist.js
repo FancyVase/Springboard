@@ -183,7 +183,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
     });
         
     // Bind click listener for dives
-    $(".dive-entry").click(function() { toggleDive(this) });
+    $(".dive-entry").click(function() { onDatabaseDiveClicked(this) });
 }
 
 
@@ -381,8 +381,9 @@ function divelist_redraw() {
 	$("<span/>",{"class":"drag-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
 
 
-	var $remove = $("<span class='remove'>[remove]</span>").click(function() {
-        toggleDive($entry);
+	var $remove = $("<span class='remove'>[remove]</span>").click(function() { //lambda function called when [remove] is clicked
+        toggleDiveSelectedInDatabase(dive_id);
+        divelist_remove_dive($entry, true);
 	}).appendTo($entry);
  
  	add_radio_buttons($entry);
@@ -399,54 +400,52 @@ function divelist_redraw() {
     });
 }
 
-function divelist_remove_dive(clickedDive) {
-    // Remove a dive in the divelist
+function divelist_remove_dive(clickedDive, showUndo) {
+    // Remove a dive from the divelist, without affecting database or chart. Display UNDO option if showUndo is true.
     var entry = divelist_lookup(clickedDive);
     var index = divelist.indexOf(entry);
-
+    var id = getDiveID(clickedDive);
     
     var divelist_undo1 = divelist.slice(0);
-    
+
     if(index != -1) {
         divelist.splice(index, 1);
     }
 
-    var undoLink = $("<a/>",{"class" : "undo"})
-	.html("UNDO")
-	.click(function() {
-	    $("#saving").hide();
-	    divelist = divelist_undo1;
-	    divelist_redraw();
-	})
-    ;
+    if (showUndo) {
+        var undoLink = $("<a/>",{"class" : "undo"})
+            .html("UNDO")
+            .click(function() { //lambda function called when UNDO is clicked
+                $("#saving").hide();
+                divelist = divelist_undo1;
+                divelist_redraw();
+                toggleDiveSelectedInDatabase(id);
+            })
+        ;
 
-    $("#saving").show(0, function() {
-        setTimeout(function(){
-            $("#saving").hide(0);
-        }, 5000);
-    })
-    	.html("Dive removed.&nbsp;&nbsp;")
-	
-    	.append(undoLink)
-    ;
-    // todo: say Dive 0000 removed, but without the newline problem.
+        $("#saving").show(0, function() {
+            setTimeout(function(){
+                $("#saving").hide(0);
+            }, 5000);
+        })
+            .html("Dive removed.&nbsp;&nbsp;")
 
+            .append(undoLink)
+        ;
+        // todo: say Dive 0000 removed, but without the newline problem.
+    }
     
     $(divelist).each(function(i, entry) {
         // renumber dives to preserve order;
         entry["dive-order"] = i;
-
     });
 
+    $('#'+id+'_selected').remove();
     divelist_redraw();
-    console.log('ID', getDiveID(clickedDive));
-    $('#'+getDiveID(clickedDive)+'_selected').remove();
-
-    //todo: include undo functionality!!
 }
 
 function divelist_add_dive(clickedDive, is_voluntary) {
-    // Add a dive from the database to the divelist
+    // Add a dive to the divelist, without affecting database or chart.
     var attributes = get_dive_attributes(clickedDive);
     var dive_order = divelist.length; // linear order in the list; todo: programmatically
     attributes["dive-order"] = dive_order;
@@ -456,16 +455,26 @@ function divelist_add_dive(clickedDive, is_voluntary) {
 }
 
 
-function toggleDive(clickedDive, is_voluntary) {
+function onDatabaseDiveClicked(clickedDive, is_voluntary) {
     var id = getDiveID(clickedDive);
-    $('#'+id).toggleClass("selected");
-    if ($('#'+id).hasClass("selected")) { // Add it to the box
-	   divelist_add_dive('#'+id, is_voluntary);
-    } else { // remove it from the box and remove selected class
-	   divelist_remove_dive(clickedDive);
+    
+    // toggle whether dive is selected in database (blue dot)
+    toggleDiveSelectedInDatabase(id);
+    
+    // add or remove dive from divelist
+    if ($('#'+id).hasClass("selected")) {
+	    divelist_add_dive('#'+id, is_voluntary);
+    } else {
+	    divelist_remove_dive(clickedDive, false);
     }
     
+    // if divelist is empty, show quicklist
     ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+}
+
+function toggleDiveSelectedInDatabase(diveID) {
+    // Toggle whether dive is selected in database (blue dot), without affecting divelist or chart.
+    $('#'+diveID).toggleClass("selected");
 }
 
 function setOptional(dive) {
@@ -636,20 +645,24 @@ function onNewListButtonClick() {
     // dxh: this is a mockup animation
     animate_autosave(function() {
         console.log("Clearing current divelist");
-        $(".selected-dive").each(function(n,selectedDive) {
-            var dive = $("#"+getDiveID(selectedDive));
-            toggleDive(dive);
-        });
-        $("#divelist-savename").text("Unnamed divelist");
+        clearDivelist();
     });
 }
 
-function onLoadDropdownClick() {
-    listName = $(this).val();
+function clearDivelist() {
     $(".selected-dive").each(function(n,selectedDive) {
-            var dive = $("#"+getDiveID(selectedDive));
-            toggleDive(dive);
-        });
+        var id = getDiveID(selectedDive);
+        var dive = $("#"+id);
+        toggleDiveSelectedInDatabase(id);
+        divelist_remove_dive(dive, false);
+    });
+    //todo stretch goal: show UNDO to undo list-clearing
+    $("#divelist-savename").text("Unnamed divelist");
+}
+
+function onLoadDropdownClick() {
+    clearDivelist();
+    listName = $(this).val();
     localStorageToDivelist(listName);
     divelist_redraw();
     $(".selected-dive").each(function(n,selectedDive) {
@@ -660,8 +673,9 @@ function onLoadDropdownClick() {
 }
 
 function autoGen(param) { //todo actually generate correct list of dives
+    console.error("not implemented (Jessica is working on this)");
     $(".dive-entry").each(function(n,dive) {
-        if (n<11) {toggleDive(dive, n>=6);}
+//        if (n<11) {toggleDive(dive, n>=6);} //todonext
     });
     hideQuicklist();
 }
