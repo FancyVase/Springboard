@@ -97,7 +97,7 @@
           <ul id="experience-level">
             <li><input type="checkbox" checked id="know"><label>Known well</label></li>
             <li><input type="checkbox" checked id="learning"><label>Learning</label></li>
-            <li><input type="checkbox" checked id="unknown"><label>Don't know</label></li>
+            <li><input type="checkbox" id="unknown"><label>Don't know</label></li>
           </ul>    
         </div>
         <!--todo add "Clear all filters" option-->
@@ -119,10 +119,10 @@ affordance (aesthetic & minimalist design)-->
       <select id="sort-dropdown" class="inputlike">
         <!--todo replace dropdown with fake column headers -->
         <!--todo should we also enable sorting by experience, other types of scores, or anything else?-->
+        <option sort-by="dive-id">Dive ID (101 first)</option>
+        <option sort-by="dive-id" reverse="true">Dive ID (5434 first)</option>
         <option sort-by="dive-predicted-score" reverse="true">Predicted score (highest first)</option>
         <option sort-by="dive-predicted-score">Predicted score (lowest first)</option>
-        <option sort-by="dive-id">Dive ID (001 first)</option>
-        <option sort-by="dive-id" reverse="true">Dive ID (5434 first)</option>
         <option sort-by="dive-last-performed" reverse="true">Date last performed (most recent first)</option>
         <option sort-by="dive-last-performed">Date last performed (oldest first)</option>
 	</select>

@@ -49,7 +49,7 @@ function loadDiveData(filename) {
             diveData.push(my_csv[i].split(","));
         }
         populateDiveDatabase(diveData);
-        sortDivesBy("dive-predicted-score", true); //initially, sort by predicted score
+        sortDivesBy("dive-id"); //initially, sort by dive ID //todo don't hard-code this
 	drawDiveDatabase();
 
 	// todo: debug to populate divelist
@@ -745,7 +745,7 @@ $(document).ready(function() {
     $("#filter-time-dropdown").change(function() {
         filterByTime($(this).val());
     });
-    $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience); //todo enable clicking on label too
+    $("#filter-experience").find("input").click(onFilterByExperience); //todo enable clicking on label too
 
     $("#sort-dropdown").change(function() {
         var option = $(this).find('option:selected');
@@ -757,9 +757,10 @@ $(document).ready(function() {
     $("#btn-newlist").click(onNewListButtonClick);
     $("#dropdown-load").change(onLoadDropdownClick);
     
-    $("#ip-search-by-name").change(function() { //todo make it filter as you type
+    $("#ip-search-by-name").keyup(function() {
         filterBySearchText($(this).val());
     });
+
     $("#btn-view-as-chart").click(
 	function() {
 	    $("#list-view").hide();
