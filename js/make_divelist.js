@@ -16,6 +16,7 @@ var filters = {
     "diveGroup": returnFalse,
     "time": returnFalse,
     "experience": returnFalse,
+    "searchText": returnFalse,
 };
 
 // DIVES
@@ -70,7 +71,7 @@ function populateDiveDatabase(diveData) {
 
         dive_database.push(map);
     });
-    console.log(dive_database);
+//    console.log(dive_database); //todo rm
 }
 
 /// ------------------- DRAW DIVELIST
@@ -478,8 +479,6 @@ function filterByTime(timeOption) {
     console.log("filter by time", timeOption);
     switch (timeOption) {
         case "1 Month":
-//    }
-//    if (timeOption == "1 Month") {
             console.log("Filtering by time: in the last month");
             filters["time"] = (function(dive) {
                 return $(dive).attr("dive-last-performed") != "2016/03/05";
@@ -493,7 +492,6 @@ function filterByTime(timeOption) {
             });
             break;
         default:
-//    } else { //Anytime
             console.log("Showing all dives");
             filters["time"] = returnFalse;
     }
@@ -525,6 +523,23 @@ function onFilterByExperience(event) {
     });
     applyFilters();
 }
+
+function filterBySearchText(searchText) {
+    //todo have this also show filtered-out dives, but with some distinguisher such as [color] or [filtered items shown first and the rest shown after a horizontal divider].
+    searchText = searchText.toUpperCase();
+    console.log("Filtering by search text:", searchText);
+    if (searchText == "") {
+        filters["searchText"] = returnFalse;
+    } else {
+        filters["searchText"] = (function(dive) {
+            // check ID and name for searchText, case-insensitive
+            return (dive.getAttribute("dive-id").indexOf(searchText) == -1)
+                && (dive.getAttribute("dive-name").toUpperCase().indexOf(searchText) == -1);
+        });
+    }
+    applyFilters();    
+}
+
 
 ///////////////// SORTING
 
@@ -657,7 +672,9 @@ $(document).ready(function() {
     $("#btn-newlist").click(onNewListButtonClick);
     $("#dropdown-load").change(onLoadDropdownClick);
     
-    $("#ip-search-by-name").click(alertNotImplemented); //todo have this also show filtered-out dives, but with some distinguisher such as [color] or [filtered items shown first and the rest shown after a horizontal divider].
+    $("#ip-search-by-name").change(function() { //todo make it filter as you type
+        filterBySearchText($(this).val());
+    });
     $("#btn-view-as-chart").click(
 	function() {
 	    $("#list-view").hide();
