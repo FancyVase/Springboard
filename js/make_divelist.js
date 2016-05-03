@@ -73,22 +73,30 @@ function populateDiveDatabase(diveData) {
 
         dive_database.push(map);
     });
-//    console.log(dive_database); //todo rm
 }
 
 /// ------------------- DRAW DIVELIST
 
-function drawDiveDatabase(database) { //todo @dxh why does this take in an argument at all?
+function drawDiveDatabase(maintainSelectedDives) {
     //todo make dive-id be a real column (formatting)
+    
+    if (maintainSelectedDives) { //todo use dive_database instead of reading 'selected' class from html
+        var selectedIDs = [];
+        $("#dive-database-table").find("tr").each(function(n,dive) {
+            if ($(dive).hasClass("selected")) {
+                selectedIDs.push(dive.getAttribute("dive-id"));
+            }
+        });
+    }
     
     //clear old dives
     $("#dive-database-table").find("tr").remove();
 
-    if(typeof(database) === "undefined") {
-	   database = dive_database; // global variable as default
-    }
+//    if(typeof(database) === "undefined") {
+//	   database = dive_database; // global variable as default
+//    }
 
-    $(database).each(function(i, dive) {
+    $(dive_database).each(function(i, dive) {
 	var $newDiveRow = $("<tr></tr>", {"class":"dive-entry",
 					  "id": dive["dive-id"],
                                           "dive-group":dive["diveGroup"]})
@@ -182,6 +190,12 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	$td.append($diveSelector);
     });
         
+    if (maintainSelectedDives) {
+        $(selectedIDs).each(function(n,id) {
+            toggleDiveSelectedInDatabase(id);
+        });
+    }
+
     // Bind click listener for dives
     $(".dive-entry").click(function() { onDatabaseDiveClicked(this) });
 }
@@ -613,7 +627,7 @@ function sortByAttribute(list, attribute, reverse) {
 function sortDivesBy(sortBy, reverse) {
     console.log("sort dives by:", sortBy, reverse ? "reversed" : "");
     sortByAttribute(dive_database, sortBy, reverse);
-    drawDiveDatabase();
+    drawDiveDatabase(true);
     applyFilters();
 }
 
@@ -672,11 +686,31 @@ function onLoadDropdownClick() {
     divelist_redraw();
 }
 
-function autoGen(param) { //todo actually generate correct list of dives
-    console.error("not implemented (Jessica is working on this)");
-    $(".dive-entry").each(function(n,dive) {
-//        if (n<11) {toggleDive(dive, n>=6);} //todonext
+function autoGen(param) {
+    console.log(param);
+    var opt, vol
+    switch(param) {
+        case "HighScore":
+            opt = "104B 203B 303C 403B 5231D 401B";
+            vol = "103B 201B 301B 403C 5132D";
+            break;
+        case "Practiced":
+        case "Recent": //these happen to be the same 11 dives
+            opt = "103B 201C 301C 403C 5231D 101B";
+            vol = "103C 201B 302C 401C 5132D";
+            break;
+    }
+    
+    $(opt.split(" ")).each(function(n,id) {
+        divelist_add_dive($("#"+id), false);
+        toggleDiveSelectedInDatabase(id);
     });
+    
+    $(vol.split(" ")).each(function(n,id) { //reusing code but whatever
+        divelist_add_dive($("#"+id), true);
+        toggleDiveSelectedInDatabase(id);
+    });
+
     hideQuicklist();
 }
 
