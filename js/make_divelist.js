@@ -398,6 +398,9 @@ function divelist_redraw() {
 	var $remove = $("<span class='remove'>[remove]</span>").click(function() { //lambda function called when [remove] is clicked
         toggleDiveSelectedInDatabase(dive_id);
         divelist_remove_dive($entry, true);
+
+        // if divelist is empty, show quicklist
+        ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
 	}).appendTo($entry);
  
  	add_radio_buttons($entry);
@@ -434,6 +437,7 @@ function divelist_remove_dive(clickedDive, showUndo) {
                 divelist = divelist_undo1;
                 divelist_redraw();
                 toggleDiveSelectedInDatabase(id);
+                hideQuicklist();
             })
         ;
 
@@ -660,6 +664,7 @@ function onNewListButtonClick() {
     animate_autosave(function() {
         console.log("Clearing current divelist");
         clearDivelist();
+        showQuicklist();
     });
 }
 
@@ -684,6 +689,7 @@ function onLoadDropdownClick() {
         dive.addClass("selected");
     });
     divelist_redraw();
+    hideQuicklist();
 }
 
 function autoGen(param) {
