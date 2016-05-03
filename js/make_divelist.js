@@ -3,6 +3,7 @@ function returnFalse() { return false; }
 
 //todo get rid of alerts
 //todo add counting thing for list view (how many of each type of dive)
+//todo timeline to represent time frames?
 
 //////////////////////////////////////////////////
 // GLOBAL VARIABLES
@@ -100,7 +101,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	}
 	
 	var $diveSelector = $('<a/>',{"class":"selection-circle"});
-    //todo make selector look more like a checkbox and less like a radio button, to show that you can select multiple dives (external consistency)
+    //todo make selector look more like a checkbox and less like a radio button, to show that you can select multiple dives (external consistency) (or at least add a checkmark inside the blue circle)
 
 	var $td = $("<td/>").appendTo($newDiveRow);
 
@@ -143,7 +144,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
     //todo it's unclear why there's a date next to the dive. should indicate somehow that it's the date the dive was last performed (maybe on mouseover? better: on mouseover, show list of dates and meets at which the dive was performed), and should use gmail-style "last week", "2 months ago", etc
     //todo use more consistent date format (internationalization)
 
-    //todo consistent number of digits in scores
+    //todo consistent number of digits in scores (or a graphical way of representing numbers? maybe a bar?)
     
 	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
 	if(dive["dive-average-score"]){

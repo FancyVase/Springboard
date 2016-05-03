@@ -24,4 +24,4 @@ TODO
     - stretch: inspect dives has a search function
     
 In general:
-    - address heuristic evals / feedback
+    - address heuristic evals / feedback (see todo/TODOs inline in code)
