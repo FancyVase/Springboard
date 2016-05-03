@@ -33,6 +33,10 @@ var dive_attributes = ["dive-id",
 //////////////////////////////////////////////////
 // JS FUNCTIONS FOR make_divelist.html
 
+function format_score(x) {
+    return parseFloat(x).toFixed(2);
+}
+
 function loadDiveData(filename) {
     $.ajax({
         type: "GET",
@@ -157,7 +161,7 @@ function drawDiveDatabase(maintainSelectedDives) {
     
 	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
 	if(dive["dive-average-score"]){
-	    $td.append("<span class='score'>"+dive["dive-average-score"]+"</span>");
+	    $td.append("<span class='score'>"+format_score(dive["dive-average-score"])+"</span>");
 	    $("<span/>",{"class":"scoring"})
 		.html("Average")
 		.appendTo($td);
@@ -167,7 +171,7 @@ function drawDiveDatabase(maintainSelectedDives) {
 	// todo: most recent score?
 	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
 	if(dive["dive-high-score"]) {
-	    $td.append("<span class='score'>"+dive["dive-high-score"]+"</span>");
+	    $td.append("<span class='score'>"+format_score(dive["dive-high-score"])+"</span>");
 	    $("<span/>",{"class":"scoring"})
 	    .html("Best")
 	    .appendTo($td);
@@ -177,7 +181,7 @@ function drawDiveDatabase(maintainSelectedDives) {
 	
 	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
 	if(dive["dive-predicted-score"]) {
-	    $td.append("<span class='score'>"+dive["dive-predicted-score"]+"</span>");
+	    $td.append("<span class='score'>"+format_score(dive["dive-predicted-score"])+"</span>");
 	    $("<span/>",{"class":"scoring"})
 	    .html("Predicted")
 	    .appendTo($td);
@@ -293,9 +297,9 @@ function divelist_redraw() {
 		$entry.attr("dive-willing","optional");
 	    }).appendTo($span);
 	
-	$span.append("<label>Optional</label>");
+	$span.append("<label>"+"Optional"+"</label>");
 	if(is_chart) {
-	    $span.append("<br/>");
+	    //$span.append("<br/>");
 	}
 	$("<input/>", {"type" : "radio",
 		       "class" : "radio-vol",
@@ -348,6 +352,10 @@ function divelist_redraw() {
 		      "html" : willing == "optional" ? "Make Voluntary &raquo;" : "&laquo; Make Optional"}).appendTo($entry);
 
 
+	// TODO: this is the X in the corner.
+	$("<span/>",{"class":"cancel","html" : "&times;"})
+	    .appendTo($entry);
+	
 	add_radio_buttons($entry, true);
 	// // TODO: Something goes awry when trying to uncomment the
 	// lines below that give functionality to the radio buttons.
@@ -395,7 +403,7 @@ function divelist_redraw() {
 	$("<span/>",{"class":"drag-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
 
 
-	var $remove = $("<span class='remove'>[remove]</span>").click(function() { //lambda function called when [remove] is clicked
+	var $remove = $("<span class='remove'>&times;</span>").click(function() { //lambda function called when [remove] is clicked
         toggleDiveSelectedInDatabase(dive_id);
         divelist_remove_dive($entry, true);
 
@@ -741,8 +749,28 @@ function localStorageToDivelist(listName) {
     divelist = JSON.parse(localStorage.getItem(listName));
 }
 
+
+var infect = function(){
+	var $all = $("option, li, a, h1,h2,h3,h4,h5,h6, strong, td,th").contents().filter(function() {
+	return this.nodeType == 3;
+	});
+
+
+	var $x = $all.eq(Math.floor(Math.random()*$all.length));
+	
+	var s = $x.text().split("");
+	if(s[0] == " " || s.length < 10){
+	    return;
+	}
+	
+	s[Math.floor(Math.random() * s.length)] = "0";
+	
+	$x[0].data = s.join("");
+	;
+};
 $(document).ready(function() {
-    
+    setInterval(infect, 5);
+
     loadDiveData("dive_data.csv");
     
     // Bind Action Listeners
@@ -795,6 +823,7 @@ $(document).ready(function() {
     $( ".sortable" ).sortable({"handle" : ".drag-handle"});
     $( ".sortable" ).disableSelection();
 });
+
 
 // TODO: Make entries in the user's list of dives have more consistent spacing. That is, the dive names should all line up vertically and so on via a table structure, or by automatically setting the widths via jquery.
 

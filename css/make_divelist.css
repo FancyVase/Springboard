@@ -453,6 +453,21 @@ span.last-performed {
     padding:0.5em;
     margin:0.25em;
     font-size:1.14em;
+
+    padding-top:1em;
+    position:relative;
+}
+
+.chart .cancel {
+    position:absolute;
+    right:0.5em;
+    top:-0.1em;
+    opacity:0.6;
+}
+.chart .cancel:hover {
+    opacity:1;
+    color:#c00;
+    cursor:pointer;
 }
 .chart strong {
     font-weight:normal;
@@ -603,4 +618,8 @@ span.remove {
     font-weight:bold;
     text-decoration: underline;
     cursor:pointer;
+}
+
+#chart-view .radio-opt {
+;
 }

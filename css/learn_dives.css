@@ -98,6 +98,10 @@ svg {
     cursor:pointer;
     cursor:hand;
 }
+.dive-bubble:hover {
+    background:#59f;
+}
+
 .dive-bubble .dive-id {
     color:#fff;
 }
@@ -141,7 +145,8 @@ html {
 
 .dive-bubble.selected {
     border-color:#0a6;
-    background:#4b8;
+    
+        background:#5af;
 }
 
 .swimmingpool {
@@ -158,4 +163,64 @@ html {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+
+.dive-filter-group {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    width:100%;
+    z-index:6831;
+    background:#fff;
+    background:#f8f0c0;
+    background:#efd;
+    border-bottom:1px solid #888;
+    padding:0.25em 3em;
+    color:#666;
+
+}
+ul.dive-filters {
+    display:inline;
+    font-size:1.4em;
+    
+}
+ul.dive-filters li {
+    display:inline;
+    list-style-type:none;
+    padding-right:1em;
+    color:#08c;
+    vertical-align:middle!important;
+    cursor:pointer;
+}
+ul.dive-filters li:hover {
+    text-decoration:underline;
+}
+ul.dive-filters li.current {
+    color:#444;
+    color:rgba(0,0,0,0.6);
+    text-decoration:none!important;
+    font-weight:bolder;
+    
+}
+
+ul.dive-filters li:first-child {
+    padding-right:1em;
+}
+
+
+.dive-info.inert {
+    display:block;
+    bottom:1em;
+    height:3em;
+    box-shadow:none;
+    text-transform:uppercase;
+    color:#666;
+    text-align:center;
+    opacity:0.85;
+    font-size:0.8em;
+}
+.dive-info.inert p {
+    display:none;
 }
