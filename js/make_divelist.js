@@ -3,6 +3,7 @@ function returnFalse() { return false; }
 
 //todo get rid of alerts
 //todo add counting thing for list view (how many of each type of dive)
+//todo timeline to represent time frames?
 
 //////////////////////////////////////////////////
 // GLOBAL VARIABLES
@@ -16,6 +17,7 @@ var filters = {
     "diveGroup": returnFalse,
     "time": returnFalse,
     "experience": returnFalse,
+    "searchText": returnFalse,
 };
 
 // DIVES
@@ -53,8 +55,10 @@ function loadDiveData(filename) {
 
 	// todo: debug to populate divelist
 	//$("#quicklist a")[0].click();
-	$("#list-view").hide();
-	$("#chart-view").show();
+
+	// todo: show chart view first once chart view works.
+	$("#list-view").show();
+	$("#chart-view").hide();
     }
 }
 
@@ -70,7 +74,7 @@ function populateDiveDatabase(diveData) {
 
         dive_database.push(map);
     });
-    console.log(dive_database);
+//    console.log(dive_database); //todo rm
 }
 
 /// ------------------- DRAW DIVELIST
@@ -99,6 +103,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	}
 	
 	var $diveSelector = $('<a/>',{"class":"selection-circle"});
+    //todo make selector look more like a checkbox and less like a radio button, to show that you can select multiple dives (external consistency) (or at least add a checkmark inside the blue circle)
 
 	var $td = $("<td/>").appendTo($newDiveRow);
 
@@ -114,7 +119,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 
 	if(dive["dive-experience"].match(/I know/i)) {
 	    
-	    $("<span/>", {"class" : "known known-well"} ).append("Known well")
+	    $("<span/>", {"class" : "known known-well"} ).append("Known well") //todo could use "Mastered"
 		.appendTo($details);
 
 	}
@@ -129,7 +134,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	    $("<span/>", {"class" : "known known-not"} ).append("Don't know")
 		.appendTo($details);
 	}
-
+    //todo add additional levels of knowledge (e.g. numerical, or "familiar", "beginner", etc)
 	
 	    
 	if(dive["dive-last-performed"]) {
@@ -138,8 +143,11 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	    $details.append("<span class='last-performed'>" + dive["dive-last-performed"]+"</span>"); 
 	}
 	$details.appendTo($td);
+    //todo it's unclear why there's a date next to the dive. should indicate somehow that it's the date the dive was last performed (maybe on mouseover? better: on mouseover, show list of dates and meets at which the dive was performed), and should use gmail-style "last week", "2 months ago", etc
+    //todo use more consistent date format (internationalization)
 
-
+    //todo consistent number of digits in scores (or a graphical way of representing numbers? maybe a bar?)
+    
 	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
 	if(dive["dive-average-score"]){
 	    $td.append("<span class='score'>"+dive["dive-average-score"]+"</span>");
@@ -169,6 +177,8 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 
 	}
 
+    //todo explain somewhere what predicted score is
+    
 	$td = $("<td/>",{"class":"selector"}).appendTo($newDiveRow);
 	$td.append($diveSelector);
     });
@@ -291,6 +301,11 @@ function divelist_redraw() {
     
     // FOR THE CHART VIEW
     // $("#list-view").hide(); // todo: this is a debug statement
+    
+    //todo fix awkward word-wrap for long dive names
+    //todo put radio buttons on a single line
+    //todo add functionality to radio buttons
+    //todo TODO important!! add REMOVE link for dive tiles in chart view
 
     var groups = ["fwd", "back", "reverse", "inward", "twist"]; //todo why not "forward"? @dxh
     var $chart = $("<table/>", {"class" : "chart"}).appendTo("#chart-view");
@@ -343,7 +358,7 @@ function divelist_redraw() {
     });
 
     
-    // FOR THE LIST VIEW
+    // FOR THE LIST VIEW //todo could make it more clear why dives are reorderable
     $(divelist).each(function(i, entry) {
 	var dive_id = entry["dive-id"];
 	var $entry = $("<span/>", {"class" : "selected-dive",
@@ -390,19 +405,44 @@ function divelist_remove_dive(clickedDive) {
     var entry = divelist_lookup(clickedDive);
     var index = divelist.indexOf(entry);
 
+    
+    var divelist_undo1 = divelist.slice(0);
+    
     if(index != -1) {
 	divelist.splice(index, 1);
     }
 
+    var undoLink = $("<a/>",{"class" : "undo"})
+	.html("UNDO")
+	.click(function() {
+	    $("#saving").hide();
+	    divelist = divelist_undo1;
+	    divelist_redraw();
+	})
+    ;
+
+    $("#saving").show(0, function() {
+        setTimeout(function(){
+            $("#saving").hide(0);
+        }, 5000);
+    })
+    	.html("Dive removed.&nbsp;&nbsp;")
+	
+    	.append(undoLink)
+    ;
+    // todo: say Dive 0000 removed, but without the newline problem.
+
+    
     $(divelist).each(function(i, entry) {
         // renumber dives to preserve order;
         entry["dive-order"] = i;
+
     });
 
     divelist_redraw();    
     $('#'+getDiveID(clickedDive)+'_selected').remove();
 
-    //todo: include undo functionality?
+    //todo: include undo functionality!!
 }
 
 function divelist_add_dive(clickedDive, is_voluntary) {
@@ -478,8 +518,6 @@ function filterByTime(timeOption) {
     console.log("filter by time", timeOption);
     switch (timeOption) {
         case "1 Month":
-//    }
-//    if (timeOption == "1 Month") {
             console.log("Filtering by time: in the last month");
             filters["time"] = (function(dive) {
                 return $(dive).attr("dive-last-performed") != "2016/03/05";
@@ -493,7 +531,6 @@ function filterByTime(timeOption) {
             });
             break;
         default:
-//    } else { //Anytime
             console.log("Showing all dives");
             filters["time"] = returnFalse;
     }
@@ -526,6 +563,25 @@ function onFilterByExperience(event) {
     applyFilters();
 }
 
+function filterBySearchText(searchText) {
+    //todo have this also show filtered-out dives, but with some distinguisher such as [color] or [filtered items shown first and the rest shown after a horizontal divider].
+    searchText = searchText.toUpperCase();
+    console.log("Filtering by search text:", searchText);
+    if (searchText == "") {
+        filters["searchText"] = returnFalse;
+    } else {
+        filters["searchText"] = (function(dive) {
+            // check ID and name for searchText, case-insensitive
+            return (dive.getAttribute("dive-id").indexOf(searchText) == -1)
+                && (dive.getAttribute("dive-name").toUpperCase().indexOf(searchText) == -1);
+        });
+    }
+    applyFilters();    
+}
+
+//todo if no dives show, message "There are no dives that match your filters."
+
+
 ///////////////// SORTING
 
 function sortByAttribute(list, attribute, reverse) {
@@ -555,7 +611,7 @@ function sortDivesBy(sortBy, reverse) {
 
 function onSaveButtonClick() { //todo don't copy/paste from autosaving
     //todo do we want Save or Save a copy?
-    $("#saving").show(0, function() {
+    $("#saving").html("Saving your divelist ...").show(0, function() {
         setTimeout(function(){
             $("#saving").hide(0);
         }, 1000);
@@ -657,7 +713,9 @@ $(document).ready(function() {
     $("#btn-newlist").click(onNewListButtonClick);
     $("#dropdown-load").change(onLoadDropdownClick);
     
-    $("#ip-search-by-name").click(alertNotImplemented);
+    $("#ip-search-by-name").change(function() { //todo make it filter as you type
+        filterBySearchText($(this).val());
+    });
     $("#btn-view-as-chart").click(
 	function() {
 	    $("#list-view").hide();

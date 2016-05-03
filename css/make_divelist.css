@@ -13,7 +13,7 @@ body {
     line-height:1.4em;
     font-family:"Lato",Cabin,"Gill Sans", Helvetica,Arial,sans-serif;
 }
-/*TODO consistent color scheme*/
+/*TODO consistent color scheme (esp no neon green on hover; should use more blue b/c diving)*/
 /*TODO make it work with a narrow window (eg horizontal scrollbar)*/
 h1 {
     font-size:2em;
@@ -140,8 +140,10 @@ td#btns-edit {
     background:#000;
 
 }
-.inputlike,#ip-search-by-name {
-    padding:0.4em;
+
+.inputlike,#ip-search-by-name { /*todo select all text on click in textbox*/
+    padding:0.5em;
+    font-size:1.4em;
     cursor:pointer;
     margin-right:0.5em;
     border-radius:0.2em;
@@ -151,6 +153,11 @@ td#btns-edit {
     white-space:nowrap;
     width:24rem;
 }
+
+#ip-search-by-name {
+    cursor: text;
+}
+
 .inputlike:hover {
     border-color:#0ab;
 }
@@ -185,6 +192,7 @@ td#btns-edit {
 
 }
 .dive-id {
+/*    todo consistent color for dive-id b/w database and list/chart (gray vs black)*/
     float:left;
     color:#666;
     width:4em;
@@ -347,6 +355,8 @@ span.last-performed {
 }
 
 #filter-dive-group li + li {
+    /*todo highlight on mouseover*/
+    /*todo make All Groups look more like it's selected and less like a section title*/
     /*padding-left:1em;*/
 }
 
@@ -473,7 +483,7 @@ span.last-performed {
 .hide-quicklist #quicklist, #hide-quicklist #quicklist-options {
     display:none;
 }
-
+/*todo quicklist should have sticky-note background color & hover links*/
 
 
 #list-view .selected-dive {
@@ -571,6 +581,7 @@ span.remove {
     left:50%;
     width:12em;
     display:none;
+    z-index:6831;
 }
 .separator {
     padding-left:2em;
@@ -586,4 +597,10 @@ span.remove {
 }
 .shady #ip-search-by-name {
     border-color:#08e;
+}
+
+.undo {
+    font-weight:bold;
+    text-decoration: underline;
+    cursor:pointer;
 }
