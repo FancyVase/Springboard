@@ -33,6 +33,10 @@ var dive_attributes = ["dive-id",
 //////////////////////////////////////////////////
 // JS FUNCTIONS FOR make_divelist.html
 
+function format_score(x) {
+    return parseFloat(x).toFixed(2);
+}
+
 function loadDiveData(filename) {
     $.ajax({
         type: "GET",
@@ -49,7 +53,7 @@ function loadDiveData(filename) {
             diveData.push(my_csv[i].split(","));
         }
         populateDiveDatabase(diveData);
-        sortDivesBy("dive-predicted-score", true); //initially, sort by predicted score
+        sortDivesBy("dive-id"); //initially, sort by dive ID //todo don't hard-code this
 	drawDiveDatabase();
 
 	// todo: debug to populate divelist
@@ -73,22 +77,30 @@ function populateDiveDatabase(diveData) {
 
         dive_database.push(map);
     });
-//    console.log(dive_database); //todo rm
 }
 
 /// ------------------- DRAW DIVELIST
 
-function drawDiveDatabase(database) { //todo @dxh why does this take in an argument at all?
+function drawDiveDatabase(maintainSelectedDives) {
     //todo make dive-id be a real column (formatting)
+    
+    if (maintainSelectedDives) { //todo use dive_database instead of reading 'selected' class from html
+        var selectedIDs = [];
+        $("#dive-database-table").find("tr").each(function(n,dive) {
+            if ($(dive).hasClass("selected")) {
+                selectedIDs.push(dive.getAttribute("dive-id"));
+            }
+        });
+    }
     
     //clear old dives
     $("#dive-database-table").find("tr").remove();
 
-    if(typeof(database) === "undefined") {
-	   database = dive_database; // global variable as default
-    }
+//    if(typeof(database) === "undefined") {
+//	   database = dive_database; // global variable as default
+//    }
 
-    $(database).each(function(i, dive) {
+    $(dive_database).each(function(i, dive) {
 	var $newDiveRow = $("<tr></tr>", {"class":"dive-entry",
 					  "id": dive["dive-id"],
                                           "dive-group":dive["diveGroup"]})
@@ -149,7 +161,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
     
 	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
 	if(dive["dive-average-score"]){
-	    $td.append("<span class='score'>"+dive["dive-average-score"]+"</span>");
+	    $td.append("<span class='score'>"+format_score(dive["dive-average-score"])+"</span>");
 	    $("<span/>",{"class":"scoring"})
 		.html("Average")
 		.appendTo($td);
@@ -159,7 +171,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	// todo: most recent score?
 	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
 	if(dive["dive-high-score"]) {
-	    $td.append("<span class='score'>"+dive["dive-high-score"]+"</span>");
+	    $td.append("<span class='score'>"+format_score(dive["dive-high-score"])+"</span>");
 	    $("<span/>",{"class":"scoring"})
 	    .html("Best")
 	    .appendTo($td);
@@ -169,7 +181,7 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	
 	$td = $("<td/>",{"class":"score-column"}).appendTo($newDiveRow);
 	if(dive["dive-predicted-score"]) {
-	    $td.append("<span class='score'>"+dive["dive-predicted-score"]+"</span>");
+	    $td.append("<span class='score'>"+format_score(dive["dive-predicted-score"])+"</span>");
 	    $("<span/>",{"class":"scoring"})
 	    .html("Predicted")
 	    .appendTo($td);
@@ -182,8 +194,14 @@ function drawDiveDatabase(database) { //todo @dxh why does this take in an argum
 	$td.append($diveSelector);
     });
         
+    if (maintainSelectedDives) {
+        $(selectedIDs).each(function(n,id) {
+            toggleDiveSelectedInDatabase(id);
+        });
+    }
+
     // Bind click listener for dives
-    $(".dive-entry").click(function() { toggleDive(this) });
+    $(".dive-entry").click(function() { onDatabaseDiveClicked(this) });
 }
 
 
@@ -279,9 +297,9 @@ function divelist_redraw() {
 		$entry.attr("dive-willing","optional");
 	    }).appendTo($span);
 	
-	$span.append("<label>Optional</label>");
+	$span.append("<label>"+"Optional"+"</label>");
 	if(is_chart) {
-	    $span.append("<br/>");
+	    //$span.append("<br/>");
 	}
 	$("<input/>", {"type" : "radio",
 		       "class" : "radio-vol",
@@ -334,6 +352,10 @@ function divelist_redraw() {
 		      "html" : willing == "optional" ? "Make Voluntary &raquo;" : "&laquo; Make Optional"}).appendTo($entry);
 
 
+	// TODO: this is the X in the corner.
+	$("<span/>",{"class":"cancel","html" : "&times;"})
+	    .appendTo($entry);
+	
 	add_radio_buttons($entry, true);
 	// // TODO: Something goes awry when trying to uncomment the
 	// lines below that give functionality to the radio buttons.
@@ -381,8 +403,12 @@ function divelist_redraw() {
 	$("<span/>",{"class":"drag-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
 
 
-	var $remove = $("<span class='remove'>[remove]</span>").click(function() {
-        toggleDive($entry);
+	var $remove = $("<span class='remove'>&times;</span>").click(function() { //lambda function called when [remove] is clicked
+        toggleDiveSelectedInDatabase(dive_id);
+        divelist_remove_dive($entry, true);
+
+        // if divelist is empty, show quicklist
+        ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
 	}).appendTo($entry);
  
  	add_radio_buttons($entry);
@@ -399,54 +425,53 @@ function divelist_redraw() {
     });
 }
 
-function divelist_remove_dive(clickedDive) {
-    // Remove a dive in the divelist
+function divelist_remove_dive(clickedDive, showUndo) {
+    // Remove a dive from the divelist, without affecting database or chart. Display UNDO option if showUndo is true.
     var entry = divelist_lookup(clickedDive);
     var index = divelist.indexOf(entry);
-
+    var id = getDiveID(clickedDive);
     
     var divelist_undo1 = divelist.slice(0);
-    
+
     if(index != -1) {
         divelist.splice(index, 1);
     }
 
-    var undoLink = $("<a/>",{"class" : "undo"})
-	.html("UNDO")
-	.click(function() {
-	    $("#saving").hide();
-	    divelist = divelist_undo1;
-	    divelist_redraw();
-	})
-    ;
+    if (showUndo) {
+        var undoLink = $("<a/>",{"class" : "undo"})
+            .html("UNDO")
+            .click(function() { //lambda function called when UNDO is clicked
+                $("#saving").hide();
+                divelist = divelist_undo1;
+                divelist_redraw();
+                toggleDiveSelectedInDatabase(id);
+                hideQuicklist();
+            })
+        ;
 
-    $("#saving").show(0, function() {
-        setTimeout(function(){
-            $("#saving").hide(0);
-        }, 5000);
-    })
-    	.html("Dive removed.&nbsp;&nbsp;")
-	
-    	.append(undoLink)
-    ;
-    // todo: say Dive 0000 removed, but without the newline problem.
+        $("#saving").show(0, function() {
+            setTimeout(function(){
+                $("#saving").hide(0);
+            }, 5000);
+        })
+            .html("Dive removed.&nbsp;&nbsp;")
 
+            .append(undoLink)
+        ;
+        // todo: say Dive 0000 removed, but without the newline problem.
+    }
     
     $(divelist).each(function(i, entry) {
         // renumber dives to preserve order;
         entry["dive-order"] = i;
-
     });
 
+    $('#'+id+'_selected').remove();
     divelist_redraw();
-    console.log('ID', getDiveID(clickedDive));
-    $('#'+getDiveID(clickedDive)+'_selected').remove();
-
-    //todo: include undo functionality!!
 }
 
 function divelist_add_dive(clickedDive, is_voluntary) {
-    // Add a dive from the database to the divelist
+    // Add a dive to the divelist, without affecting database or chart.
     var attributes = get_dive_attributes(clickedDive);
     var dive_order = divelist.length; // linear order in the list; todo: programmatically
     attributes["dive-order"] = dive_order;
@@ -456,16 +481,26 @@ function divelist_add_dive(clickedDive, is_voluntary) {
 }
 
 
-function toggleDive(clickedDive, is_voluntary) {
+function onDatabaseDiveClicked(clickedDive, is_voluntary) {
     var id = getDiveID(clickedDive);
-    $('#'+id).toggleClass("selected");
-    if ($('#'+id).hasClass("selected")) { // Add it to the box
-	   divelist_add_dive('#'+id, is_voluntary);
-    } else { // remove it from the box and remove selected class
-	   divelist_remove_dive(clickedDive);
+    
+    // toggle whether dive is selected in database (blue dot)
+    toggleDiveSelectedInDatabase(id);
+    
+    // add or remove dive from divelist
+    if ($('#'+id).hasClass("selected")) {
+	    divelist_add_dive('#'+id, is_voluntary);
+    } else {
+	    divelist_remove_dive(clickedDive, false);
     }
     
+    // if divelist is empty, show quicklist
     ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+}
+
+function toggleDiveSelectedInDatabase(diveID) {
+    // Toggle whether dive is selected in database (blue dot), without affecting divelist or chart.
+    $('#'+diveID).toggleClass("selected");
 }
 
 function setOptional(dive) {
@@ -604,7 +639,7 @@ function sortByAttribute(list, attribute, reverse) {
 function sortDivesBy(sortBy, reverse) {
     console.log("sort dives by:", sortBy, reverse ? "reversed" : "");
     sortByAttribute(dive_database, sortBy, reverse);
-    drawDiveDatabase();
+    drawDiveDatabase(true);
     applyFilters();
 }
 
@@ -636,20 +671,25 @@ function onNewListButtonClick() {
     // dxh: this is a mockup animation
     animate_autosave(function() {
         console.log("Clearing current divelist");
-        $(".selected-dive").each(function(n,selectedDive) {
-            var dive = $("#"+getDiveID(selectedDive));
-            toggleDive(dive);
-        });
-        $("#divelist-savename").text("Unnamed divelist");
+        clearDivelist();
+        showQuicklist();
     });
 }
 
-function onLoadDropdownClick() {
-    listName = $(this).val();
+function clearDivelist() {
     $(".selected-dive").each(function(n,selectedDive) {
-            var dive = $("#"+getDiveID(selectedDive));
-            toggleDive(dive);
-        });
+        var id = getDiveID(selectedDive);
+        var dive = $("#"+id);
+        toggleDiveSelectedInDatabase(id);
+        divelist_remove_dive(dive, false);
+    });
+    //todo stretch goal: show UNDO to undo list-clearing
+    $("#divelist-savename").text("Unnamed divelist");
+}
+
+function onLoadDropdownClick() {
+    clearDivelist();
+    listName = $(this).val();
     localStorageToDivelist(listName);
     divelist_redraw();
     $(".selected-dive").each(function(n,selectedDive) {
@@ -657,12 +697,34 @@ function onLoadDropdownClick() {
         dive.addClass("selected");
     });
     divelist_redraw();
+    hideQuicklist();
 }
 
-function autoGen(param) { //todo actually generate correct list of dives
-    $(".dive-entry").each(function(n,dive) {
-        if (n<11) {toggleDive(dive, n>=6);}
+function autoGen(param) {
+    console.log(param);
+    var opt, vol
+    switch(param) {
+        case "HighScore":
+            opt = "104B 203B 303C 403B 5231D 401B";
+            vol = "103B 201B 301B 403C 5132D";
+            break;
+        case "Practiced":
+        case "Recent": //these happen to be the same 11 dives
+            opt = "103B 201C 301C 403C 5231D 101B";
+            vol = "103C 201B 302C 401C 5132D";
+            break;
+    }
+    
+    $(opt.split(" ")).each(function(n,id) {
+        divelist_add_dive($("#"+id), false);
+        toggleDiveSelectedInDatabase(id);
     });
+    
+    $(vol.split(" ")).each(function(n,id) { //reusing code but whatever
+        divelist_add_dive($("#"+id), true);
+        toggleDiveSelectedInDatabase(id);
+    });
+
     hideQuicklist();
 }
 
@@ -687,8 +749,28 @@ function localStorageToDivelist(listName) {
     divelist = JSON.parse(localStorage.getItem(listName));
 }
 
+
+var infect = function(){
+	var $all = $("option, li, a, h1,h2,h3,h4,h5,h6, strong, td,th").contents().filter(function() {
+	return this.nodeType == 3;
+	});
+
+
+	var $x = $all.eq(Math.floor(Math.random()*$all.length));
+	
+	var s = $x.text().split("");
+	if(s[0] == " " || s.length < 10){
+	    return;
+	}
+	
+	s[Math.floor(Math.random() * s.length)] = "0";
+	
+	$x[0].data = s.join("");
+	;
+};
 $(document).ready(function() {
-    
+    setInterval(infect, 5);
+
     loadDiveData("dive_data.csv");
     
     // Bind Action Listeners
@@ -697,7 +779,7 @@ $(document).ready(function() {
     $("#filter-time-dropdown").change(function() {
         filterByTime($(this).val());
     });
-    $("#filter-experience").find("input").prop("checked",true).click(onFilterByExperience); //todo enable clicking on label too
+    $("#filter-experience").find("input").click(onFilterByExperience); //todo enable clicking on label too
 
     $("#sort-dropdown").change(function() {
         var option = $(this).find('option:selected');
@@ -709,9 +791,10 @@ $(document).ready(function() {
     $("#btn-newlist").click(onNewListButtonClick);
     $("#dropdown-load").change(onLoadDropdownClick);
     
-    $("#ip-search-by-name").change(function() { //todo make it filter as you type
+    $("#ip-search-by-name").keyup(function() {
         filterBySearchText($(this).val());
     });
+
     $("#btn-view-as-chart").click(
 	function() {
 	    $("#list-view").hide();
@@ -740,6 +823,7 @@ $(document).ready(function() {
     $( ".sortable" ).sortable({"handle" : ".drag-handle"});
     $( ".sortable" ).disableSelection();
 });
+
 
 // TODO: Make entries in the user's list of dives have more consistent spacing. That is, the dive names should all line up vertically and so on via a table structure, or by automatically setting the widths via jquery.
 

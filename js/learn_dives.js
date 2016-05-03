@@ -115,17 +115,39 @@ function get_dive_position(diveObject) {
     return diveObject["dive-id"].slice(-1);
 }
 
-function render_graph() {
-    $("#axis").svg();
-    $("#graph").svg();
-    
-    
-    
-    var $axis = $("#axis").svg("get");
+function render_graph(group_number) {
+    $(".dive-bubble").remove();
 
+    if(!$("#axis").svg("get")) {
+	$("#axis").svg();
+	$("#graph").svg();
+
+    }
+    var $axis = $("#axis").svg("get");
     var $svg = $("#graph").svg("get");
 
-    var margin = {"top" : 64 + $(".navbar").height() , "left" : 32};
+    
+    
+
+    
+    var should_be_shown;
+    if(!group_number) {
+	should_be_shown = function(dive){
+	    return true;
+	};
+    }
+    else {
+	should_be_shown = function(dive) {
+	    //console.log(dive["dive-id"].substr(0,1));
+	    return (group_number.toString() == dive["dive-id"].substr(0,1) );
+	};
+    }
+
+    
+    
+    
+
+    var margin = {"top" : 64 + $(".navbar").height() + $(".dive-filter-group").height() , "left" : 32};
     
 
     var ww = $("#graph").width();
@@ -234,11 +256,14 @@ function render_graph() {
     var count = {};
 
     $(diveData).each(function(i, dive) {
-	var pos = get_dive_position(dive);
-	var dd = dive["dive-difficulty"];
-	count[dd] = count[dd] || {};
-	count[dd][pos] = count[dd][pos] || 0;
-	count[dd][pos] += 1;
+
+	if(should_be_shown(dive)) {
+	    var pos = get_dive_position(dive);
+	    var dd = dive["dive-difficulty"];
+	    count[dd] = count[dd] || {};
+	    count[dd][pos] = count[dd][pos] || 0;
+	    count[dd][pos] += 1;
+	}
     });
 
     // ------ DRAW DIVE BUBBLES
@@ -249,6 +274,7 @@ function render_graph() {
     var bin = {"A" : 0, "B" : 1, "C" : 2, "D" : 3};
     
     $(diveData).each(function(_, dive) {
+	if(should_be_shown(dive)) {
 	var pos = get_dive_position(dive);
 	var dd = dive["dive-difficulty"];
 	
@@ -272,19 +298,31 @@ function render_graph() {
 
 	
 	seen[dd][pos] += 1;
-	
+	}
     });
 
+    // Position the dive filters
+    
+    $(".dive-filter-group")
+	.css("top", $(".navbar").outerHeight())
+	.css('left', (margin.left+34)*0+"px");
+    
+    ;
+    $(window).scroll();
     
     // RESIZE THE DIVE VIEWING WINDOW
 
-    $(document).click(function(e) {
+    $(document).click(function(event) {
         if ($(event.target).is(".dive-bubble")) {
-            $(".dive-info").slideDown("fast");
+            $(".dive-info")
+		.slideDown("fast")
+	    	.removeClass("inert")
+		.html("<p><h2>0000 Downward splash</h2>[X] in upper-right<br/>[video]<br/>I know it<br/>Add to divelist<br/>Or try learing ...<br/>0001 0002 0003</p>");
+		
             $(".selected").removeClass("selected");
             $(event.target).addClass("selected");
         } else {
-            $(".dive-info").slideUp("fast");
+            //$(".dive-info").slideUp("fast");
             $(".selected").removeClass("selected");
         }
     });
@@ -302,11 +340,29 @@ function render_graph() {
     
 }
 
+
+function create_dive_filters() {
+    var groups = ["All dives", "Front","Back","Reverse","Inward", "Twist"];
+
+    $(groups).each(function(i, group) {
+	$li = $("<li/>")
+		.html(group)
+	    .appendTo("ul.dive-filters");
+	$li.click(function() {
+	    $(".current").removeClass("current");
+	    $(this).addClass("current");
+	    render_graph(i);
+	});
+    });
+
+    $("ul.dive-filters li").first().click();
+}
+
 $(document).ready(function() {
     
     loadDiveData("all_dives.csv");
 
-    
+    create_dive_filters();
     console.log("hi");
 
     $(window).scroll(function() {
@@ -320,7 +376,7 @@ $(document).ready(function() {
     curXPos = 0,
     curDown = false;
 
-    window.addEventListener('mousemove', function(e){ 
+    window.addEventListener('mousemove', function(event){ 
 	if(curDown === true){
         window.scrollTo(document.body.scrollLeft + (curXPos - e.pageX), document.body.scrollTop + (curYPos - e.pageY));
       }
@@ -349,5 +405,7 @@ $(document).ready(function() {
 
    // (".dive-entry").click(function() { toggleDive(this) });
 });
+
+
 
 
