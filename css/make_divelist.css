@@ -34,10 +34,16 @@ h1 {
     height:4em;
 }
 
+/* custom styling for make divelist's navbar*/
+.navbar {
+    font-size: 0.933em;
+    margin-bottom: 0px;
+}
+
     /*  h1 { */
     /* display:block; */
     /* } */
-.navbar,.navbar li{display:none;}
+/*.navbar,.navbar li{display:none;}*/
 
     /* #scaffold { */
     /* position:absolute; */
@@ -112,8 +118,8 @@ h5 {
 .panel-dive-list #toolbar {
 
     height:100%;
-    border-left:1.4em solid #ddd;
-    border-color:#fff;
+    /*border-left:1.4em solid #ddd;
+    border-color:#fff;*/
     width:100%;
 }
 .panel-dive-list #toolbar {
@@ -162,7 +168,7 @@ td#btns-edit {
 }
 
 .panel-dive-database {
-
+    font-size:1rem;
 }
 
 #search-by-name h5{display:inline;}
@@ -186,6 +192,12 @@ table#dive-database-table {
     width:100%;
 }
 
+table#dive-database-table td:first-child {
+    min-width:60%;
+}
+
+
+
 .panel-dive-database #search-by-name + .scrollable-pane {
     margin-top:1rem;
 
@@ -194,7 +206,6 @@ table#dive-database-table {
     background:#f0f0f0;
     padding:0.4em 0;
     border-bottom:1px solid #fff;
-    width:100%;
     font-size:1.15em;
     padding:1em 0.1em;
     font-size:inherit;
@@ -220,6 +231,7 @@ a.selection-circle {
     text-decoration:none;
     outline:0;
 }
+
 a.selection-circle  {
     display:block;
     width:1.4em;
@@ -254,7 +266,7 @@ tr.dive-entry:hover > td a.selection-circle {
 .selected a.selection-circle {
               background:#4af;
               background:#17b!important;
-
+    transition:0.1s;
 }
 
 tr.dive-entry:hover > td {
@@ -399,7 +411,7 @@ span.last-performed {
     text-align:right;
     padding:0.5em;
     background:#e0eeff;
-
+    
 }
 
 .chart th, .chart td {
@@ -408,6 +420,7 @@ span.last-performed {
 }
 .chart td {
     background:#fff!important;
+    
 
 }
 
@@ -436,11 +449,16 @@ span.last-performed {
 }
 
 .chart tr.headerRow td {
-
+    text-align:center;
     background:#eee!important;
     color:#666;
     font-weight:bold;
+    width:50%;
 }
+.chart tr.headerRow td:first-child {
+    width:auto;
+}
+
 .chart button {
     font-size:0.9em;
     display:none;
@@ -550,4 +568,10 @@ span.remove {
     left:50%;
     width:12em;
     display:none;
+}
+.separator {
+    padding-left:2em;
+    height:100%;
+    box-shadow:0.25em 0.0em 0.5em #aaa inset;
+    border-left:1em solid #eee;
 }

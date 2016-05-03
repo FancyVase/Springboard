@@ -36,7 +36,7 @@ function loadDiveData(filename) {
         // for (var i=0;i<my_csv.length;i++){
         //     diveData.push(my_csv[i].split(","));
         // }
-	console.log(diveData[168]);
+//	console.log(diveData[168]);
 
 	render_graph();
 
@@ -56,9 +56,13 @@ function pretty_name(str) {
 }
 
 function populateBubbles(diveType) {
-
-
-
+    
+        $("#" + diveType).blur(); // remove focus
+    
+        // highlight current button
+        $("#" + diveType).addClass("active-btn")
+        .siblings('[type="button"]')
+        .removeClass('active-btn');
     
         $("#circle-holder").html("");
         $(diveData).each(function(i, dive) {
@@ -121,17 +125,18 @@ function render_graph() {
 
     var $svg = $("#graph").svg("get");
 
-    var margin = {"top" : 64, "left" : 32};
+    var margin = {"top" : 64 + $(".navbar").height() , "left" : 32};
     
 
     var ww = $("#graph").width();
     var hh = $("#graph").height();
 
 
+    $("#graph").addClass("unselectable");
     // background
-    $svg.rect(margin.left*2, margin.top,
+    $svg.rect(margin.left*2, margin.top-64,
 	      ww-margin.left*0, hh,
-    	      {fill:"#acf"});
+    	      {fill:"#acf", class:"swimmingpool"});
 
 
     $axis.rect(0, 0,
@@ -183,7 +188,7 @@ function render_graph() {
 
     // LEGEND TEXT: DEGREE OF DIFFICULTY
     $axis.text(margin.left*2-40+6,
-	      margin.top/2 + 28,
+	      margin.top/2 + 28+64,
 	      "D.D" || "DEGREE OF",
 	      {fontFamily: "Lato",
 	       fontSize: 13,
@@ -199,7 +204,7 @@ function render_graph() {
 	       fill : "#666"
 	      });
     
-    $axis.line(margin.left*2, margin.top,
+    $axis.line(margin.left*2, margin.top - 64,
 	      margin.left*2, hh,
     	      {stroke:"#000",strokeWidth:1});
 
@@ -252,7 +257,7 @@ function render_graph() {
 
 	var i = seen[dd][pos];
 
-	var $div = $("<div/>", {"class" : "dive-bubble"})
+	var $div = $("<div/>", {"class" : "dive-bubble unselectable"})
 	    .addClass(unabbreviate_position[pos])
 	    .appendTo("#graph")
 	    .append("<span class='dive-id'>"+dive["dive-id"]+"</span>")
@@ -316,13 +321,31 @@ $(document).ready(function() {
     curDown = false;
 
     window.addEventListener('mousemove', function(e){ 
-      if(curDown === true){
+	if(curDown === true){
         window.scrollTo(document.body.scrollLeft + (curXPos - e.pageX), document.body.scrollTop + (curYPos - e.pageY));
       }
     });
 
-    window.addEventListener('mousedown', function(e){ curDown = true; curYPos = e.pageY; curXPos = e.pageX; });
-    window.addEventListener('mouseup', function(e){ curDown = false; });
+    // window.addEventListener('mousedown', function(e){ });
+
+    $(window).on("mousedown",
+		   function(e) {
+		       curDown = true;
+		       curYPos = e.pageY;
+		       curXPos = e.pageX;
+		       $(".swimmingpool").addClass("grabbing");
+		   }
+		  );
+
+    $(window).on("mouseup",
+		   function(e) {
+		       curDown = false;
+		       $(".swimmingpool").removeClass("grabbing");
+		   }
+		  );
+
+    
+    // window.addEventListener('mouseup', function(e){ curDown = false; });
 
    // (".dive-entry").click(function() { toggleDive(this) });
 });
