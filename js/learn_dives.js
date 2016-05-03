@@ -314,11 +314,15 @@ function render_graph(group_number) {
 
     $(document).click(function(event) {
         if ($(event.target).is(".dive-bubble")) {
-            $(".dive-info").slideDown("fast");
+            $(".dive-info")
+		.slideDown("fast")
+	    	.removeClass("inert")
+		.html("<p><h2>0000 Downward splash</h2>[X] in upper-right<br/>[video]<br/>I know it<br/>Add to divelist<br/>Or try learing ...<br/>0001 0002 0003</p>");
+		
             $(".selected").removeClass("selected");
             $(event.target).addClass("selected");
         } else {
-            $(".dive-info").slideUp("fast");
+            //$(".dive-info").slideUp("fast");
             $(".selected").removeClass("selected");
         }
     });

@@ -98,6 +98,10 @@ svg {
     cursor:pointer;
     cursor:hand;
 }
+.dive-bubble:hover {
+    background:#59f;
+}
+
 .dive-bubble .dive-id {
     color:#fff;
 }
@@ -141,7 +145,8 @@ html {
 
 .dive-bubble.selected {
     border-color:#0a6;
-    background:#4b8;
+    
+        background:#5af;
 }
 
 .swimmingpool {
@@ -198,4 +203,24 @@ ul.dive-filters li.current {
     text-decoration:none!important;
     font-weight:bolder;
     
+}
+
+ul.dive-filters li:first-child {
+    padding-right:1em;
+}
+
+
+.dive-info.inert {
+    display:block;
+    bottom:1em;
+    height:3em;
+    box-shadow:none;
+    text-transform:uppercase;
+    color:#666;
+    text-align:center;
+    opacity:0.85;
+    font-size:0.8em;
+}
+.dive-info.inert p {
+    display:none;
 }
