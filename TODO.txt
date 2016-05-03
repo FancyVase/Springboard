@@ -9,12 +9,10 @@ TODO
     - Make "Anthony" look different
     - Make it editable
 -MakeDivelist:
-    - add nav bar links
-    - make chart view start empty (and also fix New List)
     - static View As location
-    - Add functionality (find, etc.)
+    - Add more functionality (generate correct quicklists, etc)
     - Ask diver about makedivelist page, esp. if DD is needed on the page
-    - replace 1/2 with pretty html 1/2
+    - replace 1/2 with pretty html 1/2 (but make it also searchable by "1/2")
     - coordinating colors 
     - stretch: load saved lists; would go well with meets thing on profile page
 -LearnDives:
