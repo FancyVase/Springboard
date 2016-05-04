@@ -380,7 +380,7 @@ function addDiveToCurrentList() {
 
 
 function create_dive_filters() {
-    var groups = ["All dives", "Front", "Back", "Reverse", "Inward", "Twist"];
+    var groups = ["All dives", "Forward", "Back", "Reverse", "Inward", "Twist"];
 
     $(groups).each(function (i, group) {
         $li = $("<li/>")
