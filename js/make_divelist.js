@@ -656,7 +656,82 @@ function onSaveButtonClick() { //todo don't copy/paste from autosaving
     divelistToLocalStorage();
 }
 function onExportButtonClick() {
-    alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)"); //todo
+    console.log(divelist);
+
+    if (divelist.length < 1) {
+        alert("Add some dives to your list!");
+    } else {
+        var exportPage = window.open();
+        var exportBody = exportPage.document.body;
+        $(exportBody).css({
+            "text-align": "center"
+        });
+        
+        var listName = $("#divelist-savename").html();
+        var titleElt = $("<h1></h1>").text(listName)
+        .css("margin-top", "15px");
+        $(exportBody).append(titleElt);
+        
+        var diveTable = $("<table></table>")
+        .css("margin", "0 auto")
+        .css("border-collapse", "separate")
+        .css("border-spacing", "30px 0");
+        
+        var headingRow = $("<tr></tr>").css("text-align", "center");
+        $(headingRow).append($("<th></th>").text("ID"));
+        $(headingRow).append($("<th></th>").text("Dive"));
+        $(headingRow).append($("<th></th>").text("Last Performed"));
+        $(headingRow).append($("<th></th>").text("Optional / Voluntary"));
+        $(headingRow).append($("<th></th>").text("Predicted Score"));
+        
+        $(diveTable).append(headingRow);
+
+
+        for (var i = 0; i < divelist.length; i++) {
+            var dive = divelist[i];
+            var diveRow = $("<tr></tr>")
+            .css("line-height", "30px");
+            
+            var id = $("<td></td>")
+            .text(dive['dive-id'])
+            .css({
+                "font-weight": "bold",
+                "padding": "0 15px"
+            });
+            $(diveRow).append(id);
+            
+            var name = $("<td></td>")
+            .text(dive['dive-name'])
+            .css("padding", "0 15px");
+            $(diveRow).append(name);
+            
+            var lastPerformed = $("<td></td>")
+            .text(dive['dive-last-performed'])
+            .css("padding", "0 15px");
+            $(diveRow).append(lastPerformed);
+            
+            var willing = $("<td></td>")
+            .text(dive['dive-willing'])
+            .css("text-transform", "capitalize")
+            .css("padding", "0 15px");
+            $(diveRow).append(willing);
+            
+            var predictedScore = $("<td></td>")
+            .text(dive['dive-predicted-score'])
+            .css("padding", "0 15px");
+            $(diveRow).append(predictedScore);
+            
+            $(diveTable).append(diveRow);
+        }
+        $(exportBody).append(diveTable);
+        
+        var footer = $("<h5></h5>").text("© Springboard 2016")
+        .css({
+            "margin-top": "60px",
+            "font-weight": "300"
+        });
+        $(exportBody).append(footer);
+    }
 }
 
 function animate_autosave(fn_when_finished) {
