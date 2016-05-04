@@ -116,13 +116,6 @@ svg {
   
 }
 
-html {
-   /* overflow-x:hidden;*/
-}
-.scrolling-debug-xxxx {
-  /*cursor:grab;*/
-}
-
 .dive-info {
 
     box-shadow:0 0 0.5em rgba(0,0,0,1);
@@ -173,12 +166,13 @@ html {
     right:0;
     width:100%;
     z-index:6831;
-    background:#fff;
     background:#f8f0c0;
     background:#efd;
+    background:#4ea;
     border-bottom:1px solid #888;
-    padding:0.25em 3em;
+    padding:0.25em 3em 0.7em 3em;
     color:#666;
+    color: rgba(0,0,0,0.6);
 
 }
 ul.dive-filters {
@@ -190,19 +184,18 @@ ul.dive-filters li {
     display:inline;
     list-style-type:none;
     padding-right:1em;
-    color:#08c;
+    color: rgba(0,0,0,0.4);
     vertical-align:middle!important;
     cursor:pointer;
 }
 ul.dive-filters li:hover {
-    text-decoration:underline;
+    color:rgba(0,0,0,0.6);
 }
-ul.dive-filters li.current {
-    color:#444;
+ul.dive-filters li.current, ul.dive-filters li.current:hover {
     color:rgba(0,0,0,0.6);
     text-decoration:none!important;
     font-weight:bolder;
-    
+    cursor: text;
 }
 
 ul.dive-filters li:first-child {
