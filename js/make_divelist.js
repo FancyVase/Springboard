@@ -19,6 +19,19 @@ var filters = {
     "searchText": returnFalse,
 };
 
+
+//jk this actually isn't trivial because you have to also change the html for the filter options, not just the backend filters
+//function resetFilters() { //todo this function should be in the filter section, not here
+//    //resets filters to 'All Groups', Performed within 'Anytime', known/learning dives only, and no search text
+//    filters = {
+//        "diveGroup": returnFalse,
+//        "time": returnFalse,
+//        "experience": returnFalse,
+//        "searchText": returnFalse,
+//    };
+//    onFilterByExperience();
+//}
+
 // DIVES
 var dive_database = [];
 var divelist = [];
@@ -55,6 +68,7 @@ function loadDiveData(filename) {
         populateDiveDatabase(diveData);
         sortDivesBy("dive-id"); //initially, sort by dive ID //todo don't hard-code this
 	drawDiveDatabase();
+    onFilterByExperience(); //apply experience filter
 
 	// todo: debug to populate divelist
 	//$("#quicklist a")[0].click();
