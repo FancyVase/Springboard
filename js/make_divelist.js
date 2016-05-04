@@ -368,6 +368,13 @@ function divelist_redraw() {
 
 	// TODO: this is the X in the corner.
 	$("<span/>",{"class":"cancel","html" : "&times;"})
+	    .click(function() { //lambda function called when [remove] is clicked
+		toggleDiveSelectedInDatabase(entry["dive-id"]);
+		
+		divelist_remove_dive($entry, true);
+		
+		($("#chart-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+	    })
 	    .appendTo($entry);
 	
 	add_radio_buttons($entry, true);
@@ -417,14 +424,15 @@ function divelist_redraw() {
 	$("<span/>",{"class":"drag-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
 
 
-	var $remove = $("<span class='remove'>&times;</span>").click(function() { //lambda function called when [remove] is clicked
-        toggleDiveSelectedInDatabase(dive_id);
-        divelist_remove_dive($entry, true);
+	var $remove = $("<span class='remove'>&times;</span>").click(function() {
+	    //lambda function called when [remove] is clicked
+            toggleDiveSelectedInDatabase(dive_id);
+            divelist_remove_dive($entry, true);
 
-        // if divelist is empty, show quicklist
-        ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+            // if divelist is empty, show quicklist
+            ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
 	}).appendTo($entry);
- 
+	
  	add_radio_buttons($entry);
 
 	$entry.attr("dive-willing", entry["dive-willing"]);
@@ -481,6 +489,8 @@ function divelist_remove_dive(clickedDive, showUndo) {
     });
 
     $('#'+id+'_selected').remove();
+
+    
     divelist_redraw();
 }
 
@@ -743,9 +753,11 @@ function autoGen(param) {
 }
 
 function showQuicklist() {
+    $("#divelist-viewchanger").hide();
     $("#divelist-container").removeClass("hide-quicklist");
 }
 function hideQuicklist() {
+    $("#divelist-viewchanger").show();
     $("#divelist-container").addClass("hide-quicklist"); //TODO for dxh: why not just modify #quicklist's properties instead? -jmn
 }
 
@@ -783,8 +795,7 @@ var infect = function(){
 	;
 };
 $(document).ready(function() {
-    //setInterval(infect, 5); //...in case you want zeros everywhere
-
+    showQuicklist();
     loadDiveData("dive_data.csv");
     
     // Bind Action Listeners
