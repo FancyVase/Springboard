@@ -769,7 +769,7 @@ var infect = function(){
 	;
 };
 $(document).ready(function() {
-//    setInterval(infect, 5); //...in case you want zeros everywhere
+    //setInterval(infect, 5); //...in case you want zeros everywhere
 
     loadDiveData("dive_data.csv");
     

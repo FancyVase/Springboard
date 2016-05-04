@@ -20,19 +20,19 @@
     <script type="text/javascript" src="js/jquery-ui-1.11.4.js"></script>
     <script type="text/javascript" src="js/make_divelist.js"></script>
     <script type="text/javascript"> //todo move to .js
-      function resize() {
-      $(".scrollable-pane").height(function(_,_) {
-      return $(window).height() - $(this).offset().top -12;
-      });
+//      function resize() {
+//      $(".scrollable-pane").height(function(_,_) {
+//      return $(window).height() - $(this).offset().top -12;
+//      });
 
-       $(".separator").height(function(_,_) {
-      return $(window).height() - $(this).offset().top -12;
-      });
-      }
-      $("body").ready(function() {
-      $(window).resize(resize);
-      resize();
-      });
+//       $(".separator").height(function(_,_) {
+//      return $(window).height() - $(this).offset().top -12;
+//      });
+//      }
+//      $("body").ready(function() {
+//      $(window).resize(resize);
+//      resize();
+//      });
     </script>
 
   </head>
@@ -141,14 +141,24 @@ affordance (aesthetic & minimalist design)-->
       <table id="toolbar">
         <tr>
           <td>
-            <div class="inputlike" id="divelist-savename" contenteditable="true">Untitled Divelist</div>
+          <div class="inputlike" id="divelist-savename" contenteditable="true">Untitled Divelist</div>
           <div id="btns-edit">
             &nbsp;
             <button id="btn-save">Save</button>
             <button id="btn-export">Export</button> <!--TODO should this be export as?-->
             <button id="btn-newlist">New List</button> <!--todo maybe add Clear List button?-->
             <select id="dropdown-load"><option>Load...</option></select>
-	  </div>
+	      </div>
+          </td>
+        </tr>
+        <tr id="divelist-viewchanger">
+          <td colspan="4">
+            View as:&nbsp;
+            <a href="#" id="btn-view-as-list"><img src="img/view_list.png"/>&nbsp;List</a>
+            &nbsp;
+            <a href="#" id="btn-view-as-chart"><img src="img/view_chart.png"/>&nbsp;Chart</a>
+            <!--todo make selected List/Chart bold or look selected-->
+            <!--todo consistent location for View as; consistent height between database and list/chart-->
           </td>
         </tr>
 
@@ -171,16 +181,6 @@ affordance (aesthetic & minimalist design)-->
                 <li><a onclick="autoGen('Recent')">Most recently performed dives &raquo;</a></li>
               </ul>
             </div>
-          </td>
-        </tr>
-        <tr id="divelist-viewchanger">
-          <td colspan="4">
-            View as:&nbsp;
-            <a href="#" id="btn-view-as-list"><img src="img/view_list.png"/>&nbsp;List</a>
-            &nbsp;
-            <a href="#" id="btn-view-as-chart"><img src="img/view_chart.png"/>&nbsp;Chart</a>
-            <!--todo make selected List/Chart bold or look selected-->
-            <!--todo consistent location for View as; consistent height between database and list/chart-->
           </td>
         </tr>
       </table>
