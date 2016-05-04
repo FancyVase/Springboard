@@ -769,7 +769,7 @@ var infect = function(){
 	;
 };
 $(document).ready(function() {
-    setInterval(infect, 5);
+    //setInterval(infect, 5);
 
     loadDiveData("dive_data.csv");
     
