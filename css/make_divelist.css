@@ -587,7 +587,7 @@ span.last-performed {
 span.remove {
     color: #a00;
     float: right;
-    text-decoration: underline;
+/*    text-decoration: underline;*/
     cursor: pointer;
 }
 
