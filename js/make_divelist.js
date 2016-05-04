@@ -43,6 +43,9 @@ var dive_attributes = ["dive-id",
 		       "dive-average-score",
 		       "dive-last-performed"];
 
+
+var current_view_is_chart = true;
+
 //////////////////////////////////////////////////
 // JS FUNCTIONS FOR make_divelist.html
 
@@ -74,7 +77,8 @@ function loadDiveData(filename) {
         //$("#quicklist a")[0].click();
 
         // todo: show chart view first once chart view works.
-        $("#list-view").show();
+
+	$("#list-view").show();
         $("#chart-view").hide();
 
         // Populate list with most recently saved dive, if applicable
@@ -309,6 +313,30 @@ function divelist_lookup(clickedDive) {
 
 
 
+function quicklist_redraw() {
+    if(divelist.length == 0) {
+	// SHOW QUICKLIST
+	$("#chart-view").hide();
+	$("#list-view").hide();
+	$("#divelist-viewchanger").hide();
+	$("#divelist-container").removeClass("hide-quicklist");
+    }
+    else {
+	$("#divelist-container").addClass("hide-quicklist");
+	$("#divelist-viewchanger").show();
+	$("#btn-view-as-list,#btn-view-as-chart").removeClass("embold");
+	if(current_view_is_chart) {
+	    $("#list-view").hide();
+	    $("#chart-view").show();
+	    $("#btn-view-as-chart").addClass("embold");
+	}
+	else {
+	    $("#btn-view-as-list").addClass("embold")
+	    $("#list-view").show();
+	    $("#chart-view").hide();
+	}
+    }
+}
 function divelist_redraw() {
 
     // Render the list of dives in HTML.
@@ -327,12 +355,16 @@ function divelist_redraw() {
                    "name" : radioName})
             .click(function() {
 //                console.log('should be jquery object', $entry);
-                var entry = divelist_lookup($entry);
+
+		if(is_chart) {
+		    $entry.appendTo($entry.parent().parent().find(".optional")).hide().show(200);
+		}
+		var entry = divelist_lookup($entry);
                 entry["dive-willing"] = "optional";
                 $entry.attr("dive-willing","optional");
             }).appendTo($span);
 
-        $span.append("<label>"+"Optional"+"</label>");
+        $span.append("<label>"+(is_chart ? "Optional" : "Optional")+"</label>");
         if(is_chart) {
             //$span.append("<br/>");
 	    }
@@ -340,12 +372,17 @@ function divelist_redraw() {
                    "class" : "radio-vol",
                    "name" : radioName})
             .click(function() {
-            var entry = divelist_lookup($entry);
-            entry["dive-willing"] = "voluntary";
-            $entry.attr("dive-willing","voluntary");
+
+		if(is_chart) {
+		    $entry.appendTo($entry.parent().parent().find(".voluntary")).hide().show(200);
+		}
+		var entry = divelist_lookup($entry);
+		
+		entry["dive-willing"] = "voluntary";
+		$entry.attr("dive-willing","voluntary");
             }).appendTo($span);
 
-        $span.append("<label>Voluntary</label>");
+        $span.append("<label>"+(is_chart ? "Voluntary" : "Voluntary")+"</label>");
         $entry.append($span);
     };
 
@@ -379,6 +416,8 @@ function divelist_redraw() {
 	var group = groups[entry["dive-id"].substr(0,1)-1]; // haaaaaack todo
 	var willing = entry["dive-willing"];
 
+
+	
 	var $entry = $("<span/>", {"class" : "selected-dive"});
 	$entry.append("<strong>"+entry["dive-id"]+"</strong>&nbsp;&nbsp;");
 	$entry.append(entry["dive-name"]);
@@ -395,7 +434,7 @@ function divelist_redraw() {
 		
 		divelist_remove_dive($entry, true);
 		
-		($("#chart-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+		quicklist_redraw();
 	    })
 	    .appendTo($entry);
 	
@@ -409,11 +448,12 @@ function divelist_redraw() {
 //        console.log(entry);
 	 $entry.attr("dive-willing", entry["dive-willing"])
 	 if(entry["dive-willing"] == "voluntary") {
-	     $entry.find(".radio-vol").click();
+	     $entry.find(".radio-vol").prop("checked",true).click();
+	     
 	 }
 	 else {
 	     // optional is the default, e.g. if dive-willing is not set.
-	     $entry.find(".radio-opt").click();
+	     $entry.find(".radio-opt").prop("checked",true).click();
 	 }
 	
 	$chart
@@ -453,7 +493,7 @@ function divelist_redraw() {
                 divelist_remove_dive($entry, true);
 
                 // if divelist is empty, show quicklist
-                ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+            quicklist_redraw();
         }).appendTo($entry);
 
         add_radio_buttons($entry);
@@ -490,7 +530,7 @@ function divelist_remove_dive(clickedDive, showUndo) {
                 divelist = divelist_undo1;
                 divelist_redraw();
                 toggleDiveSelectedInDatabase(id);
-                hideQuicklist();
+                quicklist_redraw();
             })
         ;
 
@@ -542,7 +582,7 @@ function onDatabaseDiveClicked(clickedDive, is_voluntary) {
     }
     
     // if divelist is empty, show quicklist
-    ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+    quicklist_redraw();
 }
 
 function toggleDiveSelectedInDatabase(diveID) {
@@ -794,7 +834,7 @@ function onNewListButtonClick() {
     // dxh: this is a mockup animation
     animate_autosave(function() {
         clearDivelist();
-        showQuicklist();
+	quicklist_redraw();
     });
 }
 
@@ -850,12 +890,12 @@ function autoGen(param) {
         toggleDiveSelectedInDatabase(id);
     });
 
-    hideQuicklist();
+    quicklist_redraw();
 }
 
 function showQuicklist() {
     $("#divelist-viewchanger").hide();
-    $("#divelist-container").removeClass("hide-quicklist");
+
 }
 function hideQuicklist() {
     $("#divelist-viewchanger").show();
@@ -881,7 +921,7 @@ function localStorageToDivelist(listName) {
         dive.addClass("selected");
     });
     divelist_redraw();
-    hideQuicklist();
+    quicklist_redraw();
 }
 
 
@@ -904,7 +944,7 @@ var infect = function(){
 	;
 };
 $(document).ready(function() {
-    showQuicklist();
+    
     loadDiveData("dive_data.csv");
     
     // Bind Action Listeners
@@ -931,16 +971,15 @@ $(document).ready(function() {
 
     $("#btn-view-as-chart").click(
 	function() {
-	    $("#list-view").hide();
-	    $("#chart-view").show();
+	    current_view_is_chart = true;
+	    quicklist_redraw();
 	    divelist_redraw();
-        
 	}
     );
     $("#btn-view-as-list").click(
 	function() {
-	    $("#chart-view").hide();
-	    $("#list-view").show();
+	    current_view_is_chart = false;
+	    quicklist_redraw();
 	    divelist_redraw();
 	}
     );
