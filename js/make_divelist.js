@@ -49,6 +49,13 @@ var current_view_is_chart = true;
 //////////////////////////////////////////////////
 // JS FUNCTIONS FOR make_divelist.html
 
+function pretty_name(str) { //copied from learn_dives
+    var ret = str;
+    ret = ret.replace(/(\d) 1\/2/g, " $1&frac12;");
+    ret = ret.replace(/ 1\/2/g, ' &frac12;');
+    return ret;
+}
+
 function format_score(x) {
     return parseFloat(x).toFixed(2);
 }
@@ -153,7 +160,7 @@ function drawDiveDatabase(maintainSelectedDives) {
 	var $td = $("<td/>").appendTo($newDiveRow);
 
 	$("<h4/>",{"class":"dive-name",
-		   "html" : dive["dive-name"]})
+		   "html" : pretty_name(dive["dive-name"])})
 	    .prepend(
 		"<div class='dive-id'>"+dive["dive-id"]+"</div>"
 	    )
@@ -420,7 +427,7 @@ function divelist_redraw() {
 	
 	var $entry = $("<span/>", {"class" : "selected-dive"});
 	$entry.append("<strong>"+entry["dive-id"]+"</strong>&nbsp;&nbsp;");
-	$entry.append(entry["dive-name"]);
+	$entry.append(pretty_name(entry["dive-name"]));
     $entry.attr("dive-id", entry["dive-id"]); //jmn important!
 
 	$("<button/>",{"class":"toggle-willing",
@@ -472,7 +479,7 @@ function divelist_redraw() {
                       })
             .append(dive_id)
             .append("&nbsp;")
-            .append("<strong>"+entry["dive-name"]+"</strong>")
+            .append("<strong>"+pretty_name(entry["dive-name"])+"</strong>")
             .appendTo("#list-view");
 
         // copy_dive_attributes(clickedDive, $entry); //todo rm?
