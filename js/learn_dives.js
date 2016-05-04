@@ -97,13 +97,18 @@ function populateBubbles(diveType) {
     //    }
 }
 
+function dive_info_hide() {
+    $(".dive-info").slideUp("fast");
+    $(".selected").removeClass("selected");
+}
+
 function inspectBubble(circle) {
     var diveID = circle[0].id;
     $("#diveID").html("Dive ID: " + diveID);
     $("#diveName").html("Dive Name: " + getDiveData(diveID)[1]);
     $("#diveDD").html("Degree of Difficulty: " + getDiveData(diveID)[2]);
-    $("#diveScores").html("Average score: 42");
-    $("#addDive").html("Add Dive to Current List");
+    $("#diveScores").html("Your average score: 42");
+    $("#addDive").html("Add dive to current List &raquo;");
 }
 
 function getDiveData(diveID) {
@@ -347,13 +352,12 @@ function render_graph(group_number) {
 
             $(".dive-info").slideDown("fast")
                 .removeClass("inert")
-                .html("<p><h2>" + id + " " + name + "</h2>Degree of Difficulty: " + difficulty + "<br/>Average score: " + score + "<br/><button onclick='addDiveToCurrentList()'>Add Dive to Current List</button> </p><iframe width='100%' height='200' src='https://www.youtube.com/embed/V9AZVya-N5Q' frameborder='0' allowfullscreen></iframe>");
+                .html("<p><h2>" + id + " " + name + "</h2>Degree of Difficulty: " + difficulty + "<br/>Your average score: " + score + "<br/><button onclick='addDiveToCurrentList()'>Add dive to current divelist &raquo;</button> </p><iframe width='100%' height='200' src='https://www.youtube.com/embed/V9AZVya-N5Q' frameborder='0' allowfullscreen></iframe>");
 
             $(".selected").removeClass("selected");
             $(event.target).addClass("selected");
         } else if (!$(event.target).is(".dive-info")) {
-            $(".dive-info").slideUp("fast");
-            $(".selected").removeClass("selected");
+            dive_info_hide();
         }
     });
 
@@ -365,6 +369,7 @@ function render_graph(group_number) {
 }
 
 function addDiveToCurrentList() {
+    $(".dive-info button").val("Added!");
     console.log("adding!");
     if (localStorage.divesToAdd != undefined) {
         localStorage.divesToAdd = localStorage.divesToAdd + "," + selectedID;
@@ -375,7 +380,7 @@ function addDiveToCurrentList() {
 
 
 function create_dive_filters() {
-    var groups = ["All dives", "Front", "Back", "Reverse", "Inward", "Twist"];
+    var groups = ["All dives", "Forward", "Back", "Reverse", "Inward", "Twist"];
 
     $(groups).each(function (i, group) {
         $li = $("<li/>")
@@ -388,13 +393,14 @@ function create_dive_filters() {
         });
     });
 
-    $("ul.dive-filters li").first().click();
+    $("ul.dive-filters li").eq(1).click();
 }
 
 $(document).ready(function () {
 
     loadDiveData("all_dives.csv");
 
+    
     create_dive_filters();
     console.log("hi");
 

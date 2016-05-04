@@ -139,7 +139,7 @@ h5 {
 }
 
 .panel-dive-list {
-    width: 40em;
+    width: 50em;
     padding-left: 2em;
 }
 
@@ -587,7 +587,7 @@ span.last-performed {
 span.remove {
     color: #a00;
     float: right;
-    text-decoration: underline;
+/*    text-decoration: underline;*/
     cursor: pointer;
 }
 
@@ -651,4 +651,34 @@ span.remove:hover {
 
 #chart-view .radio-opt {
     ;
+}
+
+#filter-dive-group li > a:before {
+    display:block;float:left; text-align:left;
+    width:0.75em;
+    content:"\00a0";
+    margin-top:-0.1em;
+}
+
+#filter-dive-group li > a.selected:before {
+    content:"\bb";
+}
+
+
+#btn-view-as-list,#btn-view-as-chart {
+    text-decoration:none;
+    color:inherit!important;
+}
+
+
+.embold, .embold:hover {
+    color:#444!important;
+    text-decoration:none;
+    cursor:default;
+    font-weight:bold;
+    text-decoration:underline;
+	 }
+
+.scrollable-pane {
+    border:1px solid #aaa;
 }
