@@ -103,6 +103,15 @@ function loadDiveData(filename) {
             }
             localStorage.divesToAdd = "";
         }
+        
+        // Add saved lists to the dropdown
+        console.log(localStorage);
+        for (var key in localStorage){
+            if (key != "currentList" && key != "divesToAdd"){
+                $("#dropdown-load").html($("#dropdown-load").html()+"<option>"+key+"</option>");
+            }
+        }
+//        $("#dropdown-load").html($("#dropdown-load").html()+"<option>"+listName+"</option>");
     }
 }
 
