@@ -19,6 +19,19 @@ var filters = {
     "searchText": returnFalse,
 };
 
+
+//jk this actually isn't trivial because you have to also change the html for the filter options, not just the backend filters
+//function resetFilters() { //todo this function should be in the filter section, not here
+//    //resets filters to 'All Groups', Performed within 'Anytime', known/learning dives only, and no search text
+//    filters = {
+//        "diveGroup": returnFalse,
+//        "time": returnFalse,
+//        "experience": returnFalse,
+//        "searchText": returnFalse,
+//    };
+//    onFilterByExperience();
+//}
+
 // DIVES
 var dive_database = [];
 var divelist = [];
@@ -55,6 +68,7 @@ function loadDiveData(filename) {
         populateDiveDatabase(diveData);
         sortDivesBy("dive-id"); //initially, sort by dive ID //todo don't hard-code this
 	drawDiveDatabase();
+    onFilterByExperience(); //apply experience filter
 
 	// todo: debug to populate divelist
 	//$("#quicklist a")[0].click();
@@ -246,6 +260,8 @@ function is_match(clickedDive, entry) {
     // for example, excludes vol/opt and dive order
 
     // todo: perhaps include others, such as height (!)
+//    console.log($(clickedDive).attr("dive-id"), $(entry).attr("dive-id"));
+    return $(clickedDive).attr("dive-id") == $(entry).attr("dive-id"); //jmn hack todo
     var static_attributes = ["dive-id", "dive-name"];
 
     //  $(clickedDive).attr(key) && entry[key]
@@ -262,11 +278,13 @@ function divelist_lookup(clickedDive) {
     // Given an html clickedDive, finds the corresponding javascript
     // entry in the divelist. Returns the entry if found; otherwise
     // returns null.
+//    console.log(clickedDive);
 
     var ret = null;
     $(divelist).each(function(_, entry) {
         if(is_match(clickedDive, entry)) {
             ret = entry;
+//            console.log(ret);
             return; //todo @dxh does this return do anything?
         }
     });
@@ -283,35 +301,36 @@ function divelist_redraw() {
     $("#chart-view").html("");
 
     function add_radio_buttons($entry, is_chart) {
-	var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
+        var radioName = (new Date()).getTime().toString() + Math.random().toString(); //todo this is a hack to ensure unique names
 
 
-	/// -------- CREATE OPT/VOL RADIO BUTTONS
-	var $span = $("<span class='opt-vol'></span>");
-	$("<input/>", {"type" : "radio",
-		       "class" : "radio-opt",
-		       "name" : radioName})
-	    .click(function() {
-		var entry = divelist_lookup($entry);
-		entry["dive-willing"] = "optional";
-		$entry.attr("dive-willing","optional");
-	    }).appendTo($span);
-	
-	$span.append("<label>"+"Optional"+"</label>");
-	if(is_chart) {
-	    //$span.append("<br/>");
-	}
-	$("<input/>", {"type" : "radio",
-		       "class" : "radio-vol",
-		       "name" : radioName})
-	    .click(function() {
-		var entry = divelist_lookup($entry);
-		entry["dive-willing"] = "voluntary";
-		$entry.attr("dive-willing","voluntary");
-	    }).appendTo($span);
-	
-	$span.append("<label>Voluntary</label>");
-	$entry.append($span);
+        /// -------- CREATE OPT/VOL RADIO BUTTONS
+        var $span = $("<span class='opt-vol'></span>");
+        $("<input/>", {"type" : "radio",
+                   "class" : "radio-opt",
+                   "name" : radioName})
+            .click(function() {
+//                console.log('should be jquery object', $entry);
+                var entry = divelist_lookup($entry);
+                entry["dive-willing"] = "optional";
+                $entry.attr("dive-willing","optional");
+            }).appendTo($span);
+
+        $span.append("<label>"+"Optional"+"</label>");
+        if(is_chart) {
+            //$span.append("<br/>");
+	    }
+        $("<input/>", {"type" : "radio",
+                   "class" : "radio-vol",
+                   "name" : radioName})
+            .click(function() {
+            var entry = divelist_lookup($entry);
+            entry["dive-willing"] = "voluntary";
+            $entry.attr("dive-willing","voluntary");
+            }).appendTo($span);
+
+        $span.append("<label>Voluntary</label>");
+        $entry.append($span);
     };
 
 
@@ -347,6 +366,7 @@ function divelist_redraw() {
 	var $entry = $("<span/>", {"class" : "selected-dive"});
 	$entry.append("<strong>"+entry["dive-id"]+"</strong>&nbsp;&nbsp;");
 	$entry.append(entry["dive-name"]);
+    $entry.attr("dive-id", entry["dive-id"]); //jmn important!
 
 	$("<button/>",{"class":"toggle-willing",
 		      "html" : willing == "optional" ? "Make Voluntary &raquo;" : "&laquo; Make Optional"}).appendTo($entry);
@@ -369,15 +389,16 @@ function divelist_redraw() {
 	// Something about the lookup_dive_entry returning null, i.e.
 	// "Dive in divelist doesn't match any dive in database".
 	// TODO: Personally not going to worry about it now.
-	
-	// $entry.attr("dive-willing", entry["dive-willing"]
-	// if(entry["dive-willing"] == "voluntary") {
-	//     $entry.find(".radio-vol").click();
-	// }
-	// else {
-	//     // optional is the default, e.g. if dive-willing is not set.
-	//     $entry.find(".radio-opt").click();
-	// }
+//	console.log($entry);
+//        console.log(entry);
+	 $entry.attr("dive-willing", entry["dive-willing"])
+	 if(entry["dive-willing"] == "voluntary") {
+	     $entry.find(".radio-vol").click();
+	 }
+	 else {
+	     // optional is the default, e.g. if dive-willing is not set.
+	     $entry.find(".radio-opt").click();
+	 }
 	
 	$chart
 	    .find("."+group)
@@ -388,48 +409,48 @@ function divelist_redraw() {
     
     // FOR THE LIST VIEW //todo could make it more clear why dives are reorderable
     $(divelist).each(function(i, entry) {
-	var dive_id = entry["dive-id"];
-	var $entry = $("<span/>", {"class" : "selected-dive",
-				   "id" : dive_id+"_selected", // todo: perhaps just use dive id, and add 'selected' as a class
-				   "dive-id" : dive_id
-				  })
-	    .append(dive_id)
-	    .append("&nbsp;")
-	    .append("<strong>"+entry["dive-name"]+"</strong>")
-	    .appendTo("#list-view");
-	
-	// copy_dive_attributes(clickedDive, $entry); //todo rm?
- 
-	$(dive_attributes).each(function(_, key) {
-	    $entry.attr(key, entry[key]);
-	});
-	
-	$entry.attr("dive-order", entry["dive-order"] || i); // todo: possibly just use the looping var "i". 
+        var dive_id = entry["dive-id"];
+        var $entry = $("<span/>", {"class" : "selected-dive",
+                       "id" : dive_id+"_selected", // todo: perhaps just use dive id, and add 'selected' as a class
+                       "dive-id" : dive_id
+                      })
+            .append(dive_id)
+            .append("&nbsp;")
+            .append("<strong>"+entry["dive-name"]+"</strong>")
+            .appendTo("#list-view");
 
-	
-	$("<span/>",{"class":"drag-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
+        // copy_dive_attributes(clickedDive, $entry); //todo rm?
+
+        $(dive_attributes).each(function(_, key) {
+            $entry.attr(key, entry[key]);
+        });
+
+        $entry.attr("dive-order", entry["dive-order"] || i); // todo: possibly just use the looping var "i". 
 
 
-	var $remove = $("<span class='remove'>&times;</span>").click(function() {
-	    //lambda function called when [remove] is clicked
-            toggleDiveSelectedInDatabase(dive_id);
-            divelist_remove_dive($entry, true);
+        $("<span/>",{"class":"drag-handle", "html": "&nbsp;" || "&#x2195;"}).prependTo($entry);
 
-            // if divelist is empty, show quicklist
-            ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
-	}).appendTo($entry);
-	
- 	add_radio_buttons($entry);
 
-	$entry.attr("dive-willing", entry["dive-willing"]);
-	if(entry["dive-willing"] == "voluntary") {
-	    $entry.find(".radio-vol").click();
-	}
-	else {
-	    // optional is the default, e.g. if dive-willing is not set.
-	    $entry.find(".radio-opt").click();
-	}
-	
+        var $remove = $("<span class='remove'>&times;</span>").click(function() {
+            //lambda function called when [remove] is clicked
+                toggleDiveSelectedInDatabase(dive_id);
+                divelist_remove_dive($entry, true);
+
+                // if divelist is empty, show quicklist
+                ($("#list-view").children().length > 0) ? hideQuicklist() : showQuicklist();
+        }).appendTo($entry);
+
+        add_radio_buttons($entry);
+
+        $entry.attr("dive-willing", entry["dive-willing"]);
+        if(entry["dive-willing"] == "voluntary") {
+            $entry.find(".radio-vol").click();
+        }
+        else {
+            // optional is the default, e.g. if dive-willing is not set.
+            $entry.find(".radio-opt").click();
+        }
+
     });
 }
 
@@ -666,7 +687,82 @@ function onSaveButtonClick() { //todo don't copy/paste from autosaving
     divelistToLocalStorage();
 }
 function onExportButtonClick() {
-    alert("Pretend this is an exported version of your divelist.  (This feature is not implemented yet.)"); //todo
+    console.log(divelist);
+
+    if (divelist.length < 1) {
+        alert("Add some dives to your list!");
+    } else {
+        var exportPage = window.open();
+        var exportBody = exportPage.document.body;
+        $(exportBody).css({
+            "text-align": "center"
+        });
+        
+        var listName = $("#divelist-savename").html();
+        var titleElt = $("<h1></h1>").text(listName)
+        .css("margin-top", "15px");
+        $(exportBody).append(titleElt);
+        
+        var diveTable = $("<table></table>")
+        .css("margin", "0 auto")
+        .css("border-collapse", "separate")
+        .css("border-spacing", "30px 0");
+        
+        var headingRow = $("<tr></tr>").css("text-align", "center");
+        $(headingRow).append($("<th></th>").text("ID"));
+        $(headingRow).append($("<th></th>").text("Dive"));
+        $(headingRow).append($("<th></th>").text("Last Performed"));
+        $(headingRow).append($("<th></th>").text("Optional / Voluntary"));
+        $(headingRow).append($("<th></th>").text("Predicted Score"));
+        
+        $(diveTable).append(headingRow);
+
+
+        for (var i = 0; i < divelist.length; i++) {
+            var dive = divelist[i];
+            var diveRow = $("<tr></tr>")
+            .css("line-height", "30px");
+            
+            var id = $("<td></td>")
+            .text(dive['dive-id'])
+            .css({
+                "font-weight": "bold",
+                "padding": "0 15px"
+            });
+            $(diveRow).append(id);
+            
+            var name = $("<td></td>")
+            .text(dive['dive-name'])
+            .css("padding", "0 15px");
+            $(diveRow).append(name);
+            
+            var lastPerformed = $("<td></td>")
+            .text(dive['dive-last-performed'])
+            .css("padding", "0 15px");
+            $(diveRow).append(lastPerformed);
+            
+            var willing = $("<td></td>")
+            .text(dive['dive-willing'])
+            .css("text-transform", "capitalize")
+            .css("padding", "0 15px");
+            $(diveRow).append(willing);
+            
+            var predictedScore = $("<td></td>")
+            .text(dive['dive-predicted-score'])
+            .css("padding", "0 15px");
+            $(diveRow).append(predictedScore);
+            
+            $(diveTable).append(diveRow);
+        }
+        $(exportBody).append(diveTable);
+        
+        var footer = $("<h5></h5>").text("© Springboard 2016")
+        .css({
+            "margin-top": "60px",
+            "font-weight": "300"
+        });
+        $(exportBody).append(footer);
+    }
 }
 
 function animate_autosave(fn_when_finished) {
@@ -680,15 +776,17 @@ function animate_autosave(fn_when_finished) {
 function onNewListButtonClick() {
     // dxh: this is a mockup animation
     animate_autosave(function() {
-        console.log("Clearing current divelist");
         clearDivelist();
         showQuicklist();
     });
 }
 
 function clearDivelist() {
-    $(".selected-dive").each(function(n,selectedDive) {
+    console.log("Clearing current divelist");
+//    $(".selected-dive").each(function(n,selectedDive) {
+    $(divelist).each(function(n,selectedDive) {
         var id = getDiveID(selectedDive);
+        console.log('clearing', id);
         var dive = $("#"+id);
         toggleDiveSelectedInDatabase(id);
         divelist_remove_dive(dive, false);
@@ -711,7 +809,7 @@ function onLoadDropdownClick() {
 }
 
 function autoGen(param) {
-    console.log(param);
+//    console.log(param);
     var opt, vol
     switch(param) {
         case "HighScore":
