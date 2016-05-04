@@ -1,4 +1,5 @@
 var diveData = new Array();
+var selectedId = "";
 
 var position = {
     "Straight": "A",
@@ -102,6 +103,7 @@ function inspectBubble(circle) {
     $("#diveName").html("Dive Name: " + getDiveData(diveID)[1]);
     $("#diveDD").html("Degree of Difficulty: " + getDiveData(diveID)[2]);
     $("#diveScores").html("Average score: 42");
+    $("#addDive").html("Add Dive to Current List");
 }
 
 function getDiveData(diveID) {
@@ -338,13 +340,14 @@ function render_graph(group_number) {
         if ($(event.target).is(".dive-bubble")) {
 
             var id = $(event.target).children()[0].innerText;
+            selectedID = id;
             var name = getDiveData(id)['dive-name'];
             var difficulty = getDiveData(id)['dive-difficulty'];
-            var score = Math.round(difficulty * (Math.floor(Math.random() * (30 - 20)) + 20));
+            var score = Math.round(difficulty * (Math.floor(Math.random() * (30 - 20)) + 20)); // lol
 
             $(".dive-info").slideDown("fast")
                 .removeClass("inert")
-                .html("<p><h2>" + id + " " + name + "</h2>Degree of Difficulty: " + difficulty + "<br/>Average score: " + score + "</p><iframe width='100%' height='200' src='https://www.youtube.com/embed/V9AZVya-N5Q' frameborder='0' allowfullscreen></iframe>");
+                .html("<p><h2>" + id + " " + name + "</h2>Degree of Difficulty: " + difficulty + "<br/>Average score: " + score + "<br/><button onclick='addDiveToCurrentList()'>Add Dive to Current List</button> </p><iframe width='100%' height='200' src='https://www.youtube.com/embed/V9AZVya-N5Q' frameborder='0' allowfullscreen></iframe>");
 
             $(".selected").removeClass("selected");
             $(event.target).addClass("selected");
@@ -359,6 +362,15 @@ function render_graph(group_number) {
     $(".scrolling").css("height", $(window).height());
 
 
+}
+
+function addDiveToCurrentList() {
+    console.log("adding!");
+    if (localStorage.divesToAdd != undefined) {
+        localStorage.divesToAdd = localStorage.divesToAdd + "," + selectedID;
+    } else {
+        localStorage.divesToAdd = selectedID;
+    }
 }
 
 
@@ -399,7 +411,7 @@ $(document).ready(function () {
         curDown = false;
 
     window.addEventListener('mousemove', function (e) {
-        console.log("yo");
+//        console.log("yo");
         if (curDown === true) {
             window.scrollTo(document.body.scrollLeft + (curXPos - e.pageX), document.body.scrollTop + (curYPos - e.pageY));
         }

@@ -67,15 +67,31 @@ function loadDiveData(filename) {
         }
         populateDiveDatabase(diveData);
         sortDivesBy("dive-id"); //initially, sort by dive ID //todo don't hard-code this
-	drawDiveDatabase();
-    onFilterByExperience(); //apply experience filter
+        drawDiveDatabase();
+        onFilterByExperience(); //apply experience filter
 
-	// todo: debug to populate divelist
-	//$("#quicklist a")[0].click();
+        // todo: debug to populate divelist
+        //$("#quicklist a")[0].click();
 
-	// todo: show chart view first once chart view works.
-	$("#list-view").show();
-	$("#chart-view").hide();
+        // todo: show chart view first once chart view works.
+        $("#list-view").show();
+        $("#chart-view").hide();
+
+        // Populate list with most recently saved dive, if applicable
+        if (localStorage.currentList != undefined) {
+            localStorageToDivelist(localStorage.currentList);
+        }
+        
+        // Add any cached dives from learnDives
+        if (localStorage.divesToAdd != undefined && localStorage.divesToAdd != "") {
+            divesToAdd = localStorage.divesToAdd.split(",");
+            console.log(divesToAdd);
+            for (var i=0;i<divesToAdd.length;i++){
+                console.log("adding " + divesToAdd[i]);
+                onDatabaseDiveClicked($('#'+divesToAdd[i]), false);  // add it to the list
+            }
+            localStorage.divesToAdd = "";
+        }
     }
 }
 
@@ -768,6 +784,7 @@ function onExportButtonClick() {
 function animate_autosave(fn_when_finished) {
         $("#autosaving").show(0,
 			  function() {
+                  divelistToLocalStorage();
 			      setTimeout(function(){
 				      $("#autosaving").hide(0, fn_when_finished);
 			      }, 1000)});
@@ -799,13 +816,13 @@ function onLoadDropdownClick() {
     clearDivelist();
     listName = $(this).val();
     localStorageToDivelist(listName);
-    divelist_redraw();
-    $(".selected-dive").each(function(n,selectedDive) {
-        var dive = $("#"+getDiveID(selectedDive));
-        dive.addClass("selected");
-    });
-    divelist_redraw();
-    hideQuicklist();
+//    divelist_redraw();
+//    $(".selected-dive").each(function(n,selectedDive) {
+//        var dive = $("#"+getDiveID(selectedDive));
+//        dive.addClass("selected");
+//    });
+//    divelist_redraw();
+//    hideQuicklist();
 }
 
 function autoGen(param) {
@@ -849,7 +866,8 @@ function hideQuicklist() {
 function divelistToLocalStorage() {
     var listName = $("#divelist-savename").html();
     localStorage.setItem(listName, JSON.stringify(divelist));
-    $("#dropdown-load").html($("#dropdown-load").html()+"<option>"+listName+"</option>")
+    $("#dropdown-load").html($("#dropdown-load").html()+"<option>"+listName+"</option>");
+    localStorage.currentList = listName;
 }
 
 // Parse the text in local storange and save it as the divelist var,
@@ -857,6 +875,13 @@ function divelistToLocalStorage() {
 function localStorageToDivelist(listName) {
     console.log(localStorage);
     divelist = JSON.parse(localStorage.getItem(listName));
+    divelist_redraw();
+    $(".selected-dive").each(function(n,selectedDive) {
+        var dive = $("#"+getDiveID(selectedDive));
+        dive.addClass("selected");
+    });
+    divelist_redraw();
+    hideQuicklist();
 }
 
 
@@ -931,6 +956,11 @@ $(document).ready(function() {
     // Make divelist items sortable/draggable
     $( ".sortable" ).sortable({"handle" : ".drag-handle"});
     $( ".sortable" ).disableSelection();
+    
+//    // Populate list with most recently saved dive, if applicable
+//    if (localStorage.currentList != undefined) {
+//        setTimeout(function(){console.log("delaying");localStorageToDivelist(localStorage.currentList)}, 50);
+//    }
 });
 
 
