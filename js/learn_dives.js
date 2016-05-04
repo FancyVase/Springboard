@@ -38,8 +38,11 @@ function loadDiveData(filename) {
             }
         });
 
-        render_graph();
+	$("ul.dive-filters li").eq(1).click();
+        render_graph(1);
 
+
+	
         // TODO: uncomment the next line.
         $("#graph").hide().show(1000);
         // populateBubbles("Back");
@@ -393,7 +396,7 @@ function create_dive_filters() {
         });
     });
 
-    $("ul.dive-filters li").eq(1).click();
+
 }
 
 $(document).ready(function () {
