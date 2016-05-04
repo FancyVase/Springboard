@@ -19,11 +19,6 @@
 	color: #fffff8;
 }
 
-a.title {
-	font-size: 2em;
-	font-weight: bolder;
-}
-
 .profile-pic {
 	height: 35px;
 }
@@ -46,6 +41,12 @@ a.title {
     pointer-events: none;
     text-decoration: underline;
 	color: #fffff8;
+}
+
+.nav>li>a.title {
+	font-size: 2em;
+	font-weight: bolder;
+    text-decoration: none;
 }
 
 /* END NAVBAR */
