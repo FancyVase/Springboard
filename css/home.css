@@ -1,7 +1,7 @@
 /* NAVBAR */
 .navbar {
 	background-color: #1b7;
-	padding: 0.5em 1em;
+	padding: 0.5em 2em 0.5em 1em;
 	font-family: Lato;
 	border-radius: 0;
 	border-bottom: 0.5em solid #4ea;
@@ -13,9 +13,10 @@
 }
 
 .nav>li>a:focus, .nav>li>a:hover {
-	text-decoration: none;
+	text-decoration: underline;
 	background-color: #1b7;
 	color: #eee;
+	color: #fffff8;
 }
 
 a.title {
@@ -39,8 +40,12 @@ a.title {
  line-height: 35px;
 }
 
-.active {
-	color: #4ea;
+#active-page, #active-page:hover {
+    color: #000;
+    cursor: default;
+    pointer-events: none;
+    text-decoration: underline;
+	color: #fffff8;
 }
 
 /* END NAVBAR */
