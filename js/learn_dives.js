@@ -355,13 +355,14 @@ function create_dive_filters() {
 	});
     });
 
-    $("ul.dive-filters li").first().click();
+    $("ul.dive-filters li").eq(1).click();
 }
 
 $(document).ready(function() {
     
     loadDiveData("all_dives.csv");
 
+    
     create_dive_filters();
     console.log("hi");
 
