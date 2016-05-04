@@ -37,8 +37,7 @@
 
 #active-page, #active-page:hover {
     color: #000;
-    cursor: default;
-    pointer-events: none;
+    cursor: text;
     text-decoration: underline;
 	color: #fffff8;
 }
