@@ -126,7 +126,11 @@ input.form-control {
 	transition: 0.25s;
 }
 
-.row:hover {
+.history>table>tbody>tr {
+    transition: 0.25s;
+}
+
+.row:hover, .history>table>tbody>tr:hover {
 	background-color: #f0f0f0;
 }
 
