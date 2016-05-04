@@ -537,7 +537,7 @@ function divelist_remove_dive(clickedDive, showUndo) {
         $("#saving").show(0, function() {
             setTimeout(function(){
                 $("#saving").hide(0);
-            }, 5000);
+            }, 8000);
         })
             .html("Dive removed.&nbsp;&nbsp;")
 
@@ -754,7 +754,7 @@ function onExportButtonClick() {
             "text-align": "center"
         });
         
-        var listName = $("#divelist-savename").html();
+        var listName = "Anthony McHugh"+$("<p>&mdash;</p>").html()+$("#divelist-savename").html();
         var titleElt = $("<h1></h1>").text(listName)
         .css("margin-top", "15px");
         $(exportBody).append(titleElt);
@@ -764,7 +764,7 @@ function onExportButtonClick() {
         .css("border-collapse", "separate")
         .css("border-spacing", "30px 0");
         
-        var headingRow = $("<tr></tr>").css("text-align", "center");
+        var headingRow = $("<tr></tr>").css("text-align", "left");
         $(headingRow).append($("<th></th>").text("ID"));
         $(headingRow).append($("<th></th>").text("Dive"));
         $(headingRow).append($("<th></th>").text("Last Performed"));
@@ -812,7 +812,7 @@ function onExportButtonClick() {
         }
         $(exportBody).append(diveTable);
         
-        var footer = $("<h5></h5>").text("© Springboard 2016")
+        var footer = $("<h5></h5>").text("Created with Springboard. © Springboard 2016")
         .css({
             "margin-top": "60px",
             "font-weight": "300"
@@ -840,7 +840,9 @@ function onNewListButtonClick() {
 
 function clearDivelist() {
     console.log("Clearing current divelist");
-//    $(".selected-dive").each(function(n,selectedDive) {
+    //    $(".selected-dive").each(function(n,selectedDive) {
+
+   //  localStorage.currentList = undefined; // todo: DXH added
     $(divelist).each(function(n,selectedDive) {
         var id = getDiveID(selectedDive);
         console.log('clearing', id);
@@ -995,7 +997,31 @@ $(document).ready(function() {
     // Make divelist items sortable/draggable
     $( ".sortable" ).sortable({"handle" : ".drag-handle"});
     $( ".sortable" ).disableSelection();
+
+
+
+
+    var programmatic_resize = function() {
+	//      function resize() {
+
+	$(".separator").height(function(_,_) {
+	    return $(window).height() - $(this).offset().top - 12;
+	});
+	
+	$(".scrollable-pane").height(function(_,_) {
+	    return $(window).height() - $(this).offset().top - 52 - 12;
+	});
+
+//      }
+//      $("body").ready(function() {
+//      $(window).resize(resize);
+//      resize();
+//
+    };
     
+    $(window).resize(programmatic_resize);
+
+    programmatic_resize();
 //    // Populate list with most recently saved dive, if applicable
 //    if (localStorage.currentList != undefined) {
 //        setTimeout(function(){console.log("delaying");localStorageToDivelist(localStorage.currentList)}, 50);

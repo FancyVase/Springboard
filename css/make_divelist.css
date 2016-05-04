@@ -139,7 +139,7 @@ h5 {
 }
 
 .panel-dive-list {
-    width: 40em;
+    width: 50em;
     padding-left: 2em;
 }
 
@@ -677,4 +677,8 @@ span.remove:hover {
     cursor:default;
     font-weight:bold;
     text-decoration:underline;
+	 }
+
+.scrollable-pane {
+    border:1px solid #aaa;
 }
